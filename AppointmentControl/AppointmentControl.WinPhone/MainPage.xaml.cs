@@ -28,7 +28,7 @@ namespace AppointmentControl.WinPhone
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
-            LoadApplication(new AppointmentControl.App());
+            LoadApplication(new AppointmentControl.AppointmentControl());
         }
 
         /// <summary>
