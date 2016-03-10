@@ -7,7 +7,7 @@ namespace AppointmentControl.Windows
         {
             this.InitializeComponent();
 
-            LoadApplication(new AppointmentControl.AppointmentControl());
+            LoadApplication(new AppointmentControl());
         }
     }
 }

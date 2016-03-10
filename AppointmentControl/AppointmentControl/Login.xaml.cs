@@ -23,7 +23,7 @@ namespace AppointmentControl
         /// </summary>
         public Login()
         {
-            InitializeComponent();
+            
         }
 
         #endregion
