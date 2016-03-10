@@ -219,11 +219,8 @@ FakesAssemblies/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
-
 ### VisualStudioCode ###
 .settings
-
-
 
 ### Windows ###
 # Windows image file caches
@@ -245,7 +242,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
 ### Linux ###
 *~
 
@@ -254,7 +250,6 @@ $RECYCLE.BIN/
 
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
-
 
 ### Java ###
 *.class
