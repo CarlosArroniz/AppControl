@@ -268,3 +268,8 @@ hs_err_pid*
 #Project specific
 AppointmentControl/AppointmentControl.Windows/obj/
 /AppointmentControl/AppointmentControl.WinPhone/obj/
+/AppointmentControl/AppointmentControl/obj
+/AppointmentControl/AppointmentControl.Droid/obj
+/AppointmentControl/AppointmentControl.iOS/obj
+/AppointmentControl/AppointmentControl.Windows/obj
+/AppointmentControl/AppointmentControl.WinPhone/obj
