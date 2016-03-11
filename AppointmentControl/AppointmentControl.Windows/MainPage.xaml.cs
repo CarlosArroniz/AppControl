@@ -5,7 +5,7 @@ namespace AppointmentControl.Windows
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             LoadApplication(new AppointmentControl());
         }
