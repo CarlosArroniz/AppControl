@@ -9,6 +9,8 @@
 
 namespace AppointmentControl
 {
+    using System;
+
     using Xamarin.Forms;
 
     /// <summary>
@@ -26,6 +28,19 @@ namespace AppointmentControl
             InitializeComponent();
         }
 
+        async void SignIn(object sender, EventArgs eventArgs)
+        {
+            //var username = emailEntry.Text;
+            //var password = passwordEntry.Text;
+
+            var page = new NavigationPage(new Login());
+
+            page.BarBackgroundColor = Color.FromHex("#004D40");
+            page.BarTextColor = Color.White;
+
+            Application.Current.MainPage = page;
+
+        }
         #endregion
     }
 }

@@ -21,13 +21,13 @@
             <StackLayout Orientation="Vertical" Padding="20,50,20,20" Spacing="30">
                 <Entry x:Name="emailEntry" Placeholder="Email" />
                 <Entry x:Name="passwordEntry" Placeholder="Password" IsPassword="True" />
-                <Button x:Name="signInButton" Text="Sign In"/>
+                <Button x:Name="signInButton" Text="Sign In" Clicked="SignIn"/>
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 
                     <Label Text="No Account?"></Label>
 
-                    <Button x:Name="signUpButton" Text="Sign Up"></Button>
+                    <Button x:Name="signUpButton" Text="Sign Up" ></Button>
 
                 </StackLayout>
 
