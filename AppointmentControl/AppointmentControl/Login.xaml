@@ -3,44 +3,48 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppointmentControl.Login">
-    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <OnPlatform.iOS>
-                0,20,0,0
-            </OnPlatform.iOS>
-        </OnPlatform>
-    </ContentPage.Padding>
-
     <ScrollView>
-        <StackLayout Orientation="Vertical" BackgroundColor="#26A69A">
-
-            <Label Text="AppName" FontSize="30" BackgroundColor="#004D40" HeightRequest="100" WidthRequest="100"
-                   TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+        <StackLayout Orientation="Vertical" BackgroundColor="#12A5F4">
+            <Label Text="AppControl" FontSize="20" BackgroundColor="#12A5F4" HeightRequest="70" WidthRequest="70"
+                   TextColor="#FFF" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                    FontAttributes="Bold" />
-
             <StackLayout Orientation="Vertical" Padding="20,50,20,20" Spacing="30">
-                <Entry x:Name="emailEntry" Placeholder="Email" />
-                <Entry x:Name="passwordEntry" Placeholder="Password" IsPassword="True" />
-                <Button x:Name="signInButton" Text="Sign In" Clicked="SignIn"/>
+
+                <Entry x:Name="emailEntry" Placeholder="Username"
+                       HorizontalTextAlignment="Center"
+                       BackgroundColor="#FFF"
+                       TextColor="#12A5F4"
+                       PlaceholderColor="#026CA5"
+                       HeightRequest="40" />
+
+                <Entry x:Name="passwordEntry" Placeholder="Password" IsPassword="True"
+                       HorizontalTextAlignment="Center"
+                       BackgroundColor="#FFF"
+                       TextColor="#12A5F4"
+                       PlaceholderColor="#026CA5"
+                       HeightRequest="40" />
+
+                <Button x:Name="signInButton" Text="Iniciar Sesión"
+                        BackgroundColor="#2C903D"
+                        TextColor="#FFF" />
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="¿Sin cuenta?" VerticalOptions="Center"
+                           TextColor="#FFF"
+                           FontAttributes="Bold"
+                           FontSize="Medium" 
+                           />
 
-                    <Label Text="No Account?"></Label>
-
-                    <Button x:Name="signUpButton" Text="Sign Up" ></Button>
-
+                    <Button x:Name="signUpButton" Text="Registrate" Clicked="SignIn"></Button>
                 </StackLayout>
-
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-
-                    <Button x:Name="forgotPasswordButton" Text="Forgot your Password?">
-                    </Button>
+                    <Button x:Name="forgotPasswordButton" Text="¿Olvidaste tu contraseña?"
+                            BackgroundColor="Transparent"
+                            TextColor="#FFF"
+                            VerticalOptions="Center" />
 
                 </StackLayout>
             </StackLayout>
-
         </StackLayout>
-
-
     </ScrollView>
 </ContentPage>
