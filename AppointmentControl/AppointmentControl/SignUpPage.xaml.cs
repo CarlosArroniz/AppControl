@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
 namespace AppointmentControl
@@ -15,7 +10,7 @@ namespace AppointmentControl
             InitializeComponent();
         }
 
-        private void Save(object sender, EventArgs e)
+        public void Save(object sender, EventArgs e)
         {
             //Application.Current.MainPage = new NavigationPage(new Page1()); 
             Application.Current.MainPage = new Login();
