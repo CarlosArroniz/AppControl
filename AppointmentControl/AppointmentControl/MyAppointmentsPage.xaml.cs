@@ -10,59 +10,30 @@ namespace AppointmentControl
 {
     public partial class MyAppointmentsPage : ContentPage
     {
+        
+
         public MyAppointmentsPage()
         {
-            Grid grid = new Grid
+            var Title = new Label()
                             {
-                                Padding = new Thickness(0, 1, 1, 1),
-                                RowSpacing = 1,
-                                ColumnSpacing = 1,
-                                BackgroundColor = Color.FromHex("E3E3E3")
+                                Text = "My today Appointments"
                             };
 
-            var layout = new RelativeLayout()
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                HeightRequest = 50,
-                Padding = new Thickness(0)
-            };
+            var Entry = new Entry() { Placeholder = "I am an entry", BackgroundColor = Color.White };
 
-            var cardBackground = new Image()
-            {
-                Source = ImageSource.FromFile("Icons\\shadow.png"),
-                Aspect = Aspect.Fill
-            };
+            Content = new StackLayout()
+                            {
+                                Orientation = StackOrientation.Vertical,
+                                BackgroundColor = Color.FromHex("#12A5F4"),
+                                WidthRequest = 100,
+                                HeightRequest = 100,
+                                Children = { Title, Entry }
+                            };
+        }
 
-            layout.Children.Add(
-                cardBackground,
-                Constraint.Constant(0),
-                Constraint.Constant(0),
-                Constraint.RelativeToParent((parent) =>
-                {
-                    return (parent.Width);
-                }),
-                Constraint.RelativeToParent((parent) =>
-                {
-                    return (parent.Height);
-                })
-            );
-
-            //layout.Children.Add(
-            //    grid,
-            //    Constraint.Constant(10),
-            //    Constraint.Constant(10),
-            //    Constraint.RelativeToParent((parent) =>
-            //    {
-            //        return (parent.Width - 15);
-            //    }),
-            //    Constraint.RelativeToParent((parent) =>
-            //    {
-            //        return (parent.Height - 0);
-            //    })
-            //);
-
-            Content = layout;
-
+        async void OnNextPageButtonClicked(object sender, TappedEventArgs e)
+        {
+            await Navigation.PushAsync(new MyProfilePage());
         }
     }
 }

@@ -3,10 +3,17 @@ namespace AppointmentControl
 {
     public partial class PrincipalPage : TabbedPage
     {
+        readonly Page tab1Page;
+        readonly Page tab2Page;
+        readonly Page tab3Page;
         public PrincipalPage()
         {
-            Children.Add(new MyAppointmentsPage());
-            Children.Add(new Login());
+            tab1Page = new MyAppointmentsPage() { Title = "My Appointments" };
+            tab2Page = new MyProfilePage() { Title = "My Profile" };
+
+            Children.Add(tab1Page);
+            Children.Add(tab2Page);
+            Children.Add(tab2Page);
         }
     }
 }
