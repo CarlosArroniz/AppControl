@@ -3,17 +3,58 @@ namespace AppointmentControl
 {
     public partial class PrincipalPage : TabbedPage
     {
-        readonly Page tab1Page;
-        readonly Page tab2Page;
-        readonly Page tab3Page;
         public PrincipalPage()
         {
-            tab1Page = new MyAppointmentsPage() { Title = "My Appointments" };
-            tab2Page = new MyProfilePage() { Title = "My Profile" };
+            this.ItemsSource = new NamedColor[]
+                                   {
+                                       new NamedColor("Today", Color.Green),
+                                       new NamedColor("Schedule", Color.Red),
+                                       new NamedColor("Settings", Color.Navy)
+                                   };
+            this.ItemTemplate = new DataTemplate(() => { return new NamedColorPage(); });
+            
 
-            Children.Add(tab1Page);
-            Children.Add(tab2Page);
-            Children.Add(tab2Page);
+
+        }
+
+        public void CreateAppointment()
+        {
+            Application.Current.MainPage = new CreateAppointment();
+        }
+
+        class NamedColor
+        {
+            public NamedColor(string name, Color color)
+            {
+                this.Name = name;
+                this.Color = color;
+            }
+
+            public string Name { private set; get; }
+            public Color Color { private set; get; }
+
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+
+        class NamedColorPage : ContentPage
+        {
+            public NamedColorPage()
+            {
+                this.SetBinding(ContentPage.TitleProperty, "Name");
+
+                BoxView boxView = new BoxView
+                                      {
+                                          WidthRequest = 100,
+                                          HeightRequest = 100,
+                                          HorizontalOptions = LayoutOptions.Center
+                                      };
+                boxView.SetBinding(BoxView.ColorProperty, "Color");
+
+                this.Content = boxView;
+            }
         }
     }
 }
