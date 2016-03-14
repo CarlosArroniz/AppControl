@@ -17,6 +17,11 @@ namespace AppointmentControl
 
         }
 
+        public void CreateAppointment()
+        {
+            Application.Current.MainPage = new CreateAppointment();
+        }
+
         class NamedColor
         {
             public NamedColor(string name, Color color)
