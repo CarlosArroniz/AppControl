@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppointmentControl.EditProfile">
+
+  <StackLayout Orientation="Vertical" BackgroundColor="#12A5F4" Padding="20,50,20,20" >
+    <StackLayout BackgroundColor="#12A5F4" IsClippedToBounds="True">
+      <Label Text="Editar Perfil"
+           FontSize="20"
+           BackgroundColor="#12A5F4"
+           TextColor="#FFF"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"
+           FontAttributes="Bold" />
+    </StackLayout>
+    <StackLayout>
+    <ScrollView>
+      <StackLayout Orientation="Vertical" >
+        <Image Source="default_user.png" HeightRequest="300"></Image>
+
+        <Label Text="Nombre" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Entry x:Name="Name"
+               Placeholder="Juan Perez Lopez"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
+
+        <Label Text="Especialidad" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Entry x:Name="Speciality"
+               Placeholder="Juan Perez Lopez"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
+
+        <Label Text="Phone" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Entry x:Name="Phone"
+               Placeholder="1234567890"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray"
+               Keyboard="Numeric" />
+
+        <Label Text="Address" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Entry x:Name="Address"
+               Placeholder="Av. Madero #100"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
+
+        <Label Text="Ciudad" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+         <Picker x:Name="City"  
+                 Title="Ciudad"
+                 Items="Cities"/>
+
+        <Label Text="Estado" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Picker x:Name="State"
+                Title="Estado"
+                Items="States"/>
+
+        <Label Text="Pais" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Picker x:Name="Country"
+                Title="Pais"
+                Items="Countries"/>
+         
+        <Label Text="Zip Code" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Entry x:Name="ZipCode"
+               Placeholder="58000"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray"
+               Keyboard="Numeric" />
+
+
+        <Label Text="Username" FontSize="20"
+                       BackgroundColor="#12A5F4"
+                       TextColor="#FFF"
+                       HorizontalTextAlignment="Start"
+                       VerticalTextAlignment="End"
+                       FontAttributes="Bold" />
+
+        <Entry x:Name="UserName"
+               Placeholder="username"
+               HorizontalTextAlignment="Center"
+               BackgroundColor="#FFF"
+               TextColor="#12A5F4"
+               PlaceholderColor="#026CA5"
+                       />
+
+        <Label Text="Password" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+
+        <Entry x:Name="Password"
+               Placeholder="password"
+               IsPassword="True"
+               HorizontalTextAlignment="Center"
+               BackgroundColor="#FFF"
+               TextColor="#12A5F4"
+               PlaceholderColor="#026CA5"
+               HeightRequest="40" />
+
+        <Label Text="Email"
+               FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+
+        <Entry x:Name="Email"
+               Placeholder="user@site.com"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
+
+        <Label HeightRequest="20" />
+        <Button Text="Save"
+                BackgroundColor="#2C903D"
+                TextColor="#FFF"
+                Clicked="Save" />
+        </StackLayout>
+      </ScrollView>
+      </StackLayout>
+    </StackLayout>
+</ContentPage>
