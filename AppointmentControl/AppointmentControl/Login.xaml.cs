@@ -37,11 +37,22 @@ namespace AppointmentControl
             Application.Current.MainPage = page;
 
         }
-
+        
         async void SignUp(object sender, EventArgs eventArgs)
         {
             Application.Current.MainPage = new SignUpPage();
 
+        }
+
+        async void LoginIn(object sender, EventArgs eA)
+        {
+            string un = userNameEntry.Text;
+            string pass = passwordEntry.Text;
+
+            if (pass.Equals(un))
+            {
+                Application.Current.MainPage = new PrincipalPage();
+            }
         }
         #endregion
     }
