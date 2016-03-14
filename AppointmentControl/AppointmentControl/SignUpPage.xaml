@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppointmentControl.SignUpPage">
+  
+  <StackLayout BackgroundColor="#26A69A" Orientation="Vertical" >
+    <StackLayout Padding="20,20,20,20">
+      <Label Text="Username" TextColor="White" FontAttributes="Bold" />
+      <Entry x:Name="UserName" Placeholder="username" BackgroundColor="White" TextColor="Black" PlaceholderColor="Gray" ></Entry>
+      
+      <Label Text="Password" TextColor="White" FontAttributes="Bold"/>
+      <Entry x:Name="Password" Placeholder="password" BackgroundColor="White" TextColor="Black" PlaceholderColor="Gray" IsPassword="True" ></Entry>
+      
+      <Label Text="Email" TextColor="White" FontAttributes="Bold" />
+      <Entry x:Name="Email" Placeholder="user@site.com" BackgroundColor="White" TextColor="Black" PlaceholderColor="Gray" ></Entry>
+      
+      <Label Text="Phone" TextColor="White" FontAttributes="Bold" />
+      <Entry x:Name="Phone" Placeholder="1234567890" BackgroundColor="White" TextColor="Black" PlaceholderColor="Gray" Keyboard="Numeric" ></Entry>
+      
+      <Label Text="Name" TextColor="White" FontAttributes="Bold" />
+      <Entry x:Name="Name" Placeholder="Juan Perez Lopez" BackgroundColor="White" TextColor="Black" PlaceholderColor="Gray" ></Entry>
+      
+      <Label Text="Address" TextColor="White" FontAttributes="Bold" />
+      <Entry x:Name="Address" Placeholder="Av. Madero #100" BackgroundColor="White" TextColor="Black" PlaceholderColor="Gray" ></Entry>
+      
+      <Label Text="Zip Code" TextColor="White" FontAttributes="Bold" />
+      <Entry x:Name="ZipCode" Placeholder="58000" BackgroundColor="White" TextColor="Black" PlaceholderColor="Gray" Keyboard="Numeric" ></Entry>
+    
+      <Button Text="Save" Clicked="Save" ></Button>
+    </StackLayout>
+    
+  </StackLayout>
+</ContentPage>

@@ -37,6 +37,12 @@ namespace AppointmentControl
             Application.Current.MainPage = page;
 
         }
+
+        async void SignUp(object sender, EventArgs eventArgs)
+        {
+            Application.Current.MainPage = new SignUpPage();
+
+        }
         #endregion
     }
 }

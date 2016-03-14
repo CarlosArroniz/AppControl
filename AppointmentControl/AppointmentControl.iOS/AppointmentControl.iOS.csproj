@@ -11,7 +11,7 @@
     <RootNamespace>AppointmentControl.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>AppointmentControliOS</AssemblyName>
-    <NuGetPackageImportStamp>311afd81</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>10c91062</NuGetPackageImportStamp>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
