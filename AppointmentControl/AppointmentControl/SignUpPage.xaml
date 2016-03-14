@@ -5,17 +5,18 @@
                    x:Class="AppointmentControl.SignUpPage">
     <ScrollView >
         <StackLayout Orientation="Vertical" BackgroundColor="#12A5F4">
-            <Label Text="SignUp" FontSize="20" BackgroundColor="#12A5F4" HeightRequest="50" WidthRequest="50"
-                   TextColor="#FFF" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+            <Label Text="SignUp" FontSize="20" 
+                   BackgroundColor="#12A5F4" 
+                   TextColor="#FFF" 
+                   HorizontalTextAlignment="Center" 
+                   VerticalTextAlignment="Center"
                    FontAttributes="Bold" />
-            <StackLayout Orientation="Vertical" Padding="20,50,20,20" Spacing="00">
+            <StackLayout Orientation="Vertical" Padding="20,50,20,20" >
                 <Label Text="Username" FontSize="20"
                        BackgroundColor="#12A5F4"
-                       HeightRequest="40"
-                       WidthRequest="40"
                        TextColor="#FFF" 
                        HorizontalTextAlignment="Start"
-                       VerticalTextAlignment="Start"
+                       VerticalTextAlignment="End"
                        FontAttributes="Bold" />
 
                 <Entry x:Name="UserName"
@@ -24,15 +25,13 @@
                        BackgroundColor="#FFF"
                        TextColor="#12A5F4"
                        PlaceholderColor="#026CA5"
-                       HeightRequest="40" />
+                       />
 
                 <Label Text="Password" FontSize="20"
                        BackgroundColor="#12A5F4"
-                       HeightRequest="40"
-                       WidthRequest="40"
                        TextColor="#FFF" 
                        HorizontalTextAlignment="Start"
-                       VerticalTextAlignment="Start"
+                       VerticalTextAlignment="End"
                        FontAttributes="Bold" />
               
                 <Entry x:Name="Password"
@@ -47,11 +46,9 @@
                 <Label Text="Email"
                        FontSize="20"
                        BackgroundColor="#12A5F4"
-                       HeightRequest="40"
-                       WidthRequest="40"
-                       TextColor="#FFF" 
+                       TextColor="#FFF"
                        HorizontalTextAlignment="Start"
-                       VerticalTextAlignment="Start"
+                       VerticalTextAlignment="End"
                        FontAttributes="Bold" />
 
                 <Entry x:Name="Email"
@@ -62,11 +59,9 @@
 
                 <Label Text="Phone" FontSize="20"
                        BackgroundColor="#12A5F4"
-                       HeightRequest="40"
-                       WidthRequest="40"
-                       TextColor="#FFF" 
+                       TextColor="#FFF"
                        HorizontalTextAlignment="Start"
-                       VerticalTextAlignment="Start"
+                       VerticalTextAlignment="End"
                        FontAttributes="Bold" />
                 <Entry x:Name="Phone"
                        Placeholder="1234567890"
@@ -77,11 +72,9 @@
 
                 <Label Text="Name" FontSize="20"
                        BackgroundColor="#12A5F4"
-                       HeightRequest="40"
-                       WidthRequest="40"
-                       TextColor="#FFF" 
+                       TextColor="#FFF"
                        HorizontalTextAlignment="Start"
-                       VerticalTextAlignment="Start"
+                       VerticalTextAlignment="End"
                        FontAttributes="Bold" />
                 <Entry x:Name="Name"
                        Placeholder="Juan Perez Lopez"
@@ -91,11 +84,9 @@
 
                 <Label Text="Address" FontSize="20"
                        BackgroundColor="#12A5F4"
-                       HeightRequest="40"
-                       WidthRequest="40"
-                       TextColor="#FFF" 
+                       TextColor="#FFF"
                        HorizontalTextAlignment="Start"
-                       VerticalTextAlignment="Start"
+                       VerticalTextAlignment="End"
                        FontAttributes="Bold" />
                 <Entry x:Name="Address"
                        Placeholder="Av. Madero #100"
@@ -105,11 +96,9 @@
 
                 <Label Text="Zip Code" FontSize="20"
                        BackgroundColor="#12A5F4"
-                       HeightRequest="40"
-                       WidthRequest="40"
-                       TextColor="#FFF" 
+                       TextColor="#FFF"
                        HorizontalTextAlignment="Start"
-                       VerticalTextAlignment="Start"
+                       VerticalTextAlignment="End"
                        FontAttributes="Bold" />
                 <Entry x:Name="ZipCode"
                        Placeholder="58000"
