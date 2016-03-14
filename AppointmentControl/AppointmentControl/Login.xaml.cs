@@ -30,7 +30,7 @@ namespace AppointmentControl
 
         async void SignIn(object sender, EventArgs eventArgs)
         {
-            var page = new NavigationPage(new Page1());
+            var page = new NavigationPage(new Page());
             page.BarBackgroundColor = Color.FromHex("#004D40");
             page.BarTextColor = Color.White;
 
