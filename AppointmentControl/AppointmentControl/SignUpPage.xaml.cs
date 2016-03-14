@@ -7,7 +7,7 @@ namespace AppointmentControl
     {
         public SignUpPage()
         {
-            InitializeComponent();
+            
         }
 
         public void Save(object sender, EventArgs e)

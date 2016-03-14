@@ -276,3 +276,5 @@ AppointmentControl/AppointmentControl.Windows/obj/
 *.suo
 /AppointmentControl.v12.suo
 AppointmentControl.v12.suo
+/AppointmentControl/AppointmentControl/SignUp.xaml
+/AppointmentControl/AppointmentControl/SignUp.xaml.cs
