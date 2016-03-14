@@ -1,6 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              x:Class="AppointmentControl.CreateAppointment">
-  <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />
+  <StackLayout Orientation="Vertical" BackgroundColor="#12A5F4">
+    <StackLayout>
+      <Label Text="Crear nueva cita" 
+           FontSize="20" 
+           BackgroundColor="#12A5F4" 
+           TextColor="#FFF" 
+           VerticalOptions="Center" 
+           HorizontalOptions="Center"
+           FontAttributes="Bold" />
+    </StackLayout>
+    <ScrollView>
+      <StackLayout Orientation="Vertical" Padding="20,50,20,20" >
+        <Label Text="Paciente"
+               FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+
+        <SearchBar x:Name="PatientName"
+                   Placeholder="Nombre del paciente..." 
+                   CancelButtonColor="White"
+                   ></SearchBar>
+
+        <Label Text="Fecha" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+
+        <DatePicker x:Name="Date" VerticalOptions="CenterAndExpand" Date="{x:Static system:DateTime.Now}" >
+          <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+          <DatePicker.MinimumDate>
+            <system:DateTime x:FactoryMethod="Parse">
+              <x:Arguments>
+                <x:String>Jan 1 2016</x:String>
+              </x:Arguments>
+            </system:DateTime>
+          </DatePicker.MinimumDate>
+          <DatePicker.MaximumDate>
+            <system:DateTime x:FactoryMethod="Parse">
+              <x:Arguments>
+                <x:String>Dec 31 2050</x:String>
+              </x:Arguments>
+            </system:DateTime>
+          </DatePicker.MaximumDate>
+        </DatePicker>
+
+        <Label Text="Inicio"
+               FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+
+        <TimePicker x:Name="StartHour" VerticalOptions="CenterAndExpand" ></TimePicker>
+
+        <Label Text="Fin"
+               FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+
+        <TimePicker x:Name="EndHour" VerticalOptions="CenterAndExpand" ></TimePicker>
+
+        <Label Text="Motivo" FontSize="20"
+               BackgroundColor="#12A5F4"
+               TextColor="#FFF"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Entry x:Name="Reason"
+               Placeholder="1234567890"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
+
+        <Label HeightRequest="20" />
+        <Button Text="Save"
+                BackgroundColor="#2C903D"
+                TextColor="#FFF"
+                Clicked="Save" />
+      </StackLayout>
+    </ScrollView>
+    
+
+  </StackLayout>
 </ContentPage>
