@@ -3,12 +3,4 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppointmentControl.PrincipalPage"
             xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.Core">
-
-  <TabbedPage.Children>
-    
-    <TodayPage Title="Today"/>
-    <SchedulePage Title="Schedule"/>
-    
-  </TabbedPage.Children>
-  
 </TabbedPage>
