@@ -23,7 +23,7 @@ namespace AppointmentControl
         /// </summary>
         public AppointmentControl()
         {
-            MainPage = new PrincipalPage();
+            MainPage = new Login();
         }
 
         #endregion
