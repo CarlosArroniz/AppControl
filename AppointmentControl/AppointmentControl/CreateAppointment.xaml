@@ -80,7 +80,7 @@
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
         <Entry x:Name="Reason"
-               Placeholder="1234567890"
+               Placeholder="Motivo de la consulta"
                BackgroundColor="White"
                TextColor="Black"
                PlaceholderColor="Gray" />

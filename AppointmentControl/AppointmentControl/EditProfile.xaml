@@ -120,7 +120,7 @@
 
         <Entry x:Name="UserName"
                Placeholder="username"
-               HorizontalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
                BackgroundColor="#FFF"
                TextColor="#12A5F4"
                PlaceholderColor="#026CA5"
@@ -136,7 +136,7 @@
         <Entry x:Name="Password"
                Placeholder="password"
                IsPassword="True"
-               HorizontalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
                BackgroundColor="#FFF"
                TextColor="#12A5F4"
                PlaceholderColor="#026CA5"
