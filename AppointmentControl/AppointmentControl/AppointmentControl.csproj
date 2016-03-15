@@ -49,9 +49,6 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MasterPage.xaml.cs">
-      <DependentUpon>MasterPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MyAppointmentsPage.xaml.cs">
       <DependentUpon>MyAppointmentsPage.xaml</DependentUpon>
     </Compile>
@@ -133,12 +130,6 @@
     <Content Include="Icons\appointmen.png" />
     <Content Include="Icons\profile.png" />
     <Content Include="Icons\shadow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="MasterPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
