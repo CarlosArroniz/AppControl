@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
@@ -31,6 +28,9 @@ namespace AppointmentControl
 
         public MyAppointmentsPage()
         {
+
+            BackgroundColor = Color.FromHex("#12A5F4");
+
             Label header = new Label
                                {
                                    Text = "Appointments for today:",
@@ -47,34 +47,48 @@ namespace AppointmentControl
             ListView appointsList = new ListView
                                         {
                                             ItemsSource = appointments,
-
+                                            RowHeight = 150,
+                                            WidthRequest = 150,
                                             ItemTemplate = new DataTemplate(() =>
+                                                {
+                                                    Label nameLabel = new Label
+                                                                          {
+                                                                              HorizontalTextAlignment = TextAlignment.Center
+                                                                          };
+                                                    nameLabel.SetBinding(Label.TextProperty, "Name");
+
+                                                    Label dateLabel = new Label
                                                     {
-                                                        Label nameLabel = new Label();
-                                                        nameLabel.SetBinding(Label.TextProperty, "Name");
+                                                        HorizontalTextAlignment =
+                                                            TextAlignment.Center
+                                                    };
+                                                    dateLabel.SetBinding(Label.TextProperty, new Binding("Date", BindingMode.OneWay, null, null, "Appointment Date {0:d}"));
 
-                                                        Label dateLabel = new Label();
-                                                        dateLabel.SetBinding(Label.TextProperty, new Binding("Date", BindingMode.OneWay, null, null, "Appointment Date {0:d}"));
+                                                    Label reasonLabel = new Label
+                                                    {
+                                                        HorizontalTextAlignment =
+                                                            TextAlignment.Center
+                                                    };
+                                                    reasonLabel.SetBinding(Label.TextProperty, "Reason");
 
-                                                        Label reasonLabel = new Label();
-                                                        reasonLabel.SetBinding(Label.TextProperty, "Reason");
+                                                    BoxView boxView = new BoxView();
 
-                                                        BoxView boxView = new BoxView();
-                                                        boxView.SetBinding(BoxView.ColorProperty, "Color");
+                                                    boxView.SetBinding(BoxView.ColorProperty, "Color");
 
-                                                        return new ViewCell
-                                                                   {
-                                                                       View = new StackLayout
-                                                                                  {
-                                                                                      Padding = 10,
-                                                                                      Orientation = StackOrientation.Horizontal,
-                                                                                      Children =
+                                                    return new ViewCell
+                                                               {
+                                                                   View = new StackLayout
+                                                                              {
+                                                                                  Orientation = StackOrientation.Horizontal,
+                                                                                  Children =
                                                                                           {
                                                                                               boxView, new StackLayout
                                                                                                            {
-                                                                                                               BackgroundColor = Color.Green,
-                                                                                                               VerticalOptions = LayoutOptions.Center,
-                                                                                                               Spacing = 10,
+                                                                                                               WidthRequest = 300,
+                                                                                                               HeightRequest = 150,
+                                                                                                               //VerticalOptions = LayoutOptions.Center,
+                                                                                                               //HorizontalOptions = LayoutOptions.Center,
+                                                                                                               BackgroundColor = Color.FromHex("#12A5F4"),
                                                                                                                Children =
                                                                                                                    {
                                                                                                                        nameLabel,
@@ -83,14 +97,14 @@ namespace AppointmentControl
                                                                                                                    }
                                                                                                            }
                                                                                           }
-                                                                                  }
-                                                                   };
-                                                    })
+                                                                              }
+                                                               };
+                                                })
                                         };
-            this.Padding = new Thickness(10, Device.OnPlatform(20,0,0), 10, 5);
 
             this.Content = new StackLayout
                                {
+                                   Padding = 10,
                                    Children =
                                        {
                                            header, appointsList
