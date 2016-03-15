@@ -4,12 +4,4 @@
              xmlns:cardView="http://schemas.android.com/apk/res-auto"
              x:Class="AppointmentControl.MyAppointmentsPage"
              >
-  <ScrollView>
-    <StackLayout Orientation="Vertical" BackgroundColor="#12A5F4">
-      <Label Text="My Card" FontSize="20" BackgroundColor="#12A5F4" HeightRequest="70" WidthRequest="70"
-                   TextColor="#FFF" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
-                   FontAttributes="Bold" />
-    </StackLayout>
-  </ScrollView>
-  
 </ContentPage>
