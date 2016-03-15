@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
 namespace AppointmentControl
@@ -12,7 +7,12 @@ namespace AppointmentControl
     {
         public MyProfilePage()
         {
-            
+            InitializeComponent();
+        }
+
+        private void EditProfile(object sender, EventArgs e)
+        {
+            Application.Current.MainPage = new EditProfile();
         }
     }
 }
