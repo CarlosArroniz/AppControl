@@ -16,7 +16,7 @@
     <StackLayout>
     <ScrollView>
       <StackLayout Orientation="Vertical" >
-        <Image Source="default_user.png" HeightRequest="300"></Image>
+        <Image Source="default_user.png" HeightRequest="200"></Image>
 
         <Label Text="Nombre" FontSize="20"
                BackgroundColor="#12A5F4"
