@@ -28,7 +28,6 @@ namespace AppointmentControl
 
         public MyAppointmentsPage()
         {
-
             this.BackgroundColor = Color.FromHex("#FFF");
 
             Label header = new Label
@@ -37,7 +36,7 @@ namespace AppointmentControl
                                    Text = "Appointments for today:",
                                    FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                                    HorizontalOptions = LayoutOptions.Center,
-                                   TextColor = Color.FromHex("#FFF"),
+                                   TextColor = Color.FromHex("#12A5F4"),
                                    VerticalOptions = LayoutOptions.Center
                                };
 
@@ -46,6 +45,8 @@ namespace AppointmentControl
                                                       new Appointments("Mr. Carlos Arroniz", new DateTime(2016,03,20,10,00,00,00), "Chronic headache", Color.FromHex("#ee9c00")),
                                                       new Appointments("Mr. Mauricio Arellano", new DateTime(2016,03,20,11,30,00), "Leg injury", Color.FromHex("#f00")),
                                                       new Appointments("Mr. Jose Nuñez", new DateTime(2016,03,20,11,30,00), "Nose Bleeding", Color.FromHex("#ee9c00")),
+                                                      new Appointments("Mr. Juan Nuñez", new DateTime(2016,03,20,11,30,00), "Nose Bleeding", Color.FromHex("#ee9c00")),
+                                                      new Appointments("Mr. Jesus Nuñez", new DateTime(2016,03,20,11,30,00), "Nose Bleeding", Color.FromHex("#ee9c00")),
                                                       new Appointments("Mr. Bruno Corona", new DateTime(2016,03,20,11,30,00), "Severe Stomachache", Color.FromHex("#f00"))
                                                   };
             ListView appointsList = new ListView
@@ -98,6 +99,7 @@ namespace AppointmentControl
                                                                                           {
                                                                                               boxView, new StackLayout
                                                                                                            {
+                                                                                                               HorizontalOptions = LayoutOptions.CenterAndExpand,
                                                                                                                BackgroundColor = Color.FromHex("#808080"),
                                                                                                                WidthRequest = 300,
                                                                                                                HeightRequest = 150,

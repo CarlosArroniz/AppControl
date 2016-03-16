@@ -49,7 +49,7 @@ namespace AppointmentControl
             string un = userNameEntry.Text;
             string pass = passwordEntry.Text;
 
-            if (pass!= null && pass.Equals(un))
+            if (pass != null && pass.Equals("pass1") && un != null && un.Equals("user1"))
             {
                 Application.Current.MainPage = new PrincipalPage();
             }
