@@ -125,7 +125,9 @@ namespace AppointmentControl
 
             this.Content = new ScrollView
                                {
-                                   Content = content
+                                   
+                                   Content = content,
+                                   
                                };
         }
     }

@@ -38,11 +38,11 @@ namespace AppointmentControl
 
         }
         
-        async void SignUp(object sender, EventArgs eventArgs)
-        {
-            Application.Current.MainPage = new SignUpPage();
+        //async void SignUp(object sender, EventArgs eventArgs)
+        //{
+        //    Application.Current.MainPage = new NavigationPage(new SignUpPage());
 
-        }
+        //}
 
         async void LoginIn(object sender, EventArgs eA)
         {

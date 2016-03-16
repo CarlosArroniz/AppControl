@@ -17,7 +17,7 @@
                        PlaceholderColor="#026CA5"
                        HeightRequest="40" />
 
-                <Entry x:Name="passwordEntry" Placeholder="Password" 
+                <Entry x:Name="passwordEntry" Placeholder="Password"
                        IsPassword="True"
                        HorizontalTextAlignment="Center"
                        BackgroundColor="#FFF"
@@ -25,11 +25,11 @@
                        PlaceholderColor="#026CA5"
                        HeightRequest="40" />
 
-                <Button x:Name="signInButton" 
+                <Button x:Name="signInButton"
                         Text="Iniciar Sesión"
                         BackgroundColor="#2C903D"
-                        TextColor="#FFF" 
-                        Clicked="LoginIn"/>
+                        TextColor="#FFF"
+                        Clicked="LoginIn" />
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="¿Sin cuenta?" VerticalOptions="Center"
@@ -37,10 +37,10 @@
                            FontAttributes="Bold"
                            FontSize="Medium" />
 
-                    <Button x:Name="signUpButton" Text="Registrate" Clicked="SignUp"></Button>
+                  <Button x:Name="signUpButton" Text="Registrate" /><!--Clicked="SignUp" -->
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                   <Button x:Name="forgotPasswordButton" Text="¿Olvidaste tu contraseña?"
+                    <Button x:Name="forgotPasswordButton" Text="¿Olvidaste tu contraseña?"
                             BackgroundColor="Transparent"
                             TextColor="#FFF"
                             VerticalOptions="Center" />

@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AppointmentControl.xaml.cs" company="">
-//   
+// <copyright file="AppointmentControl.xaml.cs" company="Scio_Consulting">
+//   Copyright ©  Scio_Consulting. Todos los derechos estan reservados.
 // </copyright>
-// <summary>
-//   The appointment control.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace AppointmentControl
@@ -12,18 +9,18 @@ namespace AppointmentControl
     using Xamarin.Forms;
 
     /// <summary>
-    /// The appointment control.
+    ///     The appointment control.
     /// </summary>
     public partial class AppointmentControl : Application
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AppointmentControl"/> class.
+        ///     Initializes a new instance of the <see cref="AppointmentControl" /> class.
         /// </summary>
         public AppointmentControl()
         {
-            MainPage = new Login();
+            this.MainPage = new Login();
         }
 
         #endregion
