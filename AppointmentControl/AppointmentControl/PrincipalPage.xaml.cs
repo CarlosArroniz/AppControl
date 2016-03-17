@@ -20,9 +20,10 @@ namespace AppointmentControl
         /// </summary>
         public PrincipalPage()
         {
-            
+            Padding = new Thickness(10,15,15,15);
+
             this.Children.Add(new MyAppointmentsPage { Title = "My Appointments"});
-            this.Children.Add(new CreateAppointment { Title = "Create Appointment" });
+            this.Children.Add(new CreateAppointment { Title = "New Appointment" });
             this.Children.Add(new MyProfilePage { Title = "My Profile" });
         }
 

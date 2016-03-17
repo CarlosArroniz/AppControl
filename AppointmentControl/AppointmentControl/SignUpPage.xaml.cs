@@ -1,10 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SignUpPage.xaml.cs" company="">
-//   
+// <copyright file="SignUpPage.xaml.cs" company="Scio_Consulting">
+//   Copyright ©  Scio_Consulting. Todos los derechos estan reservados.
 // </copyright>
-// <summary>
-//   The sign up page.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace AppointmentControl
@@ -18,6 +15,7 @@ namespace AppointmentControl
     /// <summary>
     /// The sign up page.
     /// </summary>
+    // ReSharper disable once PartialTypeWithSinglePart
     public partial class SignUpPage : ContentPage
     {
         #region Constructors and Destructors
@@ -28,210 +26,207 @@ namespace AppointmentControl
         public SignUpPage()
         {
             InitializeComponent();
-            #region User Fields
+            
 
-            Label signUpLabel = new Label
+            var signUpLabel = new Label
             {
-                Text = "Sign Up",
-                TextColor = Color.FromHex("#FFF"),
-                BackgroundColor = Color.FromHex("#12A5F4"),
-                HorizontalTextAlignment = TextAlignment.Center,
-                VerticalTextAlignment = TextAlignment.Center,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Sign Up", 
+                TextColor = Color.FromHex("#FFF"), 
+                BackgroundColor = Color.FromHex("#12A5F4"), 
+                HorizontalTextAlignment = TextAlignment.Center, 
+                VerticalTextAlignment = TextAlignment.Center, 
+                FontAttributes = FontAttributes.Bold, 
                 FontSize = 20
             };
 
-            Label userLabel = new Label
+            var userLabel = new Label
             {
-                Text = "Username",
-                FontSize = 20,
-                HorizontalTextAlignment = TextAlignment.Start,
-                VerticalTextAlignment = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Username", 
+                FontSize = 20, 
+                HorizontalTextAlignment = TextAlignment.Start, 
+                VerticalTextAlignment = TextAlignment.End, 
+                FontAttributes = FontAttributes.Bold, 
                 TextColor = Color.FromHex("#FFF")
             };
-            Entry userName = new Entry
+            var userName = new Entry
             {
-                Placeholder = "Username",
-                HorizontalTextAlignment = TextAlignment.Center,
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#12A5F4"),
+                Placeholder = "Username", 
+                HorizontalTextAlignment = TextAlignment.Center, 
+                BackgroundColor = Color.FromHex("#FFF"), 
+                TextColor = Color.FromHex("#12A5F4"), 
                 PlaceholderColor = Color.FromHex("#026CA5")
             };
 
-            Label passLabel = new Label
+            var passLabel = new Label
             {
-                Text = "Password",
-                FontSize = 20,
-                HorizontalTextAlignment = TextAlignment.Start,
-                VerticalTextAlignment = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Password", 
+                FontSize = 20, 
+                HorizontalTextAlignment = TextAlignment.Start, 
+                VerticalTextAlignment = TextAlignment.End, 
+                FontAttributes = FontAttributes.Bold, 
                 TextColor = Color.FromHex("#FFF")
             };
 
-            Entry pass = new Entry
+            var pass = new Entry
             {
-                Placeholder = "Password",
-                HorizontalTextAlignment = TextAlignment.Center,
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#12A5F4"),
+                Placeholder = "Password", 
+                HorizontalTextAlignment = TextAlignment.Center, 
+                BackgroundColor = Color.FromHex("#FFF"), 
+                TextColor = Color.FromHex("#12A5F4"), 
                 PlaceholderColor = Color.FromHex("#026CA5")
             };
-            #endregion
+            
 
             #region User Localization
-            Label countryLabel = new Label
+            var countryLabel = new Label
             {
-                Text = "Country",
-                FontSize = 20,
-                HorizontalTextAlignment = TextAlignment.Start,
-                VerticalTextAlignment = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Country", 
+                FontSize = 20, 
+                HorizontalTextAlignment = TextAlignment.Start, 
+                VerticalTextAlignment = TextAlignment.End, 
+                FontAttributes = FontAttributes.Bold, 
                 TextColor = Color.FromHex("#FFF")
             };
 
-            Picker countryPicker = new Picker
+            var countryPicker = new Picker
             {
-                Items = { "México", "EUA", "Canada" },
+                Items = {
+                           "México", "EUA", "Canada" 
+                        }, 
                 Title = "Choose your country"
             };
 
-            Label phoneLabel = new Label
+            var phoneLabel = new Label
             {
-                Text = "Cellphone",
-                FontSize = 20,
-                HorizontalTextAlignment = TextAlignment.Start,
-                VerticalTextAlignment = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Cellphone", 
+                FontSize = 20, 
+                HorizontalTextAlignment = TextAlignment.Start, 
+                VerticalTextAlignment = TextAlignment.End, 
+                FontAttributes = FontAttributes.Bold, 
                 TextColor = Color.FromHex("#FFF")
             };
 
-            Entry phone = new Entry
+            var phone = new Entry
             {
-                Placeholder = "999 999 9999",
-                HorizontalTextAlignment = TextAlignment.Center,
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#12A5F4"),
-                PlaceholderColor = Color.FromHex("#026CA5"),
+                Placeholder = "999 999 9999", 
+                HorizontalTextAlignment = TextAlignment.Center, 
+                BackgroundColor = Color.FromHex("#FFF"), 
+                TextColor = Color.FromHex("#12A5F4"), 
+                PlaceholderColor = Color.FromHex("#026CA5"), 
                 Keyboard = Keyboard.Telephone
             };
             #endregion
 
             #region UserData
 
-            Label name = new Label
+            var name = new Label
             {
-                Text = "Name",
-                FontSize = 20,
-                BackgroundColor = Color.FromHex("#12A5F4"),
-                TextColor = Color.FromHex("#FFF"),
-                HorizontalTextAlignment = TextAlignment.Start,
-                VerticalTextAlignment = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Name", 
+                FontSize = 20, 
+                BackgroundColor = Color.FromHex("#12A5F4"), 
+                TextColor = Color.FromHex("#FFF"), 
+                HorizontalTextAlignment = TextAlignment.Start, 
+                VerticalTextAlignment = TextAlignment.End, 
+                FontAttributes = FontAttributes.Bold, 
             };
 
-            Entry nameEntry = new Entry
+            var nameEntry = new Entry
             {
-                Placeholder = "Juan Perez Lopez",
-                HorizontalTextAlignment = TextAlignment.Center,
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#12A5F4"),
-                PlaceholderColor = Color.FromHex("#026CA5"),
+                Placeholder = "Juan Perez Lopez", 
+                HorizontalTextAlignment = TextAlignment.Center, 
+                BackgroundColor = Color.FromHex("#FFF"), 
+                TextColor = Color.FromHex("#12A5F4"), 
+                PlaceholderColor = Color.FromHex("#026CA5"), 
                 Keyboard = Keyboard.Text
             };
 
 
-            Label addressLabel = new Label
+            var addressLabel = new Label
             {
-                Text = "Address",
-                FontSize = 20,
-                HorizontalTextAlignment = TextAlignment.Start,
-                VerticalTextAlignment = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Address", 
+                FontSize = 20, 
+                HorizontalTextAlignment = TextAlignment.Start, 
+                VerticalTextAlignment = TextAlignment.End, 
+                FontAttributes = FontAttributes.Bold, 
                 TextColor = Color.FromHex("#FFF")
             };
 
-            Entry address = new Entry
+            var address = new Entry
             {
-                Placeholder = "Madero Av. 123 Centro",
-                HorizontalTextAlignment = TextAlignment.Center,
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#12A5F4"),
-                PlaceholderColor = Color.FromHex("#026CA5"),
+                Placeholder = "Madero Av. 123 Centro", 
+                HorizontalTextAlignment = TextAlignment.Center, 
+                BackgroundColor = Color.FromHex("#FFF"), 
+                TextColor = Color.FromHex("#12A5F4"), 
+                PlaceholderColor = Color.FromHex("#026CA5"), 
                 Keyboard = Keyboard.Text
             };
 
-            Label zipCodeLabel = new Label
+            var zipCodeLabel = new Label
             {
-                Text = "Zip Code",
-                FontSize = 20,
-                BackgroundColor = Color.FromHex("#12A5F4"),
-                TextColor = Color.FromHex("#FFF"),
-                HorizontalTextAlignment = TextAlignment.Start,
-                VerticalTextAlignment = TextAlignment.End,
-                FontAttributes = FontAttributes.Bold,
+                Text = "Zip Code", 
+                FontSize = 20, 
+                BackgroundColor = Color.FromHex("#12A5F4"), 
+                TextColor = Color.FromHex("#FFF"), 
+                HorizontalTextAlignment = TextAlignment.Start, 
+                VerticalTextAlignment = TextAlignment.End, 
+                FontAttributes = FontAttributes.Bold, 
             };
 
-            Entry zipCode = new Entry
+            var zipCode = new Entry
             {
-                Placeholder = "58000",
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#000"),
-                PlaceholderColor = Color.FromHex("#666"),
+                Placeholder = "58000", 
+                BackgroundColor = Color.FromHex("#FFF"), 
+                TextColor = Color.FromHex("#000"), 
+                PlaceholderColor = Color.FromHex("#666"), 
                 Keyboard = Keyboard.Numeric
             };
 
-            Button save = new Button
+            var save = new Button
             {
-                Text = "Save",
-                BackgroundColor = Color.FromHex("#2C903D"),
-                TextColor = Color.FromHex("#FFF"),
+                Text = "Save", 
+                BackgroundColor = Color.FromHex("#2C903D"), 
+                TextColor = Color.FromHex("#FFF"), 
             };
 
-            CustomRadioButton radioMedico = new CustomRadioButton
+            var radios = new BindableRadioGroup
             {
-                Text = "Medico",
-                TextColor = Color.FromHex("#FFF"),
-            };
-            CustomRadioButton radioPaciente = new CustomRadioButton
-            {
-                Text = "Paciente",
-                TextColor = Color.FromHex("#FFF")
+                TextColor = Color.FromHex("#FFF"), 
+                FontSize = 20, 
+                VerticalOptions = LayoutOptions.CenterAndExpand, 
+                HorizontalOptions = LayoutOptions.CenterAndExpand, 
+                Orientation = StackOrientation.Horizontal
             };
 
-            BindableRadioGroup radios = new BindableRadioGroup
-                                            {
-                                                Items = { radioPaciente, radioMedico},
-                                                HorizontalOptions = LayoutOptions.Center
-                                            };
+            radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };
+
             #endregion
 
-            StackLayout stack1 = new StackLayout
+            var stack1 = new StackLayout
             {   
-               Orientation = StackOrientation.Vertical,
-               BackgroundColor = Color.FromHex("#12A5F4"),
-               Padding = 15,
-               VerticalOptions = LayoutOptions.Center,
-               Spacing = 10,
+               Orientation = StackOrientation.Vertical, 
+               BackgroundColor = Color.FromHex("#12A5F4"), 
+               Padding = 15, 
+               VerticalOptions = LayoutOptions.Center, 
+               Spacing = 10, 
                Children =
                    {
-                       signUpLabel, userLabel, userName,
+                       signUpLabel, userLabel, userName, 
                        passLabel, pass, 
-                       radios,
-                       countryLabel, countryPicker,
-                       phoneLabel, phone,
-                       name, nameEntry,
-                       addressLabel, address,
-                       zipCodeLabel, zipCode,
+                       radios, 
+                       countryLabel, countryPicker, 
+                       phoneLabel, phone, 
+                       name, nameEntry, 
+                       addressLabel, address, 
+                       zipCodeLabel, zipCode, 
                        save
                    }
             };
 
             var scroll = new ScrollView { Content = stack1 };
 
-            Content = scroll;
+            this.Content = scroll;
 
-            save.Clicked += (sender, args) => Navigation.PushModalAsync(new Login());
+            save.Clicked += async (sender, args) => await this.Navigation.PushModalAsync(new Login());
         }
 
         #endregion
