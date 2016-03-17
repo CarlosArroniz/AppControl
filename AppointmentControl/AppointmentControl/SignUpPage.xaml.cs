@@ -186,7 +186,6 @@ namespace AppointmentControl
                 Text = "Save",
                 BackgroundColor = Color.FromHex("#2C903D"),
                 TextColor = Color.FromHex("#FFF"),
-                Command = new Command(() => Navigation.PushAsync(new SignUpPage()))
             };
 
             CustomRadioButton radioMedico = new CustomRadioButton
@@ -208,29 +207,31 @@ namespace AppointmentControl
             #endregion
 
             StackLayout stack1 = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
-                BackgroundColor = Color.FromHex("#12A5F4"),
-                Padding = 15,
-                VerticalOptions = LayoutOptions.Center,
-                Spacing = 10,
-                Children =
-                    {
-                        signUpLabel, userLabel, userName,
-                        passLabel, pass, 
-                        radios,
-                        countryLabel, countryPicker,
-                        phoneLabel, phone,
-                        name, nameEntry,
-                        addressLabel, address,
-                        zipCodeLabel, zipCode,
-                        save
-                    }
+            {   
+               Orientation = StackOrientation.Vertical,
+               BackgroundColor = Color.FromHex("#12A5F4"),
+               Padding = 15,
+               VerticalOptions = LayoutOptions.Center,
+               Spacing = 10,
+               Children =
+                   {
+                       signUpLabel, userLabel, userName,
+                       passLabel, pass, 
+                       radios,
+                       countryLabel, countryPicker,
+                       phoneLabel, phone,
+                       name, nameEntry,
+                       addressLabel, address,
+                       zipCodeLabel, zipCode,
+                       save
+                   }
             };
 
             var scroll = new ScrollView { Content = stack1 };
+
             Content = scroll;
 
+            save.Clicked += (sender, args) => Navigation.PushModalAsync(new Login());
         }
 
         #endregion
