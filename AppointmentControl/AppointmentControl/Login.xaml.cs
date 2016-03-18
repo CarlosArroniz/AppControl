@@ -136,7 +136,7 @@ namespace AppointmentControl
 
             this.Content = mainStack;
 
-            login.Clicked += async (e, sender) => { await Navigation.PushModalAsync(new NavigationPage(new PrincipalPage())); };
+            login.Clicked += (e, sender) => { Application.Current.MainPage = new PrincipalPage(); };
 
             signUp.Clicked += async (e, sender) => { await Navigation.PushModalAsync(new NavigationPage(new SignUpPage())); };
         }
@@ -157,6 +157,8 @@ namespace AppointmentControl
         // ReSharper disable once CSharpWarnings::CS1998
         async void SignIn(object sender, EventArgs eventArgs)
         {
+
+
             var page = new NavigationPage(new Page());
             page.BarBackgroundColor = Color.FromHex("#004D40");
             page.BarTextColor = Color.White;

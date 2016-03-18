@@ -25,9 +25,6 @@ namespace AppointmentControl
         /// </summary>
         public SignUpPage()
         {
-            InitializeComponent();
-            
-
             var signUpLabel = new Label
             {
                 Text = "Sign Up", 
@@ -76,8 +73,6 @@ namespace AppointmentControl
                 PlaceholderColor = Color.FromHex("#026CA5")
             };
             
-
-            #region User Localization
             var countryLabel = new Label
             {
                 Text = "Country", 
@@ -90,9 +85,7 @@ namespace AppointmentControl
 
             var countryPicker = new Picker
             {
-                Items = {
-                           "México", "EUA", "Canada" 
-                        }, 
+                Items = { "México", "EUA", "Canada" }, 
                 Title = "Choose your country"
             };
 
@@ -115,9 +108,6 @@ namespace AppointmentControl
                 PlaceholderColor = Color.FromHex("#026CA5"), 
                 Keyboard = Keyboard.Telephone
             };
-            #endregion
-
-            #region UserData
 
             var name = new Label
             {
@@ -139,7 +129,6 @@ namespace AppointmentControl
                 PlaceholderColor = Color.FromHex("#026CA5"), 
                 Keyboard = Keyboard.Text
             };
-
 
             var addressLabel = new Label
             {
@@ -198,8 +187,6 @@ namespace AppointmentControl
             };
 
             radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };
-
-            #endregion
 
             var stack1 = new StackLayout
             {   

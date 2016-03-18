@@ -6,6 +6,7 @@ namespace AppointmentControl
     using System.Collections.Generic;
     using System.Threading;
 
+
     public partial class EditProfile : ContentPage
     {
         public ListView Menu { set; get; }
@@ -13,8 +14,8 @@ namespace AppointmentControl
         public EditProfile()
         {
             InitializeComponent();
-            this.BackgroundColor = Color.FromHex("#FFF");
 
+            #region Fields
             //<StackLayout 2>
             var title = new Label
             {
@@ -169,6 +170,7 @@ namespace AppointmentControl
             };
 
             //</Stacklayout3>
+            #endregion
         }
 
         private void Save(object sender, EventArgs e)

@@ -7,12 +7,14 @@
 namespace AppointmentControl
 {
     using System;
+    using System.Collections.Generic;
 
     using Xamarin.Forms;
 
     /// <summary>
     /// The my profile page.
     /// </summary>
+    // ReSharper disable once PartialTypeWithSinglePart
     public partial class MyProfilePage : ContentPage
     {
         #region Constructors and Destructors
@@ -40,9 +42,16 @@ namespace AppointmentControl
         /// </param>
         async void EditProfile(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new EditProfile());
+            await this.Navigation.PushModalAsync(new EditProfile());
         }
 
+        /// <summary>
+        /// The navigate to.
+        /// </summary>
+        /// <param name="menu">
+        /// The menu.
+        /// </param>
+        
         #endregion
     }
 }

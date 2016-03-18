@@ -6,12 +6,15 @@
 
 namespace AppointmentControl
 {
+    using System;
+
     using Xamarin.Forms;
 
     /// <summary>
     /// The principal page.
     /// </summary>
-    public partial class PrincipalPage : TabbedPage
+    // ReSharper disable once PartialTypeWithSinglePart
+    public partial class PrincipalPage : MasterDetailPage
     {
         #region Constructors and Destructors
 
@@ -20,11 +23,13 @@ namespace AppointmentControl
         /// </summary>
         public PrincipalPage()
         {
-            Padding = new Thickness(10,15,15,15);
+            var menu = new MenuPage();
 
-            this.Children.Add(new MyAppointmentsPage { Title = "My Appointments"});
-            this.Children.Add(new CreateAppointment { Title = "New Appointment" });
-            this.Children.Add(new MyProfilePage { Title = "My Profile" });
+            menu.Menu.ItemSelected += (sender, args) => this.NavigateTo(args.SelectedItem as MenuPage.MenuItem);
+
+            this.Master = menu;
+
+            this.Detail = new MyTabs();
         }
 
         #endregion
@@ -38,6 +43,22 @@ namespace AppointmentControl
         {
             Application.Current.MainPage = new CreateAppointment();
         }
+
+        /// <summary>
+        /// The navigate to.
+        /// </summary>
+        /// <param name="menu">
+        /// The menu.
+        /// </param>
+        public void NavigateTo(MenuPage.MenuItem menu)
+        {
+            Page displayPage = (Page)Activator.CreateInstance(menu.TargetType);
+
+            this.Detail = new NavigationPage(displayPage);
+
+            this.IsPresented = false;
+        }
+
         #endregion
     }
 }
