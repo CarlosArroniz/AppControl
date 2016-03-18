@@ -7,21 +7,21 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace AppointmentControl.Data
 {
-    public class UserManager
+    public class DoctorManager
     {
         // Azure
-        private readonly IMobileServiceTable<User> _table;
+        private readonly IMobileServiceTable<Doctor> _table;
 
-        public UserManager()
+        public DoctorManager()
         {
             var azureClient = new MobileServiceClient(
                 Constants.AzureApplicationUrl,
                 Constants.AzureApplicationKey);
 
-            _table = azureClient.GetTable<User>();
+            _table = azureClient.GetTable<Doctor>();
         }
 
-        public async Task<User> GetTaskAsync(string id)
+        public async Task<Doctor> GetTaskAsync(string id)
         {
             try
             {
@@ -38,12 +38,12 @@ namespace AppointmentControl.Data
             return null;
         }
 
-        public async Task<ObservableCollection<User>> GetUsersAsync()
+        public async Task<ObservableCollection<Doctor>> GetUsersAsync()
         {
             try
             {
-                return new ObservableCollection<User>(
-                    await _table.Where(user => user.Username != null).ToListAsync());
+                return new ObservableCollection<Doctor>(
+                    await _table.Where(doctor => doctor.Id != null).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
@@ -56,15 +56,15 @@ namespace AppointmentControl.Data
             return null;
         }
 
-        public async Task SaveTaskAsync(User user)
+        public async Task SaveTaskAsync(Doctor doctor)
         {
-            if (user.Id == null)
+            if (doctor.Id == null)
             {
-                await _table.InsertAsync(user);
+                await _table.InsertAsync(doctor);
             }
             else
             {
-                await _table.UpdateAsync(user);
+                await _table.UpdateAsync(doctor);
             }
         }
     }
