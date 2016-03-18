@@ -8,6 +8,11 @@ namespace AppointmentControl
         public EditProfile()
         {
             InitializeComponent();
+            this.BackgroundColor = Color.FromHex("#FFF");
+
+            //<StackLayout 2>
+
+            //</StackLayout 2>
         }
 
         private void Save(object sender, EventArgs e)

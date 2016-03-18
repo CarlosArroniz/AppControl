@@ -38,9 +38,9 @@ namespace AppointmentControl
         /// <param name="e">
         /// The e.
         /// </param>
-        private void EditProfile(object sender, EventArgs e)
+        async void EditProfile(object sender, EventArgs e)
         {
-            Application.Current.MainPage = new EditProfile();
+            await Navigation.PushModalAsync(new EditProfile());
         }
 
         #endregion

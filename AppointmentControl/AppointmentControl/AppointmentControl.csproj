@@ -40,6 +40,9 @@
     <Compile Include="AppointmentControl.xaml.cs">
       <DependentUpon>AppointmentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppointmentDetails.xaml.cs">
+      <DependentUpon>AppointmentDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="CreateAppointment.xaml.cs">
       <DependentUpon>CreateAppointment.xaml</DependentUpon>
@@ -179,9 +182,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\appointmen.png" />
-    <Content Include="Icons\profile.png" />
-    <Content Include="Icons\shadow.png" />
+    <EmbeddedResource Include="AppointmentDetails.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
