@@ -268,7 +268,7 @@
     <AndroidResource Include="Resources\drawable-mdpi\tab_unselected_pressed_appcontrol.9.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\styles.xml">
+    <AndroidResource Include="Resources\values\style.xml">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </AndroidResource>
   </ItemGroup>

@@ -234,7 +234,6 @@ namespace AppointmentControl
             // Application.Current.MainPage = new NavigationPage(new Page1()); 
             Application.Current.MainPage = new Login();
         }
-
         #endregion
     }
 }

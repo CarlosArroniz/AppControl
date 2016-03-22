@@ -157,13 +157,10 @@ namespace AppointmentControl
         // ReSharper disable once CSharpWarnings::CS1998
         async void SignIn(object sender, EventArgs eventArgs)
         {
-
-
             var page = new NavigationPage(new Page());
             page.BarBackgroundColor = Color.FromHex("#004D40");
             page.BarTextColor = Color.White;
-
-            Application.Current.MainPage = page;
+            await Navigation.PushAsync(page);
         }
 
         #endregion

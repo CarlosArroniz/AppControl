@@ -26,10 +26,9 @@ namespace AppointmentControl
         {
             InitializeComponent();
 
-            this.Icon = "medical.png";
+            var icon = new Image { Source = ImageSource.FromFile("medical.png"), HeightRequest = 40, WidthRequest = 40};
             this.Title = "Menu";
             this.BackgroundColor = Color.FromHex("#12A5F4");
-
             this.Menu = new MenuListView();
 
             var menuLabel = new ContentView
