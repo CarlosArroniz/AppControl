@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -66,6 +67,11 @@ namespace AppointmentControl.Data
             {
                 await _table.UpdateAsync(patient);
             }
+        }
+
+        public async Task<List<Patient>> FindPatientByName(string toSearch)
+        {
+            return await _table.Where(p => p.Name == toSearch).ToListAsync();
         }
     }
 }
