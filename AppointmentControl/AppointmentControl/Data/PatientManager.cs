@@ -7,10 +7,12 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace AppointmentControl.Data
 {
+    using System.Collections.Generic;
+
     public class PatientManager
     {
         // Azure
-        private readonly IMobileServiceTable<Patient> _table;
+        private static IMobileServiceTable<Patient> _table;
 
         public PatientManager()
         {
@@ -43,6 +45,24 @@ namespace AppointmentControl.Data
             try
             {
                 return new ObservableCollection<Patient>(
+                    await _table.Where(patient => patient.Id != null).ToListAsync());
+            }
+            catch (MobileServiceInvalidOperationException msioe)
+            {
+                Debug.WriteLine(@"INVALID {0}", msioe.Message);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(@"ERROR {0}", e.Message);
+            }
+            return null;
+        }
+
+        public async Task<List<Patient>> GetPatientsAsync()
+        {
+            try
+            {
+                return new List<Patient>(
                     await _table.Where(patient => patient.Id != null).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)

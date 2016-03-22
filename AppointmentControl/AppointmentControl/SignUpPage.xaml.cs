@@ -271,6 +271,7 @@ namespace AppointmentControl
                 Password = pass.Text,
                 Phone = phone.Text
             };
+
             await userManager.SaveTaskAsync(user);
 
             //radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };

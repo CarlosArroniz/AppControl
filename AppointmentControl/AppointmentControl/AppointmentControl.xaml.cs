@@ -11,6 +11,7 @@ namespace AppointmentControl
     /// <summary>
     ///     The appointment control.
     /// </summary>
+    // ReSharper disable once PartialTypeWithSinglePart
     public partial class AppointmentControl : Application
     {
         #region Constructors and Destructors
