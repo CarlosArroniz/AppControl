@@ -7,7 +7,6 @@
 using System.Linq;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
-using XLabs.Forms;
 
 namespace AppointmentControl
 {
@@ -274,12 +273,15 @@ namespace AppointmentControl
 
             await userManager.SaveTaskAsync(user);
 
+            user = await userManager.FindUser(user);
+
             //radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };
             switch (radios.SelectedIndex)
             {
                 case PATIENT:
                     var patient = new Patient()
                     {
+                        UserId = user.Id,
                         Address = address.Text,
                         Country = countryPicker.Items.ToArray()[countryPicker.SelectedIndex],
                         Name = nameEntry.Text,
@@ -290,6 +292,7 @@ namespace AppointmentControl
                 case DOCTOR:
                     var doctor = new Doctor()
                     {
+                        UserId = user.Id,
                         Address = address.Text,
                         Country = countryPicker.Items.ToArray()[countryPicker.SelectedIndex],
                         Name = nameEntry.Text,
@@ -298,13 +301,12 @@ namespace AppointmentControl
                     await doctorManager.SaveTaskAsync(doctor);
                     break;
                 case HOSPITAL:
-                default:
                     break;
             }
             
             // Application.Current.MainPage = new NavigationPage(new Page1()); 
             //Application.Current.MainPage = new Login();
-            await this.Navigation.PushModalAsync(new Login());
+            await Navigation.PushModalAsync(new Login());
         }
         #endregion
     }

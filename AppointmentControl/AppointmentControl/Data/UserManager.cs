@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using AppointmentControl.Models;
 using Microsoft.WindowsAzure.MobileServices;
@@ -66,6 +67,12 @@ namespace AppointmentControl.Data
             {
                 await _table.UpdateAsync(user);
             }
+        }
+
+        public async Task<User> FindUser(User user)
+        {
+            var userList = await _table.Where(u => u.Username==user.Username).ToListAsync();
+            return userList.First();
         }
     }
 }
