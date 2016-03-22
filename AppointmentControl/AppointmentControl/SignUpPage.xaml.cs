@@ -4,10 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
+using AppointmentControl.Data;
+using AppointmentControl.Models;
+using XLabs.Forms;
+
 namespace AppointmentControl
 {
-    using System;
-
     using Xamarin.Forms;
 
     using XLabs.Forms.Controls;
@@ -18,184 +21,216 @@ namespace AppointmentControl
     // ReSharper disable once PartialTypeWithSinglePart
     public partial class SignUpPage : ContentPage
     {
-        #region Constructors and Destructors
+        private readonly UserManager userManager;
+        private readonly DoctorManager doctorManager;
+        private readonly PatientManager patientManager;
 
+        private Label signUpLabel;
+        private Label userLabel;
+        private Entry userName;
+        private Label passLabel;
+        private Entry pass;
+        private Label countryLabel;
+        private Picker countryPicker;
+        private Label phoneLabel;
+        private Entry phone;
+        private Label name;
+        private Entry nameEntry;
+        private Label addressLabel;
+        private Entry address;
+        private Label zipCodeLabel;
+        private Entry zipCode;
+        private Button save;
+        private BindableRadioGroup radios;
+        private const int PATIENT = 0;
+        private const int DOCTOR = 1;
+        private const int HOSPITAL = 2;
+
+        #region Constructors and Destructors
         /// <summary>
         /// Initializes a new instance of the <see cref="SignUpPage"/> class.
         /// </summary>
         public SignUpPage()
         {
-            var signUpLabel = new Label
+            InitializeComponents();
+            userManager = new UserManager();
+            doctorManager = new DoctorManager();
+            patientManager = new PatientManager();
+        }
+
+        private void InitializeComponents()
+        {
+            signUpLabel = new Label
             {
-                Text = "Sign Up", 
-                TextColor = Color.FromHex("#FFF"), 
-                BackgroundColor = Color.FromHex("#12A5F4"), 
-                HorizontalTextAlignment = TextAlignment.Center, 
-                VerticalTextAlignment = TextAlignment.Center, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Sign Up",
+                TextColor = Color.FromHex("#FFF"),
+                BackgroundColor = Color.FromHex("#12A5F4"),
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center,
+                FontAttributes = FontAttributes.Bold,
                 FontSize = 20
             };
 
-            var userLabel = new Label
+            userLabel = new Label
             {
-                Text = "Username", 
-                FontSize = 20, 
-                HorizontalTextAlignment = TextAlignment.Start, 
-                VerticalTextAlignment = TextAlignment.End, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Username",
+                FontSize = 20,
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromHex("#FFF")
             };
-            var userName = new Entry
+            userName = new Entry
             {
-                Placeholder = "Username", 
-                HorizontalTextAlignment = TextAlignment.Center, 
-                BackgroundColor = Color.FromHex("#FFF"), 
-                TextColor = Color.FromHex("#12A5F4"), 
+                Placeholder = "Username",
+                HorizontalTextAlignment = TextAlignment.Center,
+                BackgroundColor = Color.FromHex("#FFF"),
+                TextColor = Color.FromHex("#12A5F4"),
                 PlaceholderColor = Color.FromHex("#026CA5")
             };
 
-            var passLabel = new Label
+            passLabel = new Label
             {
-                Text = "Password", 
-                FontSize = 20, 
-                HorizontalTextAlignment = TextAlignment.Start, 
-                VerticalTextAlignment = TextAlignment.End, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Password",
+                FontSize = 20,
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromHex("#FFF")
             };
 
-            var pass = new Entry
+            pass = new Entry
             {
-                Placeholder = "Password", 
-                HorizontalTextAlignment = TextAlignment.Center, 
-                BackgroundColor = Color.FromHex("#FFF"), 
-                TextColor = Color.FromHex("#12A5F4"), 
+                Placeholder = "Password",
+                HorizontalTextAlignment = TextAlignment.Center,
+                BackgroundColor = Color.FromHex("#FFF"),
+                TextColor = Color.FromHex("#12A5F4"),
                 PlaceholderColor = Color.FromHex("#026CA5")
             };
-            
-            var countryLabel = new Label
+
+            countryLabel = new Label
             {
-                Text = "Country", 
-                FontSize = 20, 
-                HorizontalTextAlignment = TextAlignment.Start, 
-                VerticalTextAlignment = TextAlignment.End, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Country",
+                FontSize = 20,
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromHex("#FFF")
             };
 
-            var countryPicker = new Picker
+            countryPicker = new Picker
             {
-                Items = { "México", "EUA", "Canada" }, 
+                Items = { "México", "EUA", "Canada" },
                 Title = "Choose your country"
             };
 
-            var phoneLabel = new Label
+            phoneLabel = new Label
             {
-                Text = "Cellphone", 
-                FontSize = 20, 
-                HorizontalTextAlignment = TextAlignment.Start, 
-                VerticalTextAlignment = TextAlignment.End, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Cellphone",
+                FontSize = 20,
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromHex("#FFF")
             };
 
-            var phone = new Entry
+            phone = new Entry
             {
-                Placeholder = "999 999 9999", 
-                HorizontalTextAlignment = TextAlignment.Center, 
-                BackgroundColor = Color.FromHex("#FFF"), 
-                TextColor = Color.FromHex("#12A5F4"), 
-                PlaceholderColor = Color.FromHex("#026CA5"), 
+                Placeholder = "999 999 9999",
+                HorizontalTextAlignment = TextAlignment.Center,
+                BackgroundColor = Color.FromHex("#FFF"),
+                TextColor = Color.FromHex("#12A5F4"),
+                PlaceholderColor = Color.FromHex("#026CA5"),
                 Keyboard = Keyboard.Telephone
             };
 
-            var name = new Label
+            name = new Label
             {
-                Text = "Name", 
-                FontSize = 20, 
-                BackgroundColor = Color.FromHex("#12A5F4"), 
-                TextColor = Color.FromHex("#FFF"), 
-                HorizontalTextAlignment = TextAlignment.Start, 
-                VerticalTextAlignment = TextAlignment.End, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Name",
+                FontSize = 20,
+                BackgroundColor = Color.FromHex("#12A5F4"),
+                TextColor = Color.FromHex("#FFF"),
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
             };
 
-            var nameEntry = new Entry
+            nameEntry = new Entry
             {
-                Placeholder = "Juan Perez Lopez", 
-                HorizontalTextAlignment = TextAlignment.Center, 
-                BackgroundColor = Color.FromHex("#FFF"), 
-                TextColor = Color.FromHex("#12A5F4"), 
-                PlaceholderColor = Color.FromHex("#026CA5"), 
+                Placeholder = "Juan Perez Lopez",
+                HorizontalTextAlignment = TextAlignment.Center,
+                BackgroundColor = Color.FromHex("#FFF"),
+                TextColor = Color.FromHex("#12A5F4"),
+                PlaceholderColor = Color.FromHex("#026CA5"),
                 Keyboard = Keyboard.Text
             };
 
-            var addressLabel = new Label
+            addressLabel = new Label
             {
-                Text = "Address", 
-                FontSize = 20, 
-                HorizontalTextAlignment = TextAlignment.Start, 
-                VerticalTextAlignment = TextAlignment.End, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Address",
+                FontSize = 20,
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromHex("#FFF")
             };
 
-            var address = new Entry
+            address = new Entry
             {
-                Placeholder = "Madero Av. 123 Centro", 
-                HorizontalTextAlignment = TextAlignment.Center, 
-                BackgroundColor = Color.FromHex("#FFF"), 
-                TextColor = Color.FromHex("#12A5F4"), 
-                PlaceholderColor = Color.FromHex("#026CA5"), 
+                Placeholder = "Madero Av. 123 Centro",
+                HorizontalTextAlignment = TextAlignment.Center,
+                BackgroundColor = Color.FromHex("#FFF"),
+                TextColor = Color.FromHex("#12A5F4"),
+                PlaceholderColor = Color.FromHex("#026CA5"),
                 Keyboard = Keyboard.Text
             };
 
-            var zipCodeLabel = new Label
+            zipCodeLabel = new Label
             {
-                Text = "Zip Code", 
-                FontSize = 20, 
-                BackgroundColor = Color.FromHex("#12A5F4"), 
-                TextColor = Color.FromHex("#FFF"), 
-                HorizontalTextAlignment = TextAlignment.Start, 
-                VerticalTextAlignment = TextAlignment.End, 
-                FontAttributes = FontAttributes.Bold, 
+                Text = "Zip Code",
+                FontSize = 20,
+                BackgroundColor = Color.FromHex("#12A5F4"),
+                TextColor = Color.FromHex("#FFF"),
+                HorizontalTextAlignment = TextAlignment.Start,
+                VerticalTextAlignment = TextAlignment.End,
+                FontAttributes = FontAttributes.Bold,
             };
 
-            var zipCode = new Entry
+            zipCode = new Entry
             {
-                Placeholder = "58000", 
-                BackgroundColor = Color.FromHex("#FFF"), 
-                TextColor = Color.FromHex("#000"), 
-                PlaceholderColor = Color.FromHex("#666"), 
+                Placeholder = "58000",
+                BackgroundColor = Color.FromHex("#FFF"),
+                TextColor = Color.FromHex("#000"),
+                PlaceholderColor = Color.FromHex("#666"),
                 Keyboard = Keyboard.Numeric
             };
 
-            var save = new Button
+            save = new Button
             {
-                Text = "Save", 
-                BackgroundColor = Color.FromHex("#2C903D"), 
-                TextColor = Color.FromHex("#FFF"), 
+                Text = "Save",
+                BackgroundColor = Color.FromHex("#2C903D"),
+                TextColor = Color.FromHex("#FFF")
             };
 
-            var radios = new BindableRadioGroup
+            radios = new BindableRadioGroup
             {
-                TextColor = Color.FromHex("#FFF"), 
-                FontSize = 20, 
-                VerticalOptions = LayoutOptions.CenterAndExpand, 
-                HorizontalOptions = LayoutOptions.CenterAndExpand, 
+                TextColor = Color.FromHex("#FFF"),
+                FontSize = 20,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Orientation = StackOrientation.Horizontal
             };
 
             radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };
 
             var stack1 = new StackLayout
-            {   
-               Orientation = StackOrientation.Vertical, 
-               BackgroundColor = Color.FromHex("#12A5F4"), 
-               Padding = 15, 
-               VerticalOptions = LayoutOptions.Center, 
-               Spacing = 10, 
-               Children =
+            {
+                Orientation = StackOrientation.Vertical,
+                BackgroundColor = Color.FromHex("#12A5F4"),
+                Padding = 15,
+                VerticalOptions = LayoutOptions.Center,
+                Spacing = 10,
+                Children =
                    {
                        signUpLabel, userLabel, userName, 
                        passLabel, pass, 
@@ -213,9 +248,8 @@ namespace AppointmentControl
 
             this.Content = scroll;
 
-            save.Clicked += async (sender, args) => await this.Navigation.PushModalAsync(new Login());
+            save.Clicked += async (sender, args) => Save();
         }
-
         #endregion
 
         #region Public Methods and Operators
@@ -229,10 +263,47 @@ namespace AppointmentControl
         /// <param name="e">
         /// The e.
         /// </param>
-        public void Save(object sender, EventArgs e)
+        public async void Save()
         {
+            var user = new User()
+            {
+                Username = userName.Text,
+                Password = pass.Text,
+                Phone = phone.Text
+            };
+            await userManager.SaveTaskAsync(user);
+
+            //radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };
+            switch (radios.SelectedIndex)
+            {
+                case PATIENT:
+                    var patient = new Patient()
+                    {
+                        Address = address.Text,
+                        Country = countryPicker.Items.ToArray()[countryPicker.SelectedIndex],
+                        Name = nameEntry.Text,
+                        Zip = zipCode.Text
+                    };
+                    await patientManager.SaveTaskAsync(patient);
+                    break;
+                case DOCTOR:
+                    var doctor = new Doctor()
+                    {
+                        Address = address.Text,
+                        Country = countryPicker.Items.ToArray()[countryPicker.SelectedIndex],
+                        Name = nameEntry.Text,
+                        Zip = zipCode.Text
+                    };
+                    await doctorManager.SaveTaskAsync(doctor);
+                    break;
+                case HOSPITAL:
+                default:
+                    break;
+            }
+            
             // Application.Current.MainPage = new NavigationPage(new Page1()); 
-            Application.Current.MainPage = new Login();
+            //Application.Current.MainPage = new Login();
+            await this.Navigation.PushModalAsync(new Login());
         }
         #endregion
     }
