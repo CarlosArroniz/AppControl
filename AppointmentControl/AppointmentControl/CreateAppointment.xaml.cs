@@ -25,12 +25,17 @@ namespace AppointmentControl
 
         private async void Save(object sender, EventArgs e)
         {
+            if (!await ValidateFields())
+            {
+                return;
+            }
+
             try
             {
                 Appointment appointment = await CreateNewAppointment();
                 await appointmentManager.SaveTaskAsync(appointment);
 
-                this.BackgroundColor = Color.FromHex("#FFF");
+                BackgroundColor = Color.FromHex("#FFF");
                 Application.Current.MainPage = new PrincipalPage();
             }
             catch (Exception ex)
@@ -38,6 +43,21 @@ namespace AppointmentControl
                 Debug.WriteLine(@"ERROR {0}", ex.Message);
                 Debug.WriteLine(@"ERROR {0}", ex);
             }
+        }
+
+        private async Task<bool> ValidateFields()
+        {
+            if (StartHour.Time >= EndHour.Time)
+            {
+                if (await DisplayAlert("Error en la hora.",
+                    "La hora de término no debe ser menor o igual a la hora de inicio. ¿Desea cambiar la hora de término de la cita?",
+                    "Ok", "Cancel"))
+                {
+                    EndHour.Focus();
+                }
+                return false;
+            }
+            return true;
         }
 
         private async Task<Appointment> CreateNewAppointment()
