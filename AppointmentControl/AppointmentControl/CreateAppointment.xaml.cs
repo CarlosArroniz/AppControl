@@ -18,6 +18,15 @@ namespace AppointmentControl
         public CreateAppointment()
         {
             InitializeComponent();
+
+            StartHour.Time = new TimeSpan(
+                System.DateTime.Now.Hour,
+                System.DateTime.Now.Minute,
+                System.DateTime.Now.Second
+                );
+
+            EndHour.Time = StartHour.Time;
+
             doctorManager = new DoctorManager();
             patientManager = new PatientManager();
             appointmentManager = new AppointmentManager();
