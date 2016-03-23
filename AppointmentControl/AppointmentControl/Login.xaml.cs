@@ -8,6 +8,9 @@ namespace AppointmentControl
 {
     using System;
 
+    using global::AppointmentControl.Data;
+    using global::AppointmentControl.Models;
+
     using Xamarin.Forms;
 
     /// <summary>
@@ -16,6 +19,11 @@ namespace AppointmentControl
     // ReSharper disable once PartialTypeWithSinglePart
     public partial class Login : ContentPage
     {
+        private Entry userName;
+
+        private Entry password;
+
+        private UserManager usman;
         #region Constructors and Destructors
 
         /// <summary>
@@ -42,7 +50,7 @@ namespace AppointmentControl
             // </StackLayout 1>
 
             // <StackLayout 2>
-            var userName = new Entry
+            userName = new Entry
                                {
                                    Placeholder = "Username", 
                                    HorizontalTextAlignment = TextAlignment.Center, 
@@ -52,7 +60,7 @@ namespace AppointmentControl
                                    HeightRequest = 45, 
                                };
 
-            var password = new Entry
+            password = new Entry
                                {
                                    Placeholder = "Password", 
                                    HorizontalTextAlignment = TextAlignment.Center, 
@@ -157,10 +165,15 @@ namespace AppointmentControl
         // ReSharper disable once CSharpWarnings::CS1998
         async void SignIn(object sender, EventArgs eventArgs)
         {
-            var page = new NavigationPage(new Page());
-            page.BarBackgroundColor = Color.FromHex("#004D40");
-            page.BarTextColor = Color.White;
-            await Navigation.PushAsync(page);
+            var user = userName.Text;
+            var pass = password.Text;
+            
+            var userPass = await usman.FindUsernameAndPass(user, pass);
+
+            if (userPass != null)
+            {
+                
+            }
         }
 
         #endregion
