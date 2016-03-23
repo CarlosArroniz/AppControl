@@ -23,6 +23,18 @@ namespace AppointmentControl
             appointmentManager = new AppointmentManager();
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var list = await patientManager.GetPatientsAsync();
+
+            foreach (var patients in list)
+            {
+                patientPicker.Items.Add(patients.Name);
+            }
+        }
+
         private async void Save(object sender, EventArgs e)
         {
             if (!await ValidateFields())

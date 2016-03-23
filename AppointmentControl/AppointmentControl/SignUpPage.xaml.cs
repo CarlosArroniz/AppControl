@@ -12,6 +12,7 @@ namespace AppointmentControl
 {
     using Xamarin.Forms;
 
+    using XLabs.Forms;
     using XLabs.Forms.Controls;
 
     /// <summary>
@@ -264,11 +265,25 @@ namespace AppointmentControl
         /// </param>
         public async void Save()
         {
+            var isDoc = false;
+
+            if (radios.SelectedIndex == DOCTOR)
+            {
+                isDoc = true;
+            }
+
+            var country = countryPicker.SelectedIndex;
+
             var user = new User()
             {
                 Username = userName.Text,
                 Password = pass.Text,
-                Phone = phone.Text
+                Phone = phone.Text,
+                isdoctor = isDoc,
+                Address = address.Text,
+                Zip = zipCode.Text,
+                Name = nameEntry.Text,
+                Country = countryPicker.Items.ElementAt(country)
             };
 
             await userManager.SaveTaskAsync(user);
@@ -276,36 +291,10 @@ namespace AppointmentControl
             user = await userManager.FindUser(user);
 
             //radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };
-            switch (radios.SelectedIndex)
-            {
-                case PATIENT:
-                    var patient = new Patient()
-                    {
-                        UserId = user.Id,
-                        Address = address.Text,
-                        Country = countryPicker.Items.ToArray()[countryPicker.SelectedIndex],
-                        Name = nameEntry.Text,
-                        Zip = zipCode.Text
-                    };
-                    await patientManager.SaveTaskAsync(patient);
-                    break;
-                case DOCTOR:
-                    var doctor = new Doctor()
-                    {
-                        UserId = user.Id,
-                        Address = address.Text,
-                        Country = countryPicker.Items.ToArray()[countryPicker.SelectedIndex],
-                        Name = nameEntry.Text,
-                        Zip = zipCode.Text
-                    };
-                    await doctorManager.SaveTaskAsync(doctor);
-                    break;
-                case HOSPITAL:
-                    break;
-            }
             
             // Application.Current.MainPage = new NavigationPage(new Page1()); 
             //Application.Current.MainPage = new Login();
+
             await Navigation.PushModalAsync(new Login());
         }
         #endregion
