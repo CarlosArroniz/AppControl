@@ -37,8 +37,11 @@ namespace AppointmentControl
 
         private void Save(object sender, EventArgs e)
         {
-            this.BackgroundColor = Color.FromHex("#FFF");
-            Application.Current.MainPage = new PrincipalPage();
+            var appointment = new Appointment()
+                                  {
+                                      
+                                  };
+
         }
     }
 }

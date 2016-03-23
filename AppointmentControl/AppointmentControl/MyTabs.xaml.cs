@@ -8,6 +8,7 @@ namespace AppointmentControl
         public MyTabs()
         {
             InitializeComponent();
+
             this.BackgroundColor = Color.FromHex("#FFF");
             this.Padding = new Thickness(10, 15, 15, 15);
             this.Children.Add(new MyAppointmentsPage { Title = "My Appointments" });

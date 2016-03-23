@@ -74,5 +74,6 @@ namespace AppointmentControl.Data
             var userList = await _table.Where(u => u.Username==user.Username).ToListAsync();
             return userList.First();
         }
+
     }
 }

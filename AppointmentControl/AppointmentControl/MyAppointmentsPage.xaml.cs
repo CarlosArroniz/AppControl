@@ -24,7 +24,7 @@ namespace AppointmentControl
         public MyAppointmentsPage()
         {
             this.BackgroundColor = Color.FromHex("#FFF");
-            
+            #region
             /*
             Label header = new Label
                                {
@@ -126,39 +126,8 @@ namespace AppointmentControl
                                    
                                };
             */
+            #endregion
             
-
-            var layout = new RelativeLayout {
-                                 HorizontalOptions = LayoutOptions.FillAndExpand, 
-                                 HeightRequest = 125, 
-                                 Padding = new Thickness(0)
-                             };
-
-            var cardBackground = new Image { Source = ImageSource.FromFile("medical.png"), Aspect = Aspect.Fill };
-
-            var grid = new Grid
-            {
-                Padding = new Thickness(0, 1, 1, 1), 
-                RowSpacing = 1, 
-                ColumnSpacing = 1, 
-                BackgroundColor = Color.FromHex("E3E3E3")
-            };
-
-            layout.Children.Add(
-                cardBackground, 
-                Constraint.Constant(0), 
-                Constraint.Constant(0), 
-                Constraint.RelativeToParent(parent => { return parent.Width; }), 
-                Constraint.RelativeToParent(parent => { return parent.Height; }));
-
-            layout.Children.Add(
-                grid, 
-                Constraint.Constant(10), 
-                Constraint.Constant(10), 
-                Constraint.RelativeToParent(parent => { return parent.Width - 15; }), 
-                Constraint.RelativeToParent(parent => { return parent.Height - 0; }));
-
-            this.Content = layout;
         }
 
         #endregion
@@ -219,5 +188,8 @@ namespace AppointmentControl
 
             #endregion
         }
+
+        public class CardView : ContentView
+
     }
 }
