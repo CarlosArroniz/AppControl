@@ -75,6 +75,25 @@ namespace AppointmentControl.Data
             return userList.First();
         }
 
+        public async Task<User> FindUser(string username)
+        {
+            try
+            {
+                var userPassList =
+                    await _table.Where(p => p.Username == username).ToListAsync();
+                return userPassList.First();
+            }
+            catch (MobileServiceInvalidOperationException msioe)
+            {
+                Debug.WriteLine(@"INVALID {0}", msioe.Message);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(@"ERROR {0}", e.Message);
+            }
+            return null;
+        }
+        
         public async Task<User> FindUsernameAndPass(string user, string pass)
         {
             try
