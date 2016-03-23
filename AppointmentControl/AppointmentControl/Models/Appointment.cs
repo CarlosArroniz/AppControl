@@ -4,6 +4,12 @@ namespace AppointmentControl.Models
 {
     public class Appointment
     {
+        public const string REQUESTED = "Requested";
+        public const string ACCEPTED = "Accepted";
+        public const string DECLINED = "Declined";
+        public const string REJECTED = "Rejected";
+        public const string DONE = "DONE";
+        
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
