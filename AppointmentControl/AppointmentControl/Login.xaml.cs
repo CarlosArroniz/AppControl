@@ -170,10 +170,15 @@ namespace AppointmentControl
             
             var userPass = await usman.FindUsernameAndPass(user, pass);
 
-            if (userPass != null)
+            if (userPass == null)
             {
-                
+                await DisplayAlert("Usuario o contraseña incorrectos", "Ingrese sus credenciales o regístrese como nuevo usuario.", "Ok");
+                userName.Focus();
+                return;
             }
+
+            Application.Current.Properties.Add("user", userPass);
+            Application.Current.MainPage = new PrincipalPage();
         }
 
         #endregion
