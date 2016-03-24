@@ -9,13 +9,14 @@ namespace AppointmentControl
 {
     public partial class CreateAppointment : ContentPage
     {
-        
         private readonly UserManager userManager;
 
         private readonly AppointmentManager appointmentManager;
 
         public CreateAppointment()
         {
+           var type = (User)Application.Current.Properties[Constants.UserPropertyName];
+
             InitializeComponent();
 
             StartHour.Time = new TimeSpan(
