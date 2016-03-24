@@ -9,6 +9,7 @@ namespace AppointmentControl
     using System;
 
     using global::AppointmentControl.Data;
+
     using global::AppointmentControl.Models;
 
     using Xamarin.Forms;
@@ -19,11 +20,25 @@ namespace AppointmentControl
     // ReSharper disable once PartialTypeWithSinglePart
     public partial class Login : ContentPage
     {
-        private Entry userName;
+        #region Fields
 
+        /// <summary>
+        /// The password.
+        /// </summary>
         private Entry password;
 
+        /// <summary>
+        /// The user name.
+        /// </summary>
+        private Entry userName;
+
+        /// <summary>
+        /// The usman.
+        /// </summary>
         private UserManager usman;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -32,7 +47,8 @@ namespace AppointmentControl
         public Login()
         {
             InitializeComponent();
-            usman = new UserManager();
+
+            this.usman = new UserManager();
 
             var titleImage = new Image { Source = "medical.png", HeightRequest = 200 };
 
@@ -51,7 +67,7 @@ namespace AppointmentControl
             // </StackLayout 1>
 
             // <StackLayout 2>
-            userName = new Entry
+            this.userName = new Entry
                                {
                                    Placeholder = "Username", 
                                    HorizontalTextAlignment = TextAlignment.Center, 
@@ -61,7 +77,7 @@ namespace AppointmentControl
                                    HeightRequest = 45, 
                                };
 
-            password = new Entry
+            this.password = new Entry
                                {
                                    Placeholder = "Password", 
                                    HorizontalTextAlignment = TextAlignment.Center, 
@@ -136,7 +152,7 @@ namespace AppointmentControl
                                  Padding = new Thickness(20, 50, 20, 20), 
                                  Spacing = 25, 
                                  Children = {
-                                               userName, password, login, stack3 
+                                               this.userName, this.password, login, stack3 
                                             }
                              };
             var stack4 = new StackLayout { Children = { forgotPass } };
@@ -145,10 +161,10 @@ namespace AppointmentControl
 
             this.Content = mainStack;
 
-            //login.Clicked += (e, sender) => { Application.Current.MainPage = new PrincipalPage(); };
-            login.Clicked += SignIn;
+            // login.Clicked += (e, sender) => { Application.Current.MainPage = new PrincipalPage(); };
+            login.Clicked += this.SignIn;
 
-            signUp.Clicked += async (e, sender) => { await Navigation.PushModalAsync(new NavigationPage(new SignUpPage())); };
+            signUp.Clicked += async (e, sender) => { await this.Navigation.PushModalAsync(new NavigationPage(new SignUpPage())); };
         }
 
         #endregion
@@ -164,23 +180,21 @@ namespace AppointmentControl
         /// <param name="eventArgs">
         /// The event args.
         /// </param>
-        // ReSharper disable once CSharpWarnings::CS1998
-        async void SignIn(object sender, EventArgs eventArgs)
+        private async void SignIn(object sender, EventArgs eventArgs)
         {
-            var user = userName.Text;
-            var pass = password.Text;
-            
+            var user = this.userName.Text;
+            var pass = this.password.Text;
             
             User userPass = null;
-            if (user!=null && pass!=null)
+            if (user != null && pass != null)
             {
-                userPass = await usman.FindUsernameAndPass(user, pass);
+                userPass = await this.usman.FindUsernameAndPass(user, pass);
             }
 
             if (userPass == null)
             {
-                await DisplayAlert("Usuario o contraseña incorrectos", "Ingrese sus credenciales o regístrese como nuevo usuario.", "Ok");
-                userName.Focus();
+                await this.DisplayAlert("Usuario o contraseña incorrectos", "Ingrese sus credenciales o regístrese como nuevo usuario.", "Ok");
+                this.userName.Focus();
                 return;
             }
 
