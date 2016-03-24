@@ -53,7 +53,7 @@ namespace AppointmentControl
             var titleImage = new Image { Source = "medical.png", HeightRequest = 200 };
 
             // <StackLayout 1>
-            var Title = new Label
+            var title = new Label
                             {
                                 Text = "Appointment Control", 
                                 FontSize = 25, 
@@ -139,7 +139,7 @@ namespace AppointmentControl
                              {
                                  Orientation = StackOrientation.Vertical, 
                                  Children = {
-                                               titleImage, Title 
+                                               titleImage, title
                                             }, 
                                  HeightRequest = 180, 
                                  VerticalOptions = LayoutOptions.Center, 

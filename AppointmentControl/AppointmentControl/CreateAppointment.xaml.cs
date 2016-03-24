@@ -11,8 +11,9 @@ namespace AppointmentControl
 {
     public partial class CreateAppointment : ContentPage
     {
-        private readonly DoctorManager doctorManager;
-        private readonly PatientManager patientManager;
+        
+        private readonly UserManager userManager;
+
         private readonly AppointmentManager appointmentManager;
 
         public CreateAppointment()
@@ -22,13 +23,11 @@ namespace AppointmentControl
             StartHour.Time = new TimeSpan(
                 System.DateTime.Now.Hour,
                 System.DateTime.Now.Minute,
-                System.DateTime.Now.Second
-                );
+                System.DateTime.Now.Second);
 
             EndHour.Time = StartHour.Time;
 
-            doctorManager = new DoctorManager();
-            patientManager = new PatientManager();
+            userManager = new UserManager();
             appointmentManager = new AppointmentManager();
         }
 
@@ -36,7 +35,7 @@ namespace AppointmentControl
         {
             base.OnAppearing();
 
-            var list = await patientManager.GetPatientsAsync();
+            var list = await userManager.GetPatientsAsync();
 
             foreach (var patients in list)
             {
@@ -84,6 +83,7 @@ namespace AppointmentControl
         private async Task<Appointment> CreateNewAppointment()
         {
             bool isDoctor = true;
+
             Appointment appointment = null;
             if (isDoctor)
             {

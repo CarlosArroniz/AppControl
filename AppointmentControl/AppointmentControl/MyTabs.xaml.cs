@@ -1,8 +1,7 @@
-﻿
-using Xamarin.Forms;
-
-namespace AppointmentControl
+﻿namespace AppointmentControl
 {
+    using Xamarin.Forms;
+
     public partial class MyTabs : TabbedPage
     {
         public MyTabs()
