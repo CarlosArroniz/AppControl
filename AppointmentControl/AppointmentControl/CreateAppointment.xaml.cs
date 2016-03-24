@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using AppointmentControl.Data;
@@ -13,6 +14,7 @@ namespace AppointmentControl
         private readonly UserManager userManager;
 
         private readonly AppointmentManager appointmentManager;
+        private ObservableCollection<User> patientList;
 
         public CreateAppointment()
         {
@@ -33,12 +35,22 @@ namespace AppointmentControl
         {
             base.OnAppearing();
 
-            var list = await userManager.GetPatientsAsync();
-
-            foreach (var patients in list)
+            if (((User) Application.Current.Properties[Constants.UserPropertyName]).isdoctor)
             {
-                patientPicker.Items.Add(patients.Name);
+                patientList = await userManager.GetPatientsAsync();
+                patientPicker.IsEnabled = true;
+                patientPicker.IsVisible = true;
+                foreach (var patients in patientList)
+                {
+                    patientPicker.Items.Add(patients.Name);
+                }
             }
+            else
+            {
+                patientPicker.IsEnabled = false;
+                patientPicker.IsVisible = false;
+            }
+
         }
 
         private async void Save(object sender, EventArgs e)
@@ -93,10 +105,8 @@ namespace AppointmentControl
             }
 
             appointment.Reason = Reason.Text;
-            string appointmentStartDate = GetTimestamp(Date.Date, StartHour.Time);
-            string appointmentEndDate = GetTimestamp(Date.Date, EndHour.Time);
-            appointment.StartDate = appointmentStartDate;
-            appointment.EndDate = appointmentEndDate;
+            appointment.StartDate = GetTimestamp(Date.Date, StartHour.Time);
+            appointment.EndDate = GetTimestamp(Date.Date, EndHour.Time);
 
             return appointment;
 
@@ -107,28 +117,27 @@ namespace AppointmentControl
             return date.ToString("yyyy-MM-dd") + "T" + time.ToString("hh\\:mm\\:ss\\.ffff") + "+00:00";
         }
 
-        private async Task<Appointment> CreateAppointmentAsPatient()
-        {
-            //List<Patient> patientResult = await patientManager.FindPatientByName(PatientName.Text);
-            
-            return new Appointment()
-            {
-                DoctorId = ((User) Application.Current.Properties[Constants.UserPropertyName]).Id,
-                status = Appointment.ACCEPTED,
-              //  PatientId = patientResult.First().Id
-                PatientId = "dummy"
-            };
-            throw new NotImplementedException();
-        }
-
         private async Task<Appointment> CreateAppointmentAsDoctor()
         {
+            User selectedPatient = patientList[patientPicker.SelectedIndex];
             return new Appointment()
             {
-                PatientId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id,
+                PatientId = selectedPatient.Id,
                 status = Appointment.REQUESTED,
-                DoctorId = "doctor_id" // get the doctor object or doctor_id before create the appointment
+                DoctorId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id
             };
+        }
+
+        private async Task<Appointment> CreateAppointmentAsPatient()
+        {
+            return new Appointment()
+            {
+                DoctorId = "doctor_id",
+                status = Appointment.ACCEPTED,
+              //  PatientId = patientResult.First().Id
+                PatientId = ((User) Application.Current.Properties[Constants.UserPropertyName]).Id
+            };
+            throw new NotImplementedException();
         }
     }
 }
