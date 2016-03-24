@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
@@ -82,7 +80,7 @@ namespace AppointmentControl
 
         private async Task<Appointment> CreateNewAppointment()
         {
-            bool isDoctor = true;
+            bool isDoctor = ((User) Application.Current.Properties[Constants.UserPropertyName]).isdoctor;
 
             Appointment appointment = null;
             if (isDoctor)
@@ -115,7 +113,7 @@ namespace AppointmentControl
             
             return new Appointment()
             {
-                DoctorId = "doctor_id", //change for global value
+                DoctorId = ((User) Application.Current.Properties[Constants.UserPropertyName]).Id,
                 status = Appointment.ACCEPTED,
               //  PatientId = patientResult.First().Id
                 PatientId = "dummy"
@@ -127,7 +125,7 @@ namespace AppointmentControl
         {
             return new Appointment()
             {
-                PatientId = "patient_id", //change for global value
+                PatientId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id,
                 status = Appointment.REQUESTED,
                 DoctorId = "doctor_id" // get the doctor object or doctor_id before create the appointment
             };

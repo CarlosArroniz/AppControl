@@ -198,7 +198,7 @@ namespace AppointmentControl
                 return;
             }
 
-            Application.Current.Properties.Add("user", userPass);
+            Application.Current.Properties.Add(Constants.UserPropertyName, userPass);
             Application.Current.MainPage = new PrincipalPage();
         }
 
