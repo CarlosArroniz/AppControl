@@ -11,7 +11,6 @@ namespace AppointmentControl
     public partial class CreateAppointment : ContentPage
     {
         private readonly UserManager userManager;
-
         private readonly AppointmentManager appointmentManager;
         private ObservableCollection<User> patientList;
         private ObservableCollection<User> doctorsList;
@@ -147,14 +146,13 @@ namespace AppointmentControl
 
         private async Task<Appointment> CreateAppointmentAsPatient()
         {
+            User selectedDoctor = patientList[patientPicker.SelectedIndex];
             return new Appointment()
             {
-                DoctorId = "doctor_id",
+                DoctorId = selectedDoctor.Id,
                 status = Appointment.ACCEPTED,
-                //  PatientId = patientResult.First().Id
                 PatientId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id
             };
-            throw new NotImplementedException();
         }
     }
 }
