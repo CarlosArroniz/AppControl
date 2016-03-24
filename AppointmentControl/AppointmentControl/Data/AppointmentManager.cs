@@ -38,12 +38,12 @@ namespace AppointmentControl.Data
             return null;
         }
 
-        public async Task<ObservableCollection<Appointment>> GetAppointmentsAsync(string userId)
+        public async Task<ObservableCollection<Appointment>> GetAppointmentsAsync()
         {
             try
             {
                 return new ObservableCollection<Appointment>(
-                    await _table.OrderBy(appointment => appointment.DoctorId == userId || appointment.PatientId == userId).ToListAsync());
+                    await _table.Where(appointment => appointment.DoctorId != null && appointment.PatientId != null).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
@@ -74,12 +74,12 @@ namespace AppointmentControl.Data
             return null;
         }
 
-        public async Task<ObservableCollection<Appointment>> GetAppointmentsAsync(Doctor doctor)
+        public async Task<ObservableCollection<Appointment>> GetAppointmentsOfDoctorAsync(string doctorId)
         {
             try
             {
                 return new ObservableCollection<Appointment>(
-                    await _table.Where(appointment => appointment.DoctorId == doctor.Id).ToListAsync());
+                    await _table.Where(appointment => appointment.DoctorId == doctorId).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
@@ -92,12 +92,12 @@ namespace AppointmentControl.Data
             return null;
         }
 
-        public async Task<ObservableCollection<Appointment>> GetAppointmentsAsync(Patient patient)
+        public async Task<ObservableCollection<Appointment>> GetAppointmentsOfPatientAsync(string patientId)
         {
             try
             {
                 return new ObservableCollection<Appointment>(
-                    await _table.Where(appointment => appointment.PatientId == patient.Id).ToListAsync());
+                    await _table.Where(appointment => appointment.PatientId == patientId).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
