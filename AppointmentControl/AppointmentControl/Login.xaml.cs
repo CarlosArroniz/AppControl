@@ -32,6 +32,7 @@ namespace AppointmentControl
         public Login()
         {
             InitializeComponent();
+            usman = new UserManager();
 
             var titleImage = new Image { Source = "medical.png", HeightRequest = 200 };
 
@@ -144,7 +145,8 @@ namespace AppointmentControl
 
             this.Content = mainStack;
 
-            login.Clicked += (e, sender) => { Application.Current.MainPage = new PrincipalPage(); };
+            //login.Clicked += (e, sender) => { Application.Current.MainPage = new PrincipalPage(); };
+            login.Clicked += SignIn;
 
             signUp.Clicked += async (e, sender) => { await Navigation.PushModalAsync(new NavigationPage(new SignUpPage())); };
         }
@@ -168,12 +170,22 @@ namespace AppointmentControl
             var user = userName.Text;
             var pass = password.Text;
             
-            var userPass = await usman.FindUsernameAndPass(user, pass);
-
-            if (userPass != null)
+            
+            User userPass = null;
+            if (user!=null && pass!=null)
             {
-                
+                userPass = await usman.FindUsernameAndPass(user, pass);
             }
+
+            if (userPass == null)
+            {
+                await DisplayAlert("Usuario o contraseña incorrectos", "Ingrese sus credenciales o regístrese como nuevo usuario.", "Ok");
+                userName.Focus();
+                return;
+            }
+
+            Application.Current.Properties.Add("user", userPass);
+            Application.Current.MainPage = new PrincipalPage();
         }
 
         #endregion

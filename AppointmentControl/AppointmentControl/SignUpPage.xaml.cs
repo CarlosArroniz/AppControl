@@ -4,7 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
 
@@ -105,7 +107,8 @@ namespace AppointmentControl
                 HorizontalTextAlignment = TextAlignment.Center,
                 BackgroundColor = Color.FromHex("#FFF"),
                 TextColor = Color.FromHex("#12A5F4"),
-                PlaceholderColor = Color.FromHex("#026CA5")
+                PlaceholderColor = Color.FromHex("#026CA5"),
+                IsPassword = true
             };
 
             countryLabel = new Label
@@ -221,7 +224,7 @@ namespace AppointmentControl
                 Orientation = StackOrientation.Horizontal
             };
 
-            radios.ItemsSource = new[] { "Paciente", "Medico", "Clinica" };
+            radios.ItemsSource = new[] { "Paciente", "Medico" };
 
             var stack1 = new StackLayout
             {
@@ -265,6 +268,11 @@ namespace AppointmentControl
         /// </param>
         public async void Save()
         {
+            if (!await ValidateFields())
+            {
+                return;
+            }
+
             var isDoc = false;
 
             if (radios.SelectedIndex == DOCTOR)
@@ -297,6 +305,49 @@ namespace AppointmentControl
 
             await Navigation.PushModalAsync(new Login());
         }
+
+        private async Task<bool> ValidateFields()
+        {
+            if (!await ValidateUsername())
+            {
+                return false;
+            }
+            
+            if (pass.Text == null)
+            {
+                await DisplayAlert("Contraseña vacía.",
+                    "Favor de ingresar su contraseña.", "Ok");
+                pass.Text = null;
+                pass.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> ValidateUsername()
+        {
+            if (userName.Text == null || userName.Text.Length <= 0)
+            {
+                await DisplayAlert("Nombre de usuario inválido.",
+                    "Favor de ingresar su nombre de usuario.", "Ok");
+                userName.Text = null;
+                userName.Focus();
+                return false;
+            }
+
+            if (await userManager.FindUser(userName.Text) != null)
+            {
+                await DisplayAlert("Nombre de usuario ya existe.",
+                    "Favor de seleccionar otro nombre de usuario.", "Ok");
+                userName.Text = null;
+                userName.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
     }
 }
