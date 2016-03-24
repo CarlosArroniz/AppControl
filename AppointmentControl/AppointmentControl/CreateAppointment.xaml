@@ -24,7 +24,9 @@
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
 
-        <Picker x:Name="patientPicker"/>
+        <Picker x:Name="namesPicker"/>
+        <Picker x:Name="citiesPicker" />
+        <Picker x:Name="specialityPicker" />
 
         <Label Text="Date" FontSize="20"
                BackgroundColor="#FFF"

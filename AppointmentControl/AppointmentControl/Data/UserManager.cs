@@ -75,6 +75,24 @@ namespace AppointmentControl.Data
             return null;
         }
 
+        public async Task<ObservableCollection<User>> GetDoctorsAsync()
+        {
+            try
+            {
+                return new ObservableCollection<User>(
+                    await _table.Where(user => user.isdoctor != false).ToListAsync());
+            }
+            catch (MobileServiceInvalidOperationException msioe)
+            {
+                Debug.WriteLine(@"INVALID {0}", msioe.Message);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(@"ERROR {0}", e.Message);
+            }
+            return null;
+        }
+
         public async Task SaveTaskAsync(User user)
         {
             if (user.Id == null)

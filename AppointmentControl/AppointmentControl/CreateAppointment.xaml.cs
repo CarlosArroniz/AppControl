@@ -14,10 +14,11 @@ namespace AppointmentControl
 
         private readonly AppointmentManager appointmentManager;
         private ObservableCollection<User> patientList;
+        private ObservableCollection<User> doctorsList;
 
         public CreateAppointment()
         {
-           var type = (User)Application.Current.Properties[Constants.UserPropertyName];
+            var type = (User)Application.Current.Properties[Constants.UserPropertyName];
 
             InitializeComponent();
 
@@ -30,28 +31,43 @@ namespace AppointmentControl
 
             userManager = new UserManager();
             appointmentManager = new AppointmentManager();
+
+            var pick = new Picker();
+
+            pick.IsVisible = false;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            if (((User) Application.Current.Properties[Constants.UserPropertyName]).isdoctor)
+            if (((User)Application.Current.Properties[Constants.UserPropertyName]).isdoctor)
             {
                 patientList = await userManager.GetPatientsAsync();
-                patientPicker.IsEnabled = true;
-                patientPicker.IsVisible = true;
+
+                namesPicker.IsEnabled = true;
+                namesPicker.IsVisible = true;
+
+                citiesPicker.IsVisible = false;
+                specialityPicker.IsVisible = false;
+
                 foreach (var patients in patientList)
                 {
-                    patientPicker.Items.Add(patients.Name);
+                    namesPicker.Items.Add(patients.Name);
+                    
                 }
             }
             else
             {
-                patientPicker.IsEnabled = false;
-                patientPicker.IsVisible = false;
-            }
+                doctorsList = await userManager.GetDoctorsAsync();
 
+                foreach (var doctor in doctorsList)
+                {
+                    namesPicker.Items.Add(doctor.Name);
+                    citiesPicker.Items.Add(doctor.City);
+                    specialityPicker.Items.Add(doctor.Speciality);
+                }
+            }
         }
 
         private async void Save(object sender, EventArgs e)
@@ -93,7 +109,7 @@ namespace AppointmentControl
 
         private async Task<Appointment> CreateNewAppointment()
         {
-            bool isDoctor = ((User) Application.Current.Properties[Constants.UserPropertyName]).isdoctor;
+            bool isDoctor = ((User)Application.Current.Properties[Constants.UserPropertyName]).isdoctor;
 
             Appointment appointment = null;
             if (isDoctor)
@@ -120,7 +136,7 @@ namespace AppointmentControl
 
         private async Task<Appointment> CreateAppointmentAsDoctor()
         {
-            User selectedPatient = patientList[patientPicker.SelectedIndex];
+            User selectedPatient = patientList[namesPicker.SelectedIndex];
             return new Appointment()
             {
                 PatientId = selectedPatient.Id,
@@ -135,8 +151,8 @@ namespace AppointmentControl
             {
                 DoctorId = "doctor_id",
                 status = Appointment.ACCEPTED,
-              //  PatientId = patientResult.First().Id
-                PatientId = ((User) Application.Current.Properties[Constants.UserPropertyName]).Id
+                //  PatientId = patientResult.First().Id
+                PatientId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id
             };
             throw new NotImplementedException();
         }
