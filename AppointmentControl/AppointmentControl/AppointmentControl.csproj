@@ -82,6 +82,7 @@
     <Compile Include="SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="singleAppoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Login.xaml">

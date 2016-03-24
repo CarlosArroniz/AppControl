@@ -2,6 +2,7 @@
 
 namespace AppointmentControl.Models
 {
+
     public class Appointment
     {
         public const string REQUESTED = "Requested";

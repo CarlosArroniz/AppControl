@@ -30,10 +30,6 @@ namespace AppointmentControl
 
             userManager = new UserManager();
             appointmentManager = new AppointmentManager();
-
-            var pick = new Picker();
-
-            pick.IsVisible = false;
         }
 
         protected override async void OnAppearing()
@@ -146,7 +142,7 @@ namespace AppointmentControl
 
         private async Task<Appointment> CreateAppointmentAsPatient()
         {
-            User selectedDoctor = patientList[patientPicker.SelectedIndex];
+            User selectedDoctor = patientList[namesPicker.SelectedIndex];
             return new Appointment()
             {
                 DoctorId = selectedDoctor.Id,
