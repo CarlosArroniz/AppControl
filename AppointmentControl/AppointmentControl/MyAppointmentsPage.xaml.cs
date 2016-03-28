@@ -32,7 +32,7 @@ namespace AppointmentControl
         /// <summary>
         /// The appointments.
         /// </summary>
-        public List<Appointments> appointments;
+        public List<Appointment> appointments;
 
         /// <summary>
         /// The apps list.
@@ -42,8 +42,22 @@ namespace AppointmentControl
         /// <summary>
         /// The single appoint.
         /// </summary>
+
         #endregion
 
+        private Label header;
+
+        private ListView appointsList;
+
+        private Label nameLabel;
+
+        private Label dateLabel;
+
+        private Label reasonLabel;
+
+        private BoxView boxView;
+
+        private StackLayout content;
         #region Constructors and Destructors
 
         /// <summary>
@@ -52,13 +66,14 @@ namespace AppointmentControl
         public MyAppointmentsPage()
         {
             InitializeComponent();
-            appointments = new List<Appointments>();
+
+            appointments = new List<Appointment>();
 
             appointManager = new AppointmentManager();
 
             this.BackgroundColor = Color.FromHex("#FFF");
 
-            var header = new Label
+            header = new Label
             {
                 FontAttributes = FontAttributes.Bold,
                 Text = "Appointments for today:",
@@ -68,50 +83,51 @@ namespace AppointmentControl
                 VerticalOptions = LayoutOptions.Center
             };
 
-            var appointsList = new ListView
+            appointsList = new ListView
             {
                 SeparatorVisibility = SeparatorVisibility.Default,
-                SeparatorColor = Color.FromHex("#FFF"),
-                ItemsSource = this.appointments,
+                SeparatorColor = Color.Red,
+                //ItemsSource = appsList,
                 RowHeight = 100,
                 WidthRequest = 150,
 
                 ItemTemplate = new DataTemplate(() =>
                 {
-                    var nameLabel = new Label
+                    nameLabel = new Label
                     {
-                        FontSize = 15,
+                        FontSize = 10,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#FFF"),
+                        TextColor = Color.FromHex("#000"),
                     };
                     nameLabel.SetBinding(Label.TextProperty, "PatientId");
 
-                    var dateLabel = new Label
+                    dateLabel = new Label
                     {
                         FontSize = 15,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#FFF"),
+                        TextColor = Color.FromHex("#000"),
                     };
 
                     dateLabel.SetBinding(Label.TextProperty, new Binding("StartDate", BindingMode.OneWay, null, null, "Appointment Date {0:d}"));
 
-                    var reasonLabel = new Label
+                    reasonLabel = new Label
                     {
                         FontSize = 15,
                         FontAttributes = FontAttributes.Italic,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#FFF")
+                        TextColor = Color.FromHex("#000")
                     };
                     reasonLabel.SetBinding(Label.TextProperty, "Reason");
 
-                    var boxView = new BoxView { BackgroundColor = Color.FromHex("#666666") };
+                    boxView = new BoxView { BackgroundColor = Color.FromHex("#666666") };
 
                     return new ViewCell
                     {
                         View = new StackLayout
                         {
+                            Padding = new Thickness(5, 10, 10, 5),
                             Orientation = StackOrientation.Horizontal,
                             Children =
                             {
@@ -134,7 +150,7 @@ namespace AppointmentControl
                 })
             };
 
-            var content = new StackLayout
+            content = new StackLayout
             {
                 Padding = 25,
                 Children =
@@ -143,7 +159,7 @@ namespace AppointmentControl
                 }
             };
 
-            this.Content = new ScrollView
+            Content = new ScrollView
             {
                 Content = content,
             };
@@ -162,49 +178,10 @@ namespace AppointmentControl
 
             var userId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id;
 
-            appsList = await appointManager.GetAppointmentsOfDoctorAsync(userId);
+            appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync(userId);
 
-            if (appsList != null)
-            {
-                foreach (var appointment in appsList)
-                {
-                    appointments.Add(new Appointments(appointment.Id, appointment.DoctorId, appointment.PatientId, appointment.StartDate, appointment.EndDate, appointment.Reason, appointment.status));
-                }
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("", "No hay citas", "Aceptar");
-            }
         }
 
-        public class Appointments
-        {
-
-            public Appointments(string Id, string DoctorId, string PatientId, string StartDate, string EndDate, string Reason, string status)
-            {
-                this.Id = Id;
-                this.DoctorId = DoctorId;
-                this.PatientId = PatientId;
-                this.StartDate = StartDate;
-                this.EndDate = EndDate;
-                this.Reason = Reason;
-                this.status = status;
-            }
-            
-            public string Id { get; set; }
-            
-            public string DoctorId { get; set; }
-
-            public string PatientId { get; set; }
-
-            public string StartDate { get; set; }
-
-            public string EndDate { get; set; }
-
-            public string Reason { get; set; }
-
-            public string status { get; set; }
-        }
         #endregion
     }
 }
