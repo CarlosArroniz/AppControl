@@ -11,14 +11,23 @@ namespace AppointmentControl.Data
     {
         // Azure
         private readonly IMobileServiceTable<Appointment> _table;
+        private static readonly Lazy<AppointmentManager> instance = new Lazy<AppointmentManager>(() => new AppointmentManager());
 
-        public AppointmentManager()
+        private AppointmentManager()
         {
             var azureClient = new MobileServiceClient(
                 Constants.AzureApplicationUrl,
                 Constants.AzureApplicationKey);
 
             _table = azureClient.GetTable<Appointment>();
+        }
+
+        public static AppointmentManager Instance
+        {
+            get
+            {
+                return instance.Value;
+            }
         }
 
         public async Task<Appointment> GetTaskAsync(string id)

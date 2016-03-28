@@ -24,8 +24,6 @@ namespace AppointmentControl
     public partial class SignUpPage : ContentPage
     {
         private readonly UserManager userManager;
-        private readonly DoctorManager doctorManager;
-        private readonly PatientManager patientManager;
 
         private Label signUpLabel;
         private Label userLabel;
@@ -56,8 +54,6 @@ namespace AppointmentControl
         {
             InitializeComponents();
             userManager = UserManager.Instance;
-            doctorManager = new DoctorManager();
-            patientManager = new PatientManager();
         }
 
         private void InitializeComponents()

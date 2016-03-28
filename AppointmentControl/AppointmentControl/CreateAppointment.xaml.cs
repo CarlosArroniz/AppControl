@@ -29,7 +29,7 @@ namespace AppointmentControl
             EndHour.Time = StartHour.Time;
 
             userManager = UserManager.Instance;
-            appointmentManager = new AppointmentManager();
+            appointmentManager = AppointmentManager.Instance;
         }
 
         protected override async void OnAppearing()

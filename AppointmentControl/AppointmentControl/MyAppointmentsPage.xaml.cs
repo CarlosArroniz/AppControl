@@ -68,7 +68,7 @@ namespace AppointmentControl
 
             appointments = new List<Appointment>();
 
-            appointManager = new AppointmentManager();
+            appointManager = AppointmentManager.Instance;
 
             this.BackgroundColor = Color.FromHex("#FFF");
 
