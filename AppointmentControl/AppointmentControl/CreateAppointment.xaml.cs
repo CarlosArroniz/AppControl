@@ -28,7 +28,7 @@ namespace AppointmentControl
 
             EndHour.Time = StartHour.Time;
 
-            userManager = new UserManager();
+            userManager = UserManager.Instance;
             appointmentManager = new AppointmentManager();
         }
 

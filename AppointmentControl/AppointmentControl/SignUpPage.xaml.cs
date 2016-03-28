@@ -55,7 +55,7 @@ namespace AppointmentControl
         public SignUpPage()
         {
             InitializeComponents();
-            userManager = new UserManager();
+            userManager = UserManager.Instance;
             doctorManager = new DoctorManager();
             patientManager = new PatientManager();
         }

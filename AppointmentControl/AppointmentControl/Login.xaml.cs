@@ -48,7 +48,7 @@ namespace AppointmentControl
         {
             InitializeComponent();
 
-            this.usman = new UserManager();
+            this.usman = UserManager.Instance;
 
             var titleImage = new Image { Source = "medical.png", HeightRequest = 200 };
 
