@@ -48,8 +48,6 @@
       <DependentUpon>CreateAppointment.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\AppointmentManager.cs" />
-    <Compile Include="Data\DoctorManager.cs" />
-    <Compile Include="Data\PatientManager.cs" />
     <Compile Include="Data\UserManager.cs" />
     <Compile Include="EditProfile.xaml.cs">
       <DependentUpon>EditProfile.xaml</DependentUpon>

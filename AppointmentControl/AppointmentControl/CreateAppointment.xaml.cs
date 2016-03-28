@@ -29,8 +29,8 @@ namespace AppointmentControl
 
             EndHour.Time = StartHour.Time;
 
-            userManager = new UserManager();
-            appointmentManager = new AppointmentManager();
+            userManager = UserManager.Instance;
+            appointmentManager = AppointmentManager.Instance;
 
             citiesPicker.SelectedIndexChanged += async (sender, args) =>
                 {
