@@ -56,12 +56,12 @@ namespace AppointmentControl.Data
             return null;
         }
 
-        public async Task<ObservableCollection<Appointment>> GetAppointmentsAsync(string doctorId, string patientId)
+        public async Task<ObservableCollection<Appointment>> GetAppointmentsAsync(string userId)
         {
             try
             {
                 return new ObservableCollection<Appointment>(
-                    await _table.Where(appointment => (appointment.DoctorId==doctorId) && (appointment.PatientId==patientId)).ToListAsync());
+                    await _table.Where(appointment => (appointment.DoctorId == userId) || (appointment.PatientId == userId)).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {

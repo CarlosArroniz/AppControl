@@ -42,9 +42,6 @@ namespace AppointmentControl
         /// <summary>
         /// The single appoint.
         /// </summary>
-
-        #endregion
-
         private Label header;
 
         private ListView appointsList;
@@ -58,6 +55,8 @@ namespace AppointmentControl
         private BoxView boxView;
 
         private StackLayout content;
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -98,7 +97,7 @@ namespace AppointmentControl
                         FontSize = 10,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#000"),
+                        TextColor = Color.FromHex("#FFF"),
                     };
                     nameLabel.SetBinding(Label.TextProperty, "PatientId");
 
@@ -107,17 +106,17 @@ namespace AppointmentControl
                         FontSize = 15,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#000"),
+                        TextColor = Color.FromHex("#FFF"),
                     };
 
-                    dateLabel.SetBinding(Label.TextProperty, new Binding("StartDate", BindingMode.OneWay, null, null, "Appointment Date {0:d}"));
+                    dateLabel.SetBinding(Label.TextProperty, new Binding("StartDate", BindingMode.OneWay, null, null, "{0:d}"));
 
                     reasonLabel = new Label
                     {
                         FontSize = 15,
                         FontAttributes = FontAttributes.Italic,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#000")
+                        TextColor = Color.FromHex("#FFF")
                     };
                     reasonLabel.SetBinding(Label.TextProperty, "Reason");
 
@@ -134,7 +133,7 @@ namespace AppointmentControl
                                 boxView, new StackLayout
                                 {
                                     HorizontalOptions = LayoutOptions.CenterAndExpand, 
-                                    BackgroundColor = Color.FromHex("#808080"), 
+                                    BackgroundColor = Color.FromHex("#12A5F4"), 
                                     WidthRequest = 300, 
                                     HeightRequest = 150, 
                                     Children =
@@ -176,12 +175,17 @@ namespace AppointmentControl
         {
             base.OnAppearing();
 
-            var userId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id;
+            var user = ((User)Application.Current.Properties[Constants.UserPropertyName]);
 
-            appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync(userId);
-
+            if (user.isdoctor)
+            {
+                appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
+            }
+            else
+            {
+                appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
+            }
         }
-
         #endregion
     }
 }
