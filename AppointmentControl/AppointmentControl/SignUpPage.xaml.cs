@@ -269,12 +269,7 @@ namespace AppointmentControl
                 return;
             }
 
-            var isDoc = false;
-
-            if (radios.SelectedIndex == DOCTOR)
-            {
-                isDoc = true;
-            }
+            bool isDoc = radios.SelectedIndex == DOCTOR;
 
             var country = countryPicker.SelectedIndex;
 
