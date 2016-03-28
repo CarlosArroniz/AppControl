@@ -177,5 +177,23 @@ namespace AppointmentControl.Data
             return null;
         }
 
+        public async Task<ObservableCollection<User>> GetUsersByCityAsync(string city)
+        {
+            try
+            {
+                return new ObservableCollection<User>(
+                    await _table.Where(user => user.City == city).ToListAsync());
+            }
+            catch (MobileServiceInvalidOperationException msioe)
+            {
+                Debug.WriteLine(@"INVALID {0}", msioe.Message);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(@"ERROR {0}", e.Message);
+            }
+            return null;
+        }
+
     }
 }

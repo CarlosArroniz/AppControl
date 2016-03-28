@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
@@ -15,7 +17,7 @@ namespace AppointmentControl
         private readonly AppointmentManager appointmentManager;
         private ObservableCollection<User> patientList;
         private ObservableCollection<User> doctorsList;
-
+        
         public CreateAppointment()
         {
             var type = (User)Application.Current.Properties[Constants.UserPropertyName];
@@ -31,26 +33,6 @@ namespace AppointmentControl
 
             userManager = UserManager.Instance;
             appointmentManager = AppointmentManager.Instance;
-
-            citiesPicker.SelectedIndexChanged += async (sender, args) =>
-                {
-                    var specsList = await userManager.GetFiltersAsync(citiesPicker.SelectedIndex.ToString());
-
-                    foreach (var specs in specsList)
-                    {
-                        specialityPicker.Items.Add(specs.Speciality);
-                    }
-                };
-
-            specialityPicker.SelectedIndexChanged += async (sender, args) =>
-                {
-                    var namesList = await userManager.GetFiltersAsync(specialityPicker.SelectedIndex.ToString());
-
-                    foreach (var names in namesList)
-                    {
-                        namesPicker.Items.Add(names.Name);
-                    }
-                };
         }
 
         protected override async void OnAppearing()
@@ -74,13 +56,37 @@ namespace AppointmentControl
             }
             else
             {
-                doctorsList = await userManager.GetDoctorsAsync();
-
-                foreach (var doctor in doctorsList)
-                {
-                    citiesPicker.Items.Add(doctor.City);
-                }
+                FillDoctorFilterPickers();
             }
+        }
+
+        private async void FillDoctorFilterPickers()
+        {
+            doctorsList = await userManager.GetDoctorsAsync();
+            SortedSet<string> citiesList = new SortedSet<string>();
+            SortedSet<string> specialitiesList = new SortedSet<string>();
+            foreach (var doctor in doctorsList)
+            {
+                //citiesPicker.Items.Add(doctor.City);
+                citiesList.Add(doctor.City);
+                specialitiesList.Add(doctor.Speciality);
+            }
+
+            foreach (var city in citiesList)
+            {
+                citiesPicker.Items.Add(city);
+            }
+
+            foreach (var speciality in specialitiesList)
+            {
+                specialityPicker.Items.Add(speciality);
+            }
+
+            foreach (var doctor in doctorsList)
+            {
+                namesPicker.Items.Add(doctor.Name);
+            }
+           
         }
 
         private async void Save(object sender, EventArgs e)
@@ -167,6 +173,35 @@ namespace AppointmentControl
                 status = Appointment.ACCEPTED,
                 PatientId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id
             };
+        }
+
+        private async void CitiesPicker_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine("CitiesPicker_OnSelectedIndexChanged  citiesPicker.Items[citiesPicker.SelectedIndex]: " + citiesPicker.Items[citiesPicker.SelectedIndex]);
+            var specsList = await userManager.GetFiltersAsync(citiesPicker.Items[citiesPicker.SelectedIndex]);
+            Debug.WriteLine("CitiesPicker_OnSelectedIndexChanged  specsList: " + specsList.Count);
+            
+            if (specsList!= null)
+            {
+                specialityPicker.Items.Clear();
+                foreach (var specs in specsList)
+                {
+                    specialityPicker.Items.Add(specs.Speciality);
+                }
+            }
+
+        }
+
+        private async void SpecialityPicker_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine("SpecialityPicker_OnSelectedIndexChanged  specialityPicker.Items[specialityPicker.SelectedIndex]: " + specialityPicker.Items[specialityPicker.SelectedIndex]);
+            
+            var namesList = await userManager.GetFiltersAsync(specialityPicker.Items[specialityPicker.SelectedIndex]);
+
+            foreach (var names in namesList)
+            {
+                namesPicker.Items.Add(names.Name);
+            }
         }
     }
 }

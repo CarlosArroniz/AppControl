@@ -19,18 +19,20 @@
         <Label Text="Paciente"
                FontSize="20"
                BackgroundColor="#FFF"
-               TextColor="##12A5F4"
+               TextColor="#12A5F4"
                HorizontalTextAlignment="Start"
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
 
-        <Picker x:Name="citiesPicker" />
-        <Picker x:Name="specialityPicker" />
+        <Picker x:Name="citiesPicker" 
+                SelectedIndexChanged="CitiesPicker_OnSelectedIndexChanged"/>
+        <Picker x:Name="specialityPicker"
+                SelectedIndexChanged="SpecialityPicker_OnSelectedIndexChanged"/>
         <Picker x:Name="namesPicker"/>
 
         <Label Text="Date" FontSize="20"
                BackgroundColor="#FFF"
-               TextColor="##12A5F4"
+               TextColor="#12A5F4"
                HorizontalTextAlignment="Start"
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
@@ -56,7 +58,7 @@
         <Label Text="Inicio"
                FontSize="20"
                BackgroundColor="#FFF"
-               TextColor="##12A5F4"
+               TextColor="#12A5F4"
                HorizontalTextAlignment="Start"
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
@@ -66,7 +68,7 @@
         <Label Text="Fin"
                FontSize="20"
                BackgroundColor="#FFF"
-               TextColor="##12A5F4"
+               TextColor="#12A5F4"
                HorizontalTextAlignment="Start"
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
@@ -75,7 +77,7 @@
 
         <Label Text="Motivo" FontSize="20"
                BackgroundColor="#FFF"
-               TextColor="##12A5F4"
+               TextColor="#12A5F4"
                HorizontalTextAlignment="Start"
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
