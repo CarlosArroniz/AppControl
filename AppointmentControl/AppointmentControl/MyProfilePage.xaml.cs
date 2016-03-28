@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using AppointmentControl.Models;
+
 namespace AppointmentControl
 {
     using System;
@@ -25,11 +27,33 @@ namespace AppointmentControl
         public MyProfilePage()
         {
             InitializeComponent();
+            FillLabelsWithUserData();
         }
 
         #endregion
 
         #region Methods
+
+        private void FillLabelsWithUserData()
+        {
+            var currentUser = (User)Application.Current.Properties[Constants.UserPropertyName];
+            Name.Text = currentUser.Name;
+            Speciality.Text = currentUser.Speciality;
+            Phone.Text = currentUser.Phone;
+            Address.Text = currentUser.Address;
+            City.Text = currentUser.City;
+            State.Text = currentUser.State;
+            Country.Text = currentUser.Country;
+            ZipCode.Text = currentUser.Zip;
+            UserName.Text = currentUser.Username;
+            Email.Text = currentUser.Email;
+
+            if (!currentUser.isdoctor)
+            {
+                Speciality.IsVisible = Speciality.IsEnabled = false;
+            }
+
+        }
 
         /// <summary>
         /// The edit profile.
