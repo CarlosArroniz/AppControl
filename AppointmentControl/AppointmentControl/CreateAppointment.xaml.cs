@@ -8,6 +8,7 @@ using Xamarin.Forms;
 
 namespace AppointmentControl
 {
+
     public partial class CreateAppointment : ContentPage
     {
         private readonly UserManager userManager;
@@ -30,6 +31,26 @@ namespace AppointmentControl
 
             userManager = new UserManager();
             appointmentManager = new AppointmentManager();
+
+            citiesPicker.SelectedIndexChanged += async (sender, args) =>
+                {
+                    var specsList = await userManager.GetFiltersAsync(citiesPicker.SelectedIndex.ToString());
+
+                    foreach (var specs in specsList)
+                    {
+                        specialityPicker.Items.Add(specs.Speciality);
+                    }
+                };
+
+            specialityPicker.SelectedIndexChanged += async (sender, args) =>
+                {
+                    var namesList = await userManager.GetFiltersAsync(specialityPicker.SelectedIndex.ToString());
+
+                    foreach (var names in namesList)
+                    {
+                        namesPicker.Items.Add(names.Name);
+                    }
+                };
         }
 
         protected override async void OnAppearing()
@@ -49,7 +70,6 @@ namespace AppointmentControl
                 foreach (var patients in patientList)
                 {
                     namesPicker.Items.Add(patients.Name);
-                    
                 }
             }
             else
@@ -58,9 +78,7 @@ namespace AppointmentControl
 
                 foreach (var doctor in doctorsList)
                 {
-                    namesPicker.Items.Add(doctor.Name);
                     citiesPicker.Items.Add(doctor.City);
-                    specialityPicker.Items.Add(doctor.Speciality);
                 }
             }
         }

@@ -86,7 +86,6 @@ namespace AppointmentControl
             {
                 SeparatorVisibility = SeparatorVisibility.Default,
                 SeparatorColor = Color.Red,
-                //ItemsSource = appsList,
                 RowHeight = 100,
                 WidthRequest = 150,
 
@@ -163,7 +162,6 @@ namespace AppointmentControl
                 Content = content,
             };
         }
-
         #endregion
 
         #region Methods
