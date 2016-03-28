@@ -142,7 +142,7 @@ namespace AppointmentControl
 
         private async Task<Appointment> CreateAppointmentAsPatient()
         {
-            User selectedDoctor = patientList[namesPicker.SelectedIndex];
+            User selectedDoctor = doctorsList[namesPicker.SelectedIndex];
             return new Appointment()
             {
                 DoctorId = selectedDoctor.Id,
