@@ -178,7 +178,7 @@ namespace AppointmentControl
         private async void CitiesPicker_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             Debug.WriteLine("CitiesPicker_OnSelectedIndexChanged  citiesPicker.Items[citiesPicker.SelectedIndex]: " + citiesPicker.Items[citiesPicker.SelectedIndex]);
-            var specsList = await userManager.GetFiltersAsync(citiesPicker.Items[citiesPicker.SelectedIndex]);
+            var specsList = await userManager.GetUsersByCityAsync(citiesPicker.Items[citiesPicker.SelectedIndex]);
             Debug.WriteLine("CitiesPicker_OnSelectedIndexChanged  specsList: " + specsList.Count);
             
             if (specsList!= null)
@@ -195,8 +195,8 @@ namespace AppointmentControl
         private async void SpecialityPicker_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             Debug.WriteLine("SpecialityPicker_OnSelectedIndexChanged  specialityPicker.Items[specialityPicker.SelectedIndex]: " + specialityPicker.Items[specialityPicker.SelectedIndex]);
-            
-            var namesList = await userManager.GetFiltersAsync(specialityPicker.Items[specialityPicker.SelectedIndex]);
+
+            var namesList = await userManager.GetFiltersAsync(citiesPicker.Items[citiesPicker.SelectedIndex], specialityPicker.Items[specialityPicker.SelectedIndex]);
 
             foreach (var names in namesList)
             {

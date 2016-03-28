@@ -159,12 +159,12 @@ namespace AppointmentControl.Data
             return null;
         }
 
-        public async Task<ObservableCollection<User>> GetFiltersAsync(string data)
+        public async Task<ObservableCollection<User>> GetFiltersAsync(string city, string speciality)
         {
             try
             {
                 return new ObservableCollection<User>(
-                    await _table.Where(user => user.City == data || user.Speciality == data || user.Name == data).ToListAsync());
+                    await _table.Where(user => user.City == city && user.Speciality == speciality).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
@@ -182,7 +182,7 @@ namespace AppointmentControl.Data
             try
             {
                 return new ObservableCollection<User>(
-                    await _table.Where(user => user.City == city).ToListAsync());
+                    await _table.Where(user => user.City == city && user.isdoctor).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
