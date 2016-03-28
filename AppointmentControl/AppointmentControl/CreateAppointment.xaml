@@ -7,7 +7,7 @@
              x:Class="AppointmentControl.CreateAppointment">
   <ScrollView>
     <StackLayout Orientation="Vertical" BackgroundColor="#FFF">
-      <Label Text="Crear nueva cita"
+      <Label Text="Create new Appointment"
              FontSize="20"
              BackgroundColor="#FFF"
              TextColor="#12A5F4"
@@ -16,7 +16,8 @@
              FontAttributes="Bold" />
 
       <StackLayout Orientation="Vertical" Padding="15,45,15,15">
-        <Label Text="Paciente"
+        
+        <Label Text="Patient" x:Name="pLabel"
                FontSize="20"
                BackgroundColor="#FFF"
                TextColor="#12A5F4"
@@ -24,10 +25,33 @@
                VerticalTextAlignment="End"
                FontAttributes="Bold" />
 
-        <Picker x:Name="citiesPicker" 
+        <Label Text="City" x:Name="cLabel"
+               FontSize="20"
+               BackgroundColor="#FFF"
+               TextColor="#12A5F4"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
+        <Picker x:Name="citiesPicker"
                 SelectedIndexChanged="CitiesPicker_OnSelectedIndexChanged"/>
+
+        <Label Text="Speciality" x:Name="sLabel"
+               FontSize="20"
+               BackgroundColor="#FFF"
+               TextColor="#12A5F4"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
         <Picker x:Name="specialityPicker"
                 SelectedIndexChanged="SpecialityPicker_OnSelectedIndexChanged"/>
+
+        <Label Text="Name" x:Name="nLabel"
+               FontSize="20"
+               BackgroundColor="#FFF"
+               TextColor="#12A5F4"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="End"
+               FontAttributes="Bold" />
         <Picker x:Name="namesPicker"/>
 
         <Label Text="Date" FontSize="20"
@@ -55,7 +79,7 @@
           </DatePicker.MaximumDate>
         </DatePicker>
 
-        <Label Text="Inicio"
+        <Label Text="Starts at:"
                FontSize="20"
                BackgroundColor="#FFF"
                TextColor="#12A5F4"
@@ -65,7 +89,7 @@
 
         <TimePicker x:Name="StartHour" VerticalOptions="CenterAndExpand"></TimePicker>
 
-        <Label Text="Fin"
+        <Label Text="Ends at: "
                FontSize="20"
                BackgroundColor="#FFF"
                TextColor="#12A5F4"
@@ -75,7 +99,7 @@
 
         <TimePicker x:Name="EndHour" VerticalOptions="CenterAndExpand"></TimePicker>
 
-        <Label Text="Motivo" FontSize="20"
+        <Label Text="Reason" FontSize="20"
                BackgroundColor="#FFF"
                TextColor="#12A5F4"
                HorizontalTextAlignment="Start"

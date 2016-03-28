@@ -49,6 +49,11 @@ namespace AppointmentControl
                 citiesPicker.IsVisible = false;
                 specialityPicker.IsVisible = false;
 
+                pLabel.IsVisible = true;
+                cLabel.IsVisible = false;
+                sLabel.IsVisible = false;
+                nLabel.IsVisible = false;
+
                 foreach (var patients in patientList)
                 {
                     namesPicker.Items.Add(patients.Name);
@@ -56,6 +61,10 @@ namespace AppointmentControl
             }
             else
             {
+                pLabel.IsVisible = false;
+                cLabel.IsVisible = true;
+                sLabel.IsVisible = true;
+                nLabel.IsVisible = true;
                 FillDoctorFilterPickers();
             }
         }
