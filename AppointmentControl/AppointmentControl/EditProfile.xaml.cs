@@ -49,6 +49,7 @@ namespace AppointmentControl
         {
             if (!await ValidateFields()) return;
 
+            ActIndicator.IsRunning = ActIndicator.IsVisible = true;
             user = FillUserDataWithFormFields();
             await userManager.SaveTaskAsync(user);
             Application.Current.Properties[Constants.UserPropertyName] = user;

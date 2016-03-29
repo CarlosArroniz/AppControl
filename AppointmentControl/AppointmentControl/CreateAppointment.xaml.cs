@@ -107,6 +107,7 @@ namespace AppointmentControl
 
             try
             {
+                ActIndicator.IsRunning = ActIndicator.IsVisible = true;
                 Appointment appointment = await CreateNewAppointment();
                 await appointmentManager.SaveTaskAsync(appointment);
 
