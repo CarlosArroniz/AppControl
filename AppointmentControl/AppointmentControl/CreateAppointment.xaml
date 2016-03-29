@@ -5,118 +5,140 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              x:Class="AppointmentControl.CreateAppointment">
-  <ScrollView>
-    <StackLayout Orientation="Vertical" BackgroundColor="#FFF">
-      <Label Text="Create new Appointment"
-             FontSize="20"
-             BackgroundColor="#FFF"
-             TextColor="#12A5F4"
-             VerticalOptions="Center"
-             HorizontalOptions="Center"
-             FontAttributes="Bold" />
+  <AbsoluteLayout HorizontalOptions="FillAndExpand"
+      VerticalOptions="FillAndExpand">
+    <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"
+      Orientation="Vertical" BackgroundColor="White" Padding="20,50,20,20">
+      <ScrollView>
+        <StackLayout Orientation="Vertical" BackgroundColor="#FFF">
+          <Label Text="Create new Appointment"
+                 FontSize="20"
+                 BackgroundColor="#FFF"
+                 TextColor="#12A5F4"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 FontAttributes="Bold" />
 
-      <StackLayout Orientation="Vertical" Padding="15,45,15,15">
-        
-        <Label Text="Patient" x:Name="pLabel"
-               FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
+          <StackLayout Orientation="Vertical" Padding="15,45,15,15">
 
-        <Label Text="City" x:Name="cLabel"
-               FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
-        <Picker x:Name="citiesPicker"
-                SelectedIndexChanged="CitiesPicker_OnSelectedIndexChanged"/>
+            <Label Text="Patient" x:Name="pLabel"
+                   FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
 
-        <Label Text="Speciality" x:Name="sLabel"
-               FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
-        <Picker x:Name="specialityPicker"
-                SelectedIndexChanged="SpecialityPicker_OnSelectedIndexChanged"/>
+            <Label Text="City" x:Name="cLabel"
+                   FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
+            <Picker x:Name="citiesPicker"
+                    SelectedIndexChanged="CitiesPicker_OnSelectedIndexChanged"/>
 
-        <Label Text="Name" x:Name="nLabel"
-               FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
-        <Picker x:Name="namesPicker"/>
+            <Label Text="Speciality" x:Name="sLabel"
+                   FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
+            <Picker x:Name="specialityPicker"
+                    SelectedIndexChanged="SpecialityPicker_OnSelectedIndexChanged"/>
 
-        <Label Text="Date" FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
+            <Label Text="Name" x:Name="nLabel"
+                   FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
+            <Picker x:Name="namesPicker"/>
 
-        <DatePicker x:Name="Date" VerticalOptions="CenterAndExpand" Date="{x:Static system:DateTime.Now}">
-          <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
-          <DatePicker.MinimumDate>
-            <system:DateTime x:FactoryMethod="Parse">
-              <x:Arguments>
-                <x:String>Jan 1 2016</x:String>
-              </x:Arguments>
-            </system:DateTime>
-          </DatePicker.MinimumDate>
-          <DatePicker.MaximumDate>
-            <system:DateTime x:FactoryMethod="Parse">
-              <x:Arguments>
-                <x:String>Dec 31 2050</x:String>
-              </x:Arguments>
-            </system:DateTime>
-          </DatePicker.MaximumDate>
-        </DatePicker>
+            <Label Text="Date" FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
 
-        <Label Text="Starts at:"
-               FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
+            <DatePicker x:Name="Date" VerticalOptions="CenterAndExpand" Date="{x:Static system:DateTime.Now}">
+              <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+              <DatePicker.MinimumDate>
+                <system:DateTime x:FactoryMethod="Parse">
+                  <x:Arguments>
+                    <x:String>Jan 1 2016</x:String>
+                  </x:Arguments>
+                </system:DateTime>
+              </DatePicker.MinimumDate>
+              <DatePicker.MaximumDate>
+                <system:DateTime x:FactoryMethod="Parse">
+                  <x:Arguments>
+                    <x:String>Dec 31 2050</x:String>
+                  </x:Arguments>
+                </system:DateTime>
+              </DatePicker.MaximumDate>
+            </DatePicker>
 
-        <TimePicker x:Name="StartHour" VerticalOptions="CenterAndExpand"></TimePicker>
+            <Label Text="Starts at:"
+                   FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
 
-        <Label Text="Ends at: "
-               FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
+            <TimePicker x:Name="StartHour" VerticalOptions="CenterAndExpand"></TimePicker>
 
-        <TimePicker x:Name="EndHour" VerticalOptions="CenterAndExpand"></TimePicker>
+            <Label Text="Ends at: "
+                   FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
 
-        <Label Text="Reason" FontSize="20"
-               BackgroundColor="#FFF"
-               TextColor="#12A5F4"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End"
-               FontAttributes="Bold" />
-        <Entry x:Name="Reason"
-               Placeholder="Appointment Reason"
-               PlaceholderColor="#666666"
-               BackgroundColor="White"
-               TextColor="Black" />
-        <Label HeightRequest="20" />
-        <Button Text="Save"
-                BackgroundColor="#2C903D"
-                TextColor="#FFF"
-                Clicked="Save" />
-      </StackLayout>
+            <TimePicker x:Name="EndHour" VerticalOptions="CenterAndExpand"></TimePicker>
 
+            <Label Text="Reason" FontSize="20"
+                   BackgroundColor="#FFF"
+                   TextColor="#12A5F4"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="End"
+                   FontAttributes="Bold" />
+            <Entry x:Name="Reason"
+                   Placeholder="Appointment Reason"
+                   PlaceholderColor="#666666"
+                   BackgroundColor="White"
+                   TextColor="Black" />
+            <Label HeightRequest="20" />
+            <Button Text="Save"
+                    BackgroundColor="#2C903D"
+                    TextColor="#FFF"
+                    Clicked="Save" />
+          </StackLayout>
+
+        </StackLayout>
+      </ScrollView>
     </StackLayout>
-  </ScrollView>
+    <ActivityIndicator x:Name="ActIndicator"
+                         IsRunning="False"
+                         IsVisible="False"
+                         AbsoluteLayout.LayoutFlags="All"
+                         AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         Color="White"
+                         BackgroundColor="Gray"
+                         VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="CenterAndExpand"
+                         RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
+                                    Property=Height,
+                                    Factor=0.33}"
+                         RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                    Property=Height,
+                                    Factor=0.28}"
+                       />
+  </AbsoluteLayout>
 </ContentPage>
