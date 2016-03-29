@@ -4,12 +4,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppointmentControl.EditProfile">
 
-    <StackLayout Orientation="Vertical" BackgroundColor="#12A5F4" Padding="20,50,20,20">
-        <StackLayout BackgroundColor="#12A5F4" IsClippedToBounds="True" HeightRequest="25">
+    <StackLayout Orientation="Vertical" BackgroundColor="White" Padding="20,50,20,20">
+        <StackLayout BackgroundColor="White" IsClippedToBounds="True" HeightRequest="25">
             <Label Text="Editar Perfil"
                    FontSize="20"
-                   BackgroundColor="#12A5F4"
-                   TextColor="#FFF"
+                   BackgroundColor="White"
+                   TextColor="#12A5F4"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
                    FontAttributes="Bold" />
@@ -18,6 +18,154 @@
             <ScrollView>
                 <StackLayout Orientation="Vertical">
                     <Image Source="default_user.png" HeightRequest="200"></Image>
+
+                    <Label x:Name="NameLabel" Text="Name"
+                           FontSize="20"
+                           BackgroundColor="#FFF"
+                           TextColor="#12A5F4"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="End"
+                           FontAttributes="Bold" />
+                  <Entry x:Name="Name"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Name"
+                           PlaceholderColor="#666666"
+                           Keyboard="Text" />
+
+                  <Label x:Name="SpecialityLabel" Text="Speciality"
+                           FontSize="20"
+                           BackgroundColor="#FFF"
+                           TextColor="#12A5F4"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Start" />
+                  <Entry x:Name="Speciality"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Speciality"
+                           PlaceholderColor="#666666"
+                           Keyboard="Text" />
+
+                  <Label x:Name="PhoneLabel" Text="Mobile" FontSize="20"
+                           BackgroundColor="#FFF"
+                           TextColor="#12A5F4"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Center" />
+                  <Entry x:Name="Phone"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Ej. 443123456"
+                           PlaceholderColor="#666666"
+                           Keyboard="Telephone" />
+
+                    <Label x:Name="AddressLabel" Text="Address"
+                           FontSize="18"
+                           BackgroundColor="#FFF"
+                           TextColor="#12A5F4"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="End" />
+                  <Entry x:Name="Address"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Ej. Madero 10"
+                           PlaceholderColor="#666666"
+                           Keyboard="Text" />
+
+                      <Label x:Name="CityLabel" Text="City"
+                             FontSize="18"
+                             BackgroundColor="#FFF"
+                             TextColor="#12A5F4"
+                             HorizontalTextAlignment="Start"
+                             VerticalTextAlignment="End" />
+                  <Entry x:Name="City"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Ej. Morelia"
+                           PlaceholderColor="#666666"
+                           Keyboard="Text" />
+
+                      <Label x:Name="StateLabel" Text="State"
+                             FontSize="18"
+                             BackgroundColor="#FFF"
+                             TextColor="#12A5F4"
+                             HorizontalTextAlignment="Start"
+                             VerticalTextAlignment="End" />
+                  <Entry x:Name="State"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Ej. Michoacan"
+                           PlaceholderColor="#666666"
+                           Keyboard="Text" />
+
+                      <Label x:Name="CountryLabel" Text="Country"
+                             FontSize="18"
+                             BackgroundColor="#FFF"
+                             TextColor="#12A5F4"
+                             HorizontalTextAlignment="Start"
+                             VerticalTextAlignment="End" />
+                  <Entry x:Name="Country"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Ej. Mexico"
+                           PlaceholderColor="#666666"
+                           Keyboard="Text" />
+
+                      <Label x:Name="ZipCodeLabel" Text="Zip Code"
+                             FontSize="18"
+                             BackgroundColor="#FFF"
+                             TextColor="#12A5F4"
+                             HorizontalTextAlignment="Start"
+                             VerticalTextAlignment="End" />
+                  <Entry x:Name="ZipCode"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="Ej. 58000"
+                           PlaceholderColor="#666666"
+                           Keyboard="Numeric" />
+                  
+                      <Label x:Name="UserNameLabel" Text="Username" FontSize="20"
+                             BackgroundColor="#FFF"
+                             TextColor="#12A5F4"
+                             HorizontalTextAlignment="Start"
+                             VerticalTextAlignment="End"
+                             FontAttributes="Bold" />
+                  <Entry x:Name="Username"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           PlaceholderColor="#666666"
+                           IsEnabled="False" />
+
+                      <Label x:Name="PasswordLabel" Text="Password" FontSize="20"
+                             BackgroundColor="#FFF"
+                             TextColor="#12A5F4"
+                             HorizontalTextAlignment="Start"
+                             VerticalTextAlignment="End"
+                             FontAttributes="Bold"
+                             />
+                  <Entry x:Name="Password"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           PlaceholderColor="#666666"
+                           IsPassword="True" />
+
+                      <Label x:Name="EmailLabel" Text="Email"
+                             FontSize="20"
+                             BackgroundColor="#FFF"
+                             TextColor="#12A5F4"
+                             HorizontalTextAlignment="Start"
+                             VerticalTextAlignment="End" />
+                  <Entry x:Name="Email"
+                           BackgroundColor="#FFF"
+                           TextColor="Black"
+                           Placeholder="example@domain.com"
+                           PlaceholderColor="#666666"
+                           Keyboard="Email" />
+
+                    <Label HeightRequest="20" />
+                    <Button Text="Save"
+                            BackgroundColor="#2C903D"
+                            TextColor="#FFF"
+                            Clicked="Save" />
                 </StackLayout>
             </ScrollView>
         </StackLayout>

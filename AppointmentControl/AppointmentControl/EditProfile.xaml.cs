@@ -1,181 +1,143 @@
 ﻿using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using AppointmentControl.Data;
+using AppointmentControl.Models;
 using Xamarin.Forms;
 
 namespace AppointmentControl
 {
-    using System.Collections.Generic;
-    using System.Threading;
-
-
     public partial class EditProfile : ContentPage
     {
-        public ListView Menu { set; get; }
+        private readonly UserManager userManager = UserManager.Instance;
+        private User user;
 
         public EditProfile()
         {
             InitializeComponent();
+            user = Application.Current.Properties[Constants.UserPropertyName] as User;
 
-            #region Fields
-            //<StackLayout 2>
-            var title = new Label
-            {
-                Text = "Edit Profile",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center,
-                FontAttributes = FontAttributes.Bold
-            };
-            //</StackLayout 2>
-
-            //<Stacklayout3>
-            var nombreLbl = new Label
-            {
-                Text = "Name",
-                FontSize = 20,
-
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var nameEtry = new Entry
-            {
-                Placeholder = "Your name!",
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#000"),
-                PlaceholderColor = Color.FromHex("#666666")
-            };
-
-            var especialidadLbl = new Label
-            {
-                Text = "Speciality",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var specialityEntry = new Entry
-            {
-                Placeholder = "Your name!",
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#000"),
-                PlaceholderColor = Color.FromHex("#666666")
-            };
-
-            var phoneLabe = new Label
-            {
-                Text = "Phone",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var phoneEntry = new Entry
-            {
-                Placeholder = "Your Phone!",
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#000"),
-                PlaceholderColor = Color.FromHex("#666666"),
-                Keyboard = Keyboard.Telephone
-            };
-
-            var addressLabel = new Label
-            {
-                Text = "Address",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var adressEntry = new Entry
-            {
-                Placeholder = "Address!",
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#000"),
-                PlaceholderColor = Color.FromHex("#666666")
-            };
-
-            var countryLabel = new Label
-            {
-                Text = "Address",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var countryPicker = new Picker
-            {
-                BackgroundColor = Color.FromHex("#FFF"),
-                Items = { "Mexico", "Canada", "España" }
-            };
-
-            var provinceLabel = new Label
-            {
-                Text = "Province",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var provincePicker = new Picker
-            {
-                BackgroundColor = Color.FromHex("#FFF"),
-                Items = { "Michoacán", "Hidalgo", "Veracruz" }
-            };
-
-            var cityLabel = new Label
-            {
-                Text = "City",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var cityPicker = new Picker
-            {
-                BackgroundColor = Color.FromHex("#FFF"),
-                Items = { "Morelia", "Zamora", "Quiroga" }
-            };
-
-            var zipCodeLabel = new Label
-            {
-                Text = "Zip Code",
-                FontSize = 20,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.Start,
-                FontAttributes = FontAttributes.Bold
-            };
-
-            var zipCodeEntry = new Entry
-            {
-                Placeholder = "Zip Code!",
-                BackgroundColor = Color.FromHex("#FFF"),
-                TextColor = Color.FromHex("#000"),
-                PlaceholderColor = Color.FromHex("#666666")
-            };
-
-            //</Stacklayout3>
-            #endregion
+            FillFieldsWithLoggedUserData();
+            EnableFieldsByUserType();
         }
 
-        private void Save(object sender, EventArgs e)
+        private void EnableFieldsByUserType()
         {
+            if (user != null && !user.isdoctor)
+            {
+                SpecialityLabel.IsEnabled = SpecialityLabel.IsVisible = false;
+                Speciality.IsEnabled = Speciality.IsVisible = false;
+            }
+        }
+
+        private void FillFieldsWithLoggedUserData()
+        {
+            Name.Text = user.Name;
+            Speciality.Text = user.Speciality;
+            Phone.Text = user.Phone;
+            Address.Text = user.Address;
+            City.Text = user.City;
+            State.Text = user.State;
+            Country.Text = user.Country;
+            ZipCode.Text = user.Zip;
+            Username.Text = user.Username;
+            Password.Text = user.Password;
+            Email.Text = user.Email;
+        }
+
+        private async void Save(object sender, EventArgs e)
+        {
+            if (!await ValidateFields()) return;
+
+            user = FillUserDataWithFormFields();
+            await userManager.SaveTaskAsync(user);
+            Application.Current.Properties[Constants.UserPropertyName] = user;
+
             Application.Current.MainPage = new PrincipalPage();
+        }
+
+        private User FillUserDataWithFormFields()
+        {
+            User user = Application.Current.Properties[Constants.UserPropertyName] as User;
+            user.Name = Name.Text;
+            user.Speciality = Speciality.Text;
+            user.Phone = Phone.Text;
+            user.Address = Address.Text;
+            user.City = City.Text;
+            user.State = State.Text;
+            user.Country = Country.Text;
+            user.Zip = ZipCode.Text;
+            user.Username = Username.Text;
+            user.Password = Password.Text;
+            user.Email = Email.Text;
+            return user;
+        }
+
+        private async Task<bool> ValidateFields()
+        {
+            if (user.Password != Password.Text)
+            {
+                if (!await DisplayAlert(null, "Are you sure do you want to change your current password?", "Ok", "Cancel"))
+                {
+                    Password.Text = user.Password;
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(Password.Text))
+                {
+                    await DisplayAlert("Invalid password.",
+                        "Please enter a correct password.", "Ok");
+                    Password.Text = null;
+                    Password.Focus();
+                    return false;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(user.Phone) && user.Phone != Phone.Text)
+            {
+                if (!await DisplayAlert(null, "Are you sure do you want to change your current phone number?", "Ok", "Cancel"))
+                {
+                    Phone.Text = user.Phone;
+                    return false;
+                }
+
+                if (Phone.Text.Length!=10)
+                {
+                    await DisplayAlert("Invalid phone number.",
+                        "Please enter a correct phone number.", "Ok");
+                    Phone.Text = null;
+                    Phone.Focus();
+                    return false;
+                }
+            }
+            
+            if (Speciality.IsEnabled && string.IsNullOrEmpty(Speciality.Text) )
+            {
+                await DisplayAlert("Invalid Speciality.",
+                    "Please insert your medical speciality.", "Ok");
+                Speciality.Text = null;
+                Speciality.Focus();
+                return false;
+            }
+            
+            if (!string.IsNullOrEmpty(user.Email) && user.Email != Email.Text)
+            {
+                if (!await DisplayAlert(null, "Are you sure do you want to change your current email?", "Ok", "Cancel"))
+                {
+                    Email.Text = user.Email;
+                    return false;
+                }
+                if (!Regex.Match(Email.Text, Constants.EmailRegexPattern).Success )
+                {
+                    await DisplayAlert("Invalid Email.",
+                    "Please insert a valid email address.", "Ok");
+                    Email.Text = null;
+                    Email.Focus();
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

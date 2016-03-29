@@ -9,5 +9,7 @@
 
         // Constants for application
         public static string UserPropertyName = "user";
+
+        public static string EmailRegexPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
     }
 }
