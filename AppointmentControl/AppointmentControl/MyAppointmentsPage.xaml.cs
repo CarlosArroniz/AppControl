@@ -17,6 +17,9 @@ namespace AppointmentControl
 
     using Xamarin.Forms;
 
+    using XLabs.Forms;
+    using XLabs.Forms.Controls;
+
     /// <summary>
     /// The my appointments page.
     /// </summary>
@@ -59,6 +62,11 @@ namespace AppointmentControl
 
         #region Constructors and Destructors
 
+        private Button btnAceptar;
+
+        private Button btnRechazar;
+
+        private Button btnCancelar;
         /// <summary>
         /// Initializes a new instance of the <see cref="MyAppointmentsPage"/> class.
         /// </summary>
@@ -66,34 +74,38 @@ namespace AppointmentControl
         {
             InitializeComponent();
 
+            var grid = new Grid { Padding = 2 };
+
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60, GridUnitType.Star) });
+
             appointments = new List<Appointment>();
 
             appointManager = AppointmentManager.Instance;
 
             this.BackgroundColor = Color.FromHex("#FFF");
 
-            header = new Label
-            {
-                FontAttributes = FontAttributes.Bold,
-                Text = "Appointments for today:",
-                FontSize = 20,
-                HorizontalOptions = LayoutOptions.Center,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.Center
-            };
+            btnAceptar = new Button { TextColor = Color.FromHex("#FFF"), BackgroundColor = Color.FromHex("#2C903D"), Text = "Accept", WidthRequest = 10, FontSize = 10, HeightRequest = 70 };
+            btnRechazar = new Button { TextColor = Color.FromHex("#FFF"), BackgroundColor = Color.FromHex("#FF5808"), Text = "Deny", WidthRequest = 10, FontSize = 10, HeightRequest = 70 };
+            btnCancelar = new Button { TextColor = Color.FromHex("#FFF"), BackgroundColor = Color.FromHex("#FF0000"), Text = "Cancel", WidthRequest = 10, FontSize = 10, HeightRequest = 70 };
+
+            grid.Children.Add(btnAceptar, 0, 0);
+            grid.Children.Add(btnRechazar, 1, 0);
+            grid.Children.Add(btnCancelar, 2, 0);
 
             appointsList = new ListView
             {
                 SeparatorVisibility = SeparatorVisibility.Default,
-                SeparatorColor = Color.Red,
-                RowHeight = 100,
-                WidthRequest = 150,
-
+                SeparatorColor = Color.Gray,
+                RowHeight = 150,
+                WidthRequest = 200,
                 ItemTemplate = new DataTemplate(() =>
                 {
                     nameLabel = new Label
                     {
-                        FontSize = 10,
+                        FontSize = 15,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
                         TextColor = Color.FromHex("#FFF"),
@@ -119,19 +131,18 @@ namespace AppointmentControl
                     };
                     reasonLabel.SetBinding(Label.TextProperty, "Reason");
 
-                    boxView = new BoxView { BackgroundColor = Color.FromHex("#666666") };
-
                     return new ViewCell
                     {
                         View = new StackLayout
                         {
-                            Padding = new Thickness(5, 10, 10, 5),
+                            Padding = 8,
                             Orientation = StackOrientation.Horizontal,
                             Children =
                             {
-                                boxView, new StackLayout
+                                new StackLayout
                                 {
-                                    HorizontalOptions = LayoutOptions.CenterAndExpand, 
+                                    Padding = new Thickness(1, 5, 1, 1), 
+                                    HorizontalOptions = LayoutOptions.Center, 
                                     BackgroundColor = Color.FromHex("#12A5F4"), 
                                     WidthRequest = 300, 
                                     HeightRequest = 150, 
@@ -139,7 +150,8 @@ namespace AppointmentControl
                                     {
                                         nameLabel, 
                                         dateLabel, 
-                                        reasonLabel
+                                        reasonLabel,
+                                        grid
                                     }
                                 }
                             }
@@ -150,17 +162,16 @@ namespace AppointmentControl
 
             content = new StackLayout
             {
-                Padding = 25,
+                Padding = 0,
                 Children =
                 {
-                    header, appointsList
+                    appointsList
                 }
             };
 
-            Content = new ScrollView
-            {
-                Content = content,
-            };
+            var framious = new Frame() { HasShadow = true, Content = content };
+
+            Content = framious;
         }
         #endregion
 
@@ -182,6 +193,9 @@ namespace AppointmentControl
             else
             {
                 appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
+                btnAceptar.IsVisible = false;
+                btnRechazar.IsVisible = false;
+                btnCancelar.IsVisible = true;
             }
         }
         #endregion

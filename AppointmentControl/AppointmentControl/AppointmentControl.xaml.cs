@@ -24,6 +24,12 @@ namespace AppointmentControl
             this.MainPage = new Login();
         }
 
+        public void Logout()
+        {
+            Properties["IsLoggedIn"] = false; // only gets set to 'true' on the LoginPage
+            MainPage = new Login();
+        }
+
         #endregion
     }
 }
