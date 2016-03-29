@@ -89,7 +89,8 @@
         </StackLayout>
 
         <Label HeightRequest="20" />
-        <Button Text="Editar"
+        <Button Text="Edit Profile"
+                FontSize="15"
                 BackgroundColor="#2C903D"
                 TextColor="#FFF"
                 Clicked="EditProfile" />
