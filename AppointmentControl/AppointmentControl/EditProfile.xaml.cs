@@ -47,12 +47,14 @@ namespace AppointmentControl
 
         private async void Save(object sender, EventArgs e)
         {
+            ActIndicator.IsRunning = ActIndicator.IsVisible = true;
             if (!await ValidateFields()) return;
 
             user = FillUserDataWithFormFields();
             await userManager.SaveTaskAsync(user);
             Application.Current.Properties[Constants.UserPropertyName] = user;
 
+            ActIndicator.IsRunning = ActIndicator.IsVisible = false;
             Application.Current.MainPage = new PrincipalPage();
         }
 
