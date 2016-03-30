@@ -4,19 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using AppointmentControl.Data;
+using AppointmentControl.Models;
+using Xamarin.Forms;
+
 namespace AppointmentControl
 {
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-
-    using global::AppointmentControl.Data;
-
-    using global::AppointmentControl.Models;
-
-    using Newtonsoft.Json;
-
-    using Xamarin.Forms;
-
     /// <summary>
     /// The my appointments page.
     /// </summary>
@@ -55,6 +50,8 @@ namespace AppointmentControl
         private BoxView boxView;
 
         private StackLayout content;
+        private ActivityIndicator activityIndicator;
+
         #endregion
 
         #region Constructors and Destructors
@@ -70,7 +67,7 @@ namespace AppointmentControl
 
             appointManager = AppointmentManager.Instance;
 
-            this.BackgroundColor = Color.FromHex("#FFF");
+            BackgroundColor = Color.FromHex("#FFF");
 
             header = new Label
             {
@@ -96,7 +93,7 @@ namespace AppointmentControl
                         FontSize = 10,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#FFF"),
+                        TextColor = Color.FromHex("#FFF")
                     };
                     nameLabel.SetBinding(Label.TextProperty, "PatientId");
 
@@ -105,7 +102,7 @@ namespace AppointmentControl
                         FontSize = 15,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
-                        TextColor = Color.FromHex("#FFF"),
+                        TextColor = Color.FromHex("#FFF")
                     };
 
                     dateLabel.SetBinding(Label.TextProperty, new Binding("StartDate", BindingMode.OneWay, null, null, "{0:d}"));
@@ -157,10 +154,14 @@ namespace AppointmentControl
                 }
             };
 
-            Content = new ScrollView
+            var scroll = new ScrollView
             {
-                Content = content,
+                Content = content
             };
+
+            activityIndicator = Util.CreateLoadingIndicator();
+            var layout = Util.CreateAbsoluteLayout(scroll, activityIndicator);
+            Content = layout;
         }
         #endregion
 
@@ -175,6 +176,7 @@ namespace AppointmentControl
 
             var user = ((User)Application.Current.Properties[Constants.UserPropertyName]);
 
+            activityIndicator.IsRunning = activityIndicator.IsVisible = true;
             if (user.isdoctor)
             {
                 appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
@@ -183,6 +185,7 @@ namespace AppointmentControl
             {
                 appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
             }
+            activityIndicator.IsRunning = activityIndicator.IsVisible = false;
         }
         #endregion
     }
