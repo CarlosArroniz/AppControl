@@ -41,61 +41,79 @@ namespace AppointmentControl
 
             if (((User)Application.Current.Properties[Constants.UserPropertyName]).isdoctor)
             {
-                patientList = await userManager.GetPatientsAsync();
-
-                namesPicker.IsEnabled = true;
-                namesPicker.IsVisible = true;
-
-                citiesPicker.IsVisible = false;
-                specialityPicker.IsVisible = false;
-
-                pLabel.IsVisible = true;
-                cLabel.IsVisible = false;
-                sLabel.IsVisible = false;
-                nLabel.IsVisible = false;
-
-                foreach (var patients in patientList)
-                {
-                    namesPicker.Items.Add(patients.Name);
-                }
+                FillPatientFilterPickers();
             }
             else
             {
-                pLabel.IsVisible = false;
-                cLabel.IsVisible = true;
-                sLabel.IsVisible = true;
-                nLabel.IsVisible = true;
                 FillDoctorFilterPickers();
             }
         }
 
+        private async void FillPatientFilterPickers()
+        {
+            ActIndicator.IsRunning = ActIndicator.IsVisible = true;
+            patientList = await userManager.GetPatientsAsync();
+            ActIndicator.IsRunning = ActIndicator.IsVisible = false;
+
+            foreach (var patients in patientList)
+            {
+                namesPicker.Items.Add(patients.Name);
+            }
+            namesPicker.IsEnabled = true;
+            namesPicker.IsVisible = true;
+
+            citiesPicker.IsVisible = false;
+            specialityPicker.IsVisible = false;
+
+            pLabel.IsVisible = true;
+            cLabel.IsVisible = false;
+            sLabel.IsVisible = false;
+            nLabel.IsVisible = false;
+        }
+
         private async void FillDoctorFilterPickers()
         {
+            ActIndicator.IsRunning = ActIndicator.IsVisible = true;
             doctorsList = await userManager.GetDoctorsAsync();
+            ActIndicator.IsRunning = ActIndicator.IsVisible = false;
+            
             SortedSet<string> citiesList = new SortedSet<string>();
             SortedSet<string> specialitiesList = new SortedSet<string>();
             foreach (var doctor in doctorsList)
             {
-                //citiesPicker.Items.Add(doctor.City);
-                citiesList.Add(doctor.City);
-                specialitiesList.Add(doctor.Speciality);
+                Debug.WriteLine("FillDoctorFilterPickers {0} {1} {2}", doctor.Name, doctor.City, doctor.Speciality);
+                if (!string.IsNullOrEmpty(doctor.City))
+                {
+                    citiesList.Add(doctor.City);
+                }
+                if (!string.IsNullOrEmpty(doctor.Speciality))
+                {
+                    specialitiesList.Add(doctor.Speciality);
+                }
             }
 
             foreach (var city in citiesList)
             {
+                Debug.WriteLine("FillDoctorFilterPickers city: {0}", city);
                 citiesPicker.Items.Add(city);
             }
 
             foreach (var speciality in specialitiesList)
             {
+                Debug.WriteLine("FillDoctorFilterPickers speciality: {0}", speciality);
                 specialityPicker.Items.Add(speciality);
             }
 
             foreach (var doctor in doctorsList)
             {
+                Debug.WriteLine("FillDoctorFilterPickers doctor name: {0}", doctor.Name);
                 namesPicker.Items.Add(doctor.Name);
             }
-           
+
+            pLabel.IsVisible = false;
+            cLabel.IsVisible = true;
+            sLabel.IsVisible = true;
+            nLabel.IsVisible = true;
         }
 
         private async void Save(object sender, EventArgs e)

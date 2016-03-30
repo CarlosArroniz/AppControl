@@ -64,7 +64,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<User>();
         }
 
         public async Task<ObservableCollection<User>> GetPatientsAsync()
@@ -82,7 +82,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<User>();
         }
 
         public async Task<ObservableCollection<User>> GetDoctorsAsync()
@@ -90,7 +90,7 @@ namespace AppointmentControl.Data
             try
             {
                 return new ObservableCollection<User>(
-                    await _table.Where(user => user.isdoctor != false).ToListAsync());
+                    await _table.Where(user => user.isdoctor).ToListAsync());
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
@@ -100,7 +100,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<User>();
         }
 
         public async Task SaveTaskAsync(User user)
@@ -174,7 +174,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<User>();
         }
 
         public async Task<ObservableCollection<User>> GetUsersByCityAsync(string city)
@@ -192,7 +192,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<User>();
         }
 
     }
