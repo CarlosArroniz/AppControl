@@ -47,6 +47,8 @@ namespace AppointmentControl
         public Login()
         {
             InitializeComponent();
+            
+
 
             this.usman = UserManager.Instance;
 

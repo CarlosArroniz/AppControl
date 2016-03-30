@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace AppointmentControl
 {
-    public partial class EditProfile : ContentPage
+    public partial class EditProfile : NavigationPage
     {
         private readonly UserManager userManager = UserManager.Instance;
         private User user;
@@ -15,10 +15,16 @@ namespace AppointmentControl
         public EditProfile()
         {
             InitializeComponent();
+
             user = Application.Current.Properties[Constants.UserPropertyName] as User;
 
             FillFieldsWithLoggedUserData();
             EnableFieldsByUserType();
+        }
+
+        async void OnBackButtonPressed()
+        {
+            await Navigation.PushAsync(new NavigationPage(new MyProfilePage()));
         }
 
         private void EnableFieldsByUserType()
@@ -102,7 +108,7 @@ namespace AppointmentControl
                     return false;
                 }
 
-                if (Phone.Text.Length!=10)
+                if (Phone.Text.Length != 10)
                 {
                     await DisplayAlert("Invalid phone number.",
                         "Please enter a correct phone number.", "Ok");
@@ -111,8 +117,8 @@ namespace AppointmentControl
                     return false;
                 }
             }
-            
-            if (Speciality.IsEnabled && string.IsNullOrEmpty(Speciality.Text) )
+
+            if (Speciality.IsEnabled && string.IsNullOrEmpty(Speciality.Text))
             {
                 await DisplayAlert("Invalid Speciality.",
                     "Please insert your medical speciality.", "Ok");
@@ -120,7 +126,7 @@ namespace AppointmentControl
                 Speciality.Focus();
                 return false;
             }
-            
+
             if (!string.IsNullOrEmpty(user.Email) && user.Email != Email.Text)
             {
                 if (!await DisplayAlert(null, "Are you sure do you want to change your current email?", "Ok", "Cancel"))
@@ -128,7 +134,7 @@ namespace AppointmentControl
                     Email.Text = user.Email;
                     return false;
                 }
-                if (!Regex.Match(Email.Text, Constants.EmailRegexPattern).Success )
+                if (!Regex.Match(Email.Text, Constants.EmailRegexPattern).Success)
                 {
                     await DisplayAlert("Invalid Email.",
                     "Please insert a valid email address.", "Ok");

@@ -21,7 +21,7 @@ namespace AppointmentControl
         /// </summary>
         public AppointmentControl()
         {
-            this.MainPage = new Login();
+            this.MainPage = new NavigationPage(new Login());
         }
 
         public void Logout()

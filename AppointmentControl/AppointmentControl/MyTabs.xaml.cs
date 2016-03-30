@@ -24,8 +24,8 @@ namespace AppointmentControl
             InitializeComponent();
 
             this.BackgroundColor = Color.FromHex("#FFF");
-            this.Padding = 10;
-            this.Children.Add(new MyAppointmentsPage { Title = "My Appointments" });
+            this.Padding = 5;
+            this.Children.Add(new MyAppointmentsPage { Title = "My Appointmens" });
             this.Children.Add(new CreateAppointment { Title = "New Appointment" });
             this.Children.Add(new MyProfilePage { Title = "My Profile" });
         }

@@ -220,7 +220,7 @@ namespace AppointmentControl
                 Orientation = StackOrientation.Horizontal
             };
 
-            radios.ItemsSource = new[] { "Paciente", "Medico" };
+            radios.ItemsSource = new[] { "Patient", "Medic" };
 
             var stack1 = new StackLayout
             {

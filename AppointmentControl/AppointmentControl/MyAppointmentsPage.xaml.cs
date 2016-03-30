@@ -185,9 +185,10 @@ namespace AppointmentControl
             base.OnAppearing();
 
             var user = ((User)Application.Current.Properties[Constants.UserPropertyName]);
-
+            
             if (user.isdoctor)
             {
+                btnCancelar.IsVisible = false;
                 appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
             }
             else
