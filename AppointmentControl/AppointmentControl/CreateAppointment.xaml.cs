@@ -27,7 +27,7 @@ namespace AppointmentControl
                 System.DateTime.Now.Minute,
                 System.DateTime.Now.Second);
 
-            EndHour.Time = StartHour.Time;
+            EndHour.Time = StartHour.Time.Add(new TimeSpan(1,0,0));
 
             userManager = UserManager.Instance;
             appointmentManager = AppointmentManager.Instance;
@@ -36,6 +36,8 @@ namespace AppointmentControl
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+            Date.MinimumDate = System.DateTime.Now;
 
             if (((User)Application.Current.Properties[Constants.UserPropertyName]).isdoctor)
             {
@@ -139,14 +141,37 @@ namespace AppointmentControl
 
         private async Task<bool> ValidateFields()
         {
+            if (namesPicker.SelectedIndex < 0)
+            {
+                await DisplayAlert("Invalid username", "You must select a name to save the appointment.", "Ok");
+                namesPicker.Focus();
+                return false;
+            }
+
+            if (Date.Date.Add(StartHour.Time) < System.DateTime.Now)
+            {
+                await DisplayAlert("Error on start hour",
+                    "The appointment can't start in a past time",
+                    "Ok");
+                StartHour.Focus();
+                return false;
+            }
+
             if (StartHour.Time >= EndHour.Time)
             {
-                if (await DisplayAlert("Error en la hora.",
-                    "La hora de término no debe ser menor o igual a la hora de inicio. ¿Desea cambiar la hora de término de la cita?",
+                if (await DisplayAlert("Termination hour wrong.",
+                    "The appointment end hour can't be less or equal to the start hour. Do you want to change the appointment end hour?",
                     "Ok", "Cancel"))
                 {
                     EndHour.Focus();
                 }
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(Reason.Text))
+            {
+                await DisplayAlert("Invalid reason", "Please enter the reason of the appointment.", "Ok");
+                Reason.Focus();
                 return false;
             }
 
