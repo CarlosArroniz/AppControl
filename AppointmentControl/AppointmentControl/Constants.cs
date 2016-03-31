@@ -11,5 +11,8 @@
         public static string UserPropertyName = "user";
 
         public static string EmailRegexPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+
+        public static string DateFormat = "yyyy-MM-dd";
+        public static string TimeFormat = "hh\\:mm\\:ss\\.ffff";
     }
 }

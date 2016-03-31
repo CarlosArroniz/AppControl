@@ -42,6 +42,7 @@ namespace AppointmentControl
         private Entry zipCode;
         private Button save;
         private BindableRadioGroup radios;
+        private ActivityIndicator activityIndicator;
         private const int PATIENT = 0;
         private const int DOCTOR = 1;
         private const int HOSPITAL = 2;
@@ -245,7 +246,10 @@ namespace AppointmentControl
 
             var scroll = new ScrollView { Content = stack1 };
 
-            this.Content = scroll;
+            //this.Content = scroll;
+            activityIndicator = Util.CreateLoadingIndicator();
+            var layout = Util.CreateAbsoluteLayout(scroll, activityIndicator);
+            Content = layout;
 
             save.Clicked += async (sender, args) => Save();
         }
@@ -285,6 +289,7 @@ namespace AppointmentControl
                 Country = countryPicker.Items.ElementAt(country)
             };
 
+            activityIndicator.IsRunning = activityIndicator.IsVisible = true;
             await userManager.SaveTaskAsync(user);
 
             user = await userManager.FindUser(user);
@@ -327,15 +332,17 @@ namespace AppointmentControl
                 return false;
             }
 
+            activityIndicator.IsRunning = activityIndicator.IsVisible = true;
             if (await userManager.FindUser(userName.Text) != null)
             {
                 await DisplayAlert("Nombre de usuario ya existe.",
                     "Favor de seleccionar otro nombre de usuario.", "Ok");
                 userName.Text = null;
                 userName.Focus();
+                activityIndicator.IsRunning = activityIndicator.IsVisible = false; 
                 return false;
             }
-
+            activityIndicator.IsRunning = activityIndicator.IsVisible = false;
             return true;
         }
 

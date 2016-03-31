@@ -21,21 +21,10 @@ namespace AppointmentControl
     public partial class Login : ContentPage
     {
         #region Fields
-
-        /// <summary>
-        /// The password.
-        /// </summary>
         private Entry password;
-
-        /// <summary>
-        /// The user name.
-        /// </summary>
         private Entry userName;
-
-        /// <summary>
-        /// The usman.
-        /// </summary>
         private UserManager usman;
+        private ActivityIndicator activityIndicator;
 
         #endregion
 
@@ -159,7 +148,10 @@ namespace AppointmentControl
 
             var mainStack = new StackLayout { Children = { stack1, stack2, stack4 } };
 
-            this.Content = mainStack;
+            //this.Content = mainStack;
+            activityIndicator = Util.CreateLoadingIndicator();
+            var layout = Util.CreateAbsoluteLayout(mainStack, activityIndicator);
+            Content = layout;
 
             // login.Clicked += (e, sender) => { Application.Current.MainPage = new PrincipalPage(); };
             login.Clicked += this.SignIn;
@@ -188,12 +180,15 @@ namespace AppointmentControl
             User userPass = null;
             if (user != null && pass != null)
             {
+                activityIndicator.IsRunning = activityIndicator.IsVisible = true;
                 userPass = await this.usman.FindUsernameAndPass(user, pass);
+                activityIndicator.IsRunning = activityIndicator.IsVisible = false;
             }
 
             if (userPass == null)
             {
                 await this.DisplayAlert("Usuario o contraseña incorrectos", "Ingrese sus credenciales o regístrese como nuevo usuario.", "Ok");
+                password.Text = null;
                 this.userName.Focus();
                 return;
             }
