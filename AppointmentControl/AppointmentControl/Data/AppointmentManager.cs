@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using AppointmentControl.Models;
 using Microsoft.WindowsAzure.MobileServices;
@@ -62,7 +65,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<Appointment>();
         }
 
         public async Task<ObservableCollection<Appointment>> GetAppointmentsAsync(string userId)
@@ -80,7 +83,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<Appointment>();
         }
 
         public async Task<ObservableCollection<Appointment>> GetAppointmentsOfDoctorAsync(string doctorId)
@@ -98,7 +101,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<Appointment>();
         }
 
         public async Task<ObservableCollection<Appointment>> GetAppointmentsOfPatientAsync(string patientId)
@@ -116,7 +119,7 @@ namespace AppointmentControl.Data
             {
                 Debug.WriteLine(@"ERROR {0}", e.Message);
             }
-            return null;
+            return new ObservableCollection<Appointment>();
         }
 
         public async Task SaveTaskAsync(Appointment appointment)
@@ -129,6 +132,22 @@ namespace AppointmentControl.Data
             {
                 await _table.UpdateAsync(appointment);
             }
+        }
+
+        public async Task<ObservableCollection<Appointment>> GetAppointmentsOfDoctorAsync(string doctorId, DateTime appointmentStart)
+        {
+            var appointments = await GetAppointmentsOfDoctorAsync(doctorId);
+            ObservableCollection<Appointment> result = new ObservableCollection<Appointment>();
+            foreach (var appointment in appointments)
+            {
+                var start = DateTime.Parse(appointment.StartDate, new DateTimeFormatInfo());
+                if (start >= appointmentStart)
+                {
+                    result.Add(appointment);
+                }
+            }
+
+            return result;
         }
     }
 }

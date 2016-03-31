@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
+using System.Globalization;
 using System.Threading.Tasks;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
@@ -20,8 +20,6 @@ namespace AppointmentControl
         
         public CreateAppointment()
         {
-            var type = (User)Application.Current.Properties[Constants.UserPropertyName];
-
             InitializeComponent();
 
             StartHour.Time = new TimeSpan(
@@ -151,6 +149,36 @@ namespace AppointmentControl
                 }
                 return false;
             }
+
+            return await ValidateWithDoctorAppointmens();
+        }
+
+        private async Task<bool> ValidateWithDoctorAppointmens()
+        {
+            User user = Application.Current.Properties[Constants.UserPropertyName] as User;
+            
+            var selectedAppointmentStart = Date.Date.Add(StartHour.Time);
+            var selectedAppointmentEnd = Date.Date.Add(EndHour.Time);
+            
+            string doctorId = user.isdoctor ? user.Id : doctorsList[namesPicker.SelectedIndex].Id;
+            var doctorAppointments = await appointmentManager.GetAppointmentsOfDoctorAsync(doctorId);
+
+
+            foreach (var appointment in doctorAppointments)
+            {
+                var appointmentStart = DateTime.Parse(appointment.StartDate, new DateTimeFormatInfo());
+                var appointmentEnd = DateTime.Parse(appointment.EndDate, new DateTimeFormatInfo());
+
+                if ((appointment.status != Appointment.ACCEPTED && appointment.status != Appointment.REQUESTED) ||
+                    (selectedAppointmentEnd <= appointmentStart || selectedAppointmentStart >= appointmentEnd))
+                {
+                    continue;
+                }
+                await DisplayAlert("Selected time unavailable.",
+                    "The selected hour is already taken by another appointment.",
+                    "Ok");
+                return false;
+            }
             return true;
         }
 
@@ -158,7 +186,7 @@ namespace AppointmentControl
         {
             bool isDoctor = ((User)Application.Current.Properties[Constants.UserPropertyName]).isdoctor;
 
-            Appointment appointment = null;
+            Appointment appointment;
             if (isDoctor)
             {
                 appointment = await CreateAppointmentAsDoctor();
@@ -169,16 +197,11 @@ namespace AppointmentControl
             }
 
             appointment.Reason = Reason.Text;
-            appointment.StartDate = GetTimestamp(Date.Date, StartHour.Time);
-            appointment.EndDate = GetTimestamp(Date.Date, EndHour.Time);
+            appointment.StartDate = Util.GetTimestamp(Date.Date, StartHour.Time);
+            appointment.EndDate = Util.GetTimestamp(Date.Date, EndHour.Time);
 
             return appointment;
 
-        }
-
-        private string GetTimestamp(DateTime date, TimeSpan time)
-        {
-            return date.ToString("yyyy-MM-dd") + "T" + time.ToString("hh\\:mm\\:ss\\.ffff") + "+00:00";
         }
 
         private async Task<Appointment> CreateAppointmentAsDoctor()
@@ -187,7 +210,7 @@ namespace AppointmentControl
             return new Appointment()
             {
                 PatientId = selectedPatient.Id,
-                status = Appointment.REQUESTED,
+                status = Appointment.ACCEPTED,
                 DoctorId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id
             };
         }
@@ -198,7 +221,7 @@ namespace AppointmentControl
             return new Appointment()
             {
                 DoctorId = selectedDoctor.Id,
-                status = Appointment.ACCEPTED,
+                status = Appointment.REQUESTED,
                 PatientId = ((User)Application.Current.Properties[Constants.UserPropertyName]).Id
             };
         }
@@ -208,16 +231,12 @@ namespace AppointmentControl
             Debug.WriteLine("CitiesPicker_OnSelectedIndexChanged  citiesPicker.Items[citiesPicker.SelectedIndex]: " + citiesPicker.Items[citiesPicker.SelectedIndex]);
             var specsList = await userManager.GetUsersByCityAsync(citiesPicker.Items[citiesPicker.SelectedIndex]);
             Debug.WriteLine("CitiesPicker_OnSelectedIndexChanged  specsList: " + specsList.Count);
-            
-            if (specsList!= null)
-            {
-                specialityPicker.Items.Clear();
-                foreach (var specs in specsList)
-                {
-                    specialityPicker.Items.Add(specs.Speciality);
-                }
-            }
 
+            specialityPicker.Items.Clear();
+            foreach (var specs in specsList)
+            {
+                specialityPicker.Items.Add(specs.Speciality);
+            }
         }
 
         private async void SpecialityPicker_OnSelectedIndexChanged(object sender, EventArgs e)

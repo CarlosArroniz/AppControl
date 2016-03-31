@@ -1,9 +1,16 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace AppointmentControl
 {
     public abstract class Util
     {
+        public static string GetTimestamp(DateTime date, TimeSpan time)
+        {
+            return date.ToString(Constants.DateFormat) + "T" + time.ToString(Constants.TimeFormat) + "+00:00";
+        }
+
+        
         public static AbsoluteLayout CreateAbsoluteLayout(View content, ActivityIndicator actIndicator)
         {
             var absoluteLayout = new AbsoluteLayout()
