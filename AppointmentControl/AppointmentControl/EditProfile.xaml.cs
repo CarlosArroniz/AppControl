@@ -22,9 +22,11 @@ namespace AppointmentControl
             EnableFieldsByUserType();
         }
 
-        async void OnBackButtonPressed()
+        protected override bool OnBackButtonPressed()
         {
-            await Navigation.PushAsync(new NavigationPage(new MyProfilePage()));
+            return base.OnBackButtonPressed();
+
+            Navigation.PushModalAsync(new MyProfilePage());
         }
 
         private void EnableFieldsByUserType()

@@ -42,6 +42,8 @@ namespace AppointmentControl
         /// </summary>
         public ObservableCollection<Appointment> appsList;
 
+		public ObservableCollection<User> user;
+
         /// <summary>
         /// The single appoint.
         /// </summary>
@@ -67,6 +69,8 @@ namespace AppointmentControl
         private Button btnRechazar;
 
         private Button btnCancelar;
+
+        private Grid grid;
         /// <summary>
         /// Initializes a new instance of the <see cref="MyAppointmentsPage"/> class.
         /// </summary>
@@ -74,12 +78,9 @@ namespace AppointmentControl
         {
             InitializeComponent();
 
-            var grid = new Grid { Padding = 2 };
+            grid = new Grid { Padding = 5 };
 
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100,GridUnitType.Star) });
 
             appointments = new List<Appointment>();
 
@@ -87,13 +88,9 @@ namespace AppointmentControl
 
             this.BackgroundColor = Color.FromHex("#FFF");
 
-            btnAceptar = new Button { TextColor = Color.FromHex("#FFF"), BackgroundColor = Color.FromHex("#2C903D"), Text = "Accept", WidthRequest = 10, FontSize = 10, HeightRequest = 70 };
-            btnRechazar = new Button { TextColor = Color.FromHex("#FFF"), BackgroundColor = Color.FromHex("#FF5808"), Text = "Deny", WidthRequest = 10, FontSize = 10, HeightRequest = 70 };
-            btnCancelar = new Button { TextColor = Color.FromHex("#FFF"), BackgroundColor = Color.FromHex("#FF0000"), Text = "Cancel", WidthRequest = 10, FontSize = 10, HeightRequest = 70 };
-
-            grid.Children.Add(btnAceptar, 0, 0);
-            grid.Children.Add(btnRechazar, 1, 0);
-            grid.Children.Add(btnCancelar, 2, 0);
+            btnAceptar = new Button { BackgroundColor = Color.FromHex("#2C903D"), FontSize = 12, HeightRequest = 85, Text = "Accept", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold};
+            btnRechazar = new Button { BackgroundColor = Color.FromHex("#FF5808"), FontSize = 12, HeightRequest = 85, Text = "Decline", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
+            btnCancelar = new Button { BackgroundColor = Color.FromHex("#FF0000"), FontSize = 12, HeightRequest = 85, Text = "Cancel", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
 
             appointsList = new ListView
             {
@@ -135,8 +132,7 @@ namespace AppointmentControl
                     {
                         View = new StackLayout
                         {
-                            Padding = 8,
-                            Orientation = StackOrientation.Horizontal,
+                            Padding = 5,
                             Children =
                             {
                                 new StackLayout
@@ -162,16 +158,17 @@ namespace AppointmentControl
 
             content = new StackLayout
             {
-                Padding = 0,
                 Children =
                 {
                     appointsList
                 }
             };
 
-            var framious = new Frame() { HasShadow = true, Content = content };
+            var framious = new Frame { Content = this.content };
 
-            Content = framious;
+            this.Content = framious;
+
+			this.OnBindingContextChanged += GetNames();
         }
         #endregion
 
@@ -180,25 +177,47 @@ namespace AppointmentControl
         /// <summary>
         /// The on appearing.
         /// </summary>
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
+        
+		public async void GetNames()
+		{
+			UserManager usMan = new UserManager ();
 
-            var user = ((User)Application.Current.Properties[Constants.UserPropertyName]);
+			user = usMan.GetUsersAsync (nameLabel.Text);
+		}
+
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing ();
+
+			var user = ((User)Application.Current.Properties [Constants.UserPropertyName]);
             
-            if (user.isdoctor)
-            {
-                btnCancelar.IsVisible = false;
-                appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
-            }
-            else
-            {
-                appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
-                btnAceptar.IsVisible = false;
-                btnRechazar.IsVisible = false;
-                btnCancelar.IsVisible = true;
-            }
-        }
+			if (user.isdoctor) {
+				btnCancelar.IsVisible = false;
+
+				appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync (user.Id);
+
+				grid.ColumnDefinitions.Add (new ColumnDefinition { Width = new GridLength (100, GridUnitType.Star) });
+				grid.ColumnDefinitions.Add (new ColumnDefinition { Width = new GridLength (100, GridUnitType.Star) });
+
+				grid.Children.Add (btnAceptar, 0, 0);
+				grid.Children.Add (btnRechazar, 1, 0);
+
+				grid.HorizontalOptions = LayoutOptions.Center;
+				grid.VerticalOptions = LayoutOptions.Center;
+			} else {
+				appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync (user.Id);
+
+				grid.ColumnDefinitions.Add (new ColumnDefinition { Width = new GridLength (100, GridUnitType.Star) });
+				grid.Children.Add (btnCancelar);
+
+				grid.HorizontalOptions = LayoutOptions.Center;
+				grid.VerticalOptions = LayoutOptions.Center;
+
+				btnAceptar.IsVisible = false;
+				btnRechazar.IsVisible = false;
+				btnCancelar.IsVisible = true;
+			}
+		}
         #endregion
     }
 }

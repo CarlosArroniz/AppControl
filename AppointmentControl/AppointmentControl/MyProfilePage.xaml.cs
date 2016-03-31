@@ -10,6 +10,7 @@ namespace AppointmentControl
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
     using Xamarin.Forms;
@@ -67,7 +68,7 @@ namespace AppointmentControl
         /// </param>
         async void EditProfile(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NavigationPage(new EditProfile()));
+            await Navigation.PushModalAsync(new NavigationPage(new EditProfile()));
         }
 
         /// <summary>
