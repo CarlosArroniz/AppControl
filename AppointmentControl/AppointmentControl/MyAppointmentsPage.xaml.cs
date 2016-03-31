@@ -4,8 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
 using Xamarin.Forms;
@@ -81,6 +83,7 @@ namespace AppointmentControl
 
             appointsList = new ListView
             {
+                IsPullToRefreshEnabled = true,
                 SeparatorVisibility = SeparatorVisibility.Default,
                 SeparatorColor = Color.Red,
                 RowHeight = 100,
@@ -145,6 +148,12 @@ namespace AppointmentControl
                 })
             };
 
+            appointsList.RefreshCommand = new Command(() =>
+            {
+                RefreshAppointments();
+                appointsList.IsRefreshing = false;
+            });
+            
             content = new StackLayout
             {
                 Padding = 25,
@@ -154,26 +163,18 @@ namespace AppointmentControl
                 }
             };
 
-            var scroll = new ScrollView
-            {
-                Content = content
-            };
-
             activityIndicator = Util.CreateLoadingIndicator();
-            var layout = Util.CreateAbsoluteLayout(scroll, activityIndicator);
+            var layout = Util.CreateAbsoluteLayout(content, activityIndicator);
             Content = layout;
         }
-        #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// The on appearing.
-        /// </summary>
-        protected override async void OnAppearing()
+        private void RefreshAppointments()
         {
-            base.OnAppearing();
+            FillAppointmentsList();
+        }
 
+        private async void FillAppointmentsList()
+        {
             var user = ((User)Application.Current.Properties[Constants.UserPropertyName]);
 
             activityIndicator.IsRunning = activityIndicator.IsVisible = true;
@@ -186,6 +187,19 @@ namespace AppointmentControl
                 appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
             }
             activityIndicator.IsRunning = activityIndicator.IsVisible = false;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The on appearing.
+        /// </summary>
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            FillAppointmentsList();
         }
         #endregion
     }
