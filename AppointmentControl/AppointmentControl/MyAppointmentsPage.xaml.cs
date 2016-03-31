@@ -4,10 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
 using Xamarin.Forms;
@@ -196,7 +194,7 @@ namespace AppointmentControl
         /// <summary>
         /// The on appearing.
         /// </summary>
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
             FillAppointmentsList();
