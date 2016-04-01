@@ -200,5 +200,36 @@ namespace AppointmentControl
             FillAppointmentsList();
         }
         #endregion
+
+        private Dictionary<string, User> GetUsers(ObservableCollection<Appointment> appointmentList)
+        {
+            var result = new Dictionary<string, User>();
+            foreach (var appointment in appointmentList)
+            {
+                result.Add(appointment.DoctorId,null);
+            }
+            return result;
+        }
+
+        private ObservableCollection<AppointmentUser> FillAppointmentUserList(ObservableCollection<Appointment> appointmentList)
+        {
+            var result = new ObservableCollection<AppointmentUser>();
+            foreach (var appointment in appointmentList)
+            {
+                var appointmentUser = new AppointmentUser()
+                {
+                    Id = appointment.Id,
+                    DoctorId = appointment.DoctorId,
+                    PatientId = appointment.PatientId,
+                    StartDate = appointment.StartDate,
+                    EndDate = appointment.EndDate,
+                    Reason = appointment.Reason,
+                    status = appointment.status
+                };
+                result.Add(appointmentUser);
+            }
+
+            return result;
+        }
     }
 }
