@@ -4,8 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
 using Xamarin.Forms;
@@ -34,6 +36,8 @@ namespace AppointmentControl
         /// </summary>
         public ObservableCollection<Appointment> appsList;
 
+        public ObservableCollection<User> user;
+
         /// <summary>
         /// The single appoint.
         /// </summary>
@@ -50,7 +54,17 @@ namespace AppointmentControl
         private BoxView boxView;
 
         private StackLayout content;
+
         private ActivityIndicator activityIndicator;
+
+        private Button btnAceptar;
+
+        private Button btnRechazar;
+
+        private Button btnCancelar;
+
+        private Grid grid;
+
 
         #endregion
 
@@ -69,23 +83,11 @@ namespace AppointmentControl
 
             BackgroundColor = Color.FromHex("#FFF");
 
-            header = new Label
-            {
-                FontAttributes = FontAttributes.Bold,
-                Text = "Appointments for today:",
-                FontSize = 20,
-                HorizontalOptions = LayoutOptions.Center,
-                TextColor = Color.FromHex("#12A5F4"),
-                VerticalOptions = LayoutOptions.Center
-            };
-
             appointsList = new ListView
             {
                 IsPullToRefreshEnabled = true,
-                SeparatorVisibility = SeparatorVisibility.Default,
-                SeparatorColor = Color.Red,
-                RowHeight = 100,
-                WidthRequest = 150,
+                RowHeight = 150,
+                WidthRequest = 200,
 
                 ItemTemplate = new DataTemplate(() =>
                 {
@@ -129,15 +131,16 @@ namespace AppointmentControl
                             {
                                 boxView, new StackLayout
                                 {
-                                    HorizontalOptions = LayoutOptions.CenterAndExpand, 
-                                    BackgroundColor = Color.FromHex("#12A5F4"), 
-                                    WidthRequest = 300, 
-                                    HeightRequest = 150, 
+                                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                                    BackgroundColor = Color.FromHex("#12A5F4"),
+                                    WidthRequest = 300,
+                                    HeightRequest = 230,
                                     Children =
                                     {
-                                        nameLabel, 
-                                        dateLabel, 
-                                        reasonLabel
+                                        nameLabel,
+                                        dateLabel,
+                                        reasonLabel,
+                                        grid
                                     }
                                 }
                             }
@@ -146,23 +149,44 @@ namespace AppointmentControl
                 })
             };
 
+            grid = new Grid
+                       {
+                           Padding = 5,
+                           HorizontalOptions = LayoutOptions.Center,
+                           VerticalOptions = LayoutOptions.Center
+                       };
+
+            this.grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Star) });
+            this.grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+            this.grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+            this.grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50, GridUnitType.Star) });
+
+            this.grid.Children.Add(btnAceptar, 0, 0);
+            this.grid.Children.Add(btnRechazar, 1, 0);
+            this.grid.Children.Add(btnCancelar, 1, 1);
+
+            btnAceptar = new Button { BackgroundColor = Color.FromHex("#2C903D"), FontSize = 12, HeightRequest = 20, Text = "Accept", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
+            btnRechazar = new Button { BackgroundColor = Color.FromHex("#FF5808"), FontSize = 12, HeightRequest = 20, Text = "Decline", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
+            btnCancelar = new Button { BackgroundColor = Color.FromHex("#FF0000"), FontSize = 12, HeightRequest = 20, Text = "Cancel", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
+
             appointsList.RefreshCommand = new Command(() =>
             {
                 RefreshAppointments();
                 appointsList.IsRefreshing = false;
             });
-            
+
             content = new StackLayout
             {
                 Padding = 25,
                 Children =
                 {
-                    header, appointsList
+                    appointsList
                 }
             };
 
             activityIndicator = Util.CreateLoadingIndicator();
             var layout = Util.CreateAbsoluteLayout(content, activityIndicator);
+
             Content = layout;
         }
 
@@ -175,14 +199,47 @@ namespace AppointmentControl
         {
             var user = ((User)Application.Current.Properties[Constants.UserPropertyName]);
 
-            activityIndicator.IsRunning = activityIndicator.IsVisible = true;
             if (user.isdoctor)
             {
-                appointsList.ItemsSource = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
+                btnCancelar.IsVisible = false;
+
+                appsList = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
+
+                foreach (var apps in appsList)
+                {
+                    if (apps.status == Appointment.REQUESTED)
+                    {
+                        btnAceptar.IsVisible = true;
+                        btnRechazar.IsVisible = true;
+                    }
+                    if (apps.status == Appointment.ACCEPTED)
+                    {
+                        btnAceptar.IsVisible = false;
+                        btnRechazar.IsVisible = false;
+                    }
+                    appointsList.ItemsSource = appsList;
+                }
             }
             else
             {
-                appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
+                appsList = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
+
+                foreach (var apps in appsList)
+                {
+                    if (apps.status == Appointment.REQUESTED)
+                    {
+                        btnAceptar.IsVisible = false;
+                        btnRechazar.IsVisible = false;
+                        this.btnCancelar.IsVisible = true;
+                    }
+                    if (apps.status == Appointment.ACCEPTED)
+                    {
+                        btnAceptar.IsVisible = false;
+                        btnRechazar.IsVisible = false;
+                        btnCancelar.IsVisible = true;
+                    }
+                    appointsList.ItemsSource = appsList;
+                }
             }
             activityIndicator.IsRunning = activityIndicator.IsVisible = false;
         }
@@ -194,7 +251,7 @@ namespace AppointmentControl
         /// <summary>
         /// The on appearing.
         /// </summary>
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             FillAppointmentsList();

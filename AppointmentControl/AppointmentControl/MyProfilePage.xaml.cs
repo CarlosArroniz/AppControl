@@ -68,7 +68,7 @@ namespace AppointmentControl
         /// </param>
         async void EditProfile(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new EditProfile()));
+            await Navigation.PushModalAsync(new EditProfile());
         }
 
         /// <summary>

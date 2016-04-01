@@ -3508,100 +3508,97 @@ namespace AppointmentControl.Droid
 			public const int menu_dropdown_panel_appcontrol = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int monoandroidsplash = 2130837612;
+			public const int mr_ic_cast_dark = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int mr_ic_cast_dark = 2130837613;
+			public const int mr_ic_cast_light = 2130837613;
 			
 			// aapt resource value: 0x7f02006e
-			public const int mr_ic_cast_light = 2130837614;
+			public const int mr_ic_media_route_connecting_mono_dark = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int mr_ic_media_route_connecting_mono_dark = 2130837615;
+			public const int mr_ic_media_route_connecting_mono_light = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int mr_ic_media_route_connecting_mono_light = 2130837616;
+			public const int mr_ic_media_route_mono_dark = 2130837616;
 			
 			// aapt resource value: 0x7f020071
-			public const int mr_ic_media_route_mono_dark = 2130837617;
+			public const int mr_ic_media_route_mono_light = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int mr_ic_media_route_mono_light = 2130837618;
+			public const int mr_ic_pause_dark = 2130837618;
 			
 			// aapt resource value: 0x7f020073
-			public const int mr_ic_pause_dark = 2130837619;
+			public const int mr_ic_pause_light = 2130837619;
 			
 			// aapt resource value: 0x7f020074
-			public const int mr_ic_pause_light = 2130837620;
+			public const int mr_ic_play_dark = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int mr_ic_play_dark = 2130837621;
+			public const int mr_ic_play_light = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int mr_ic_play_light = 2130837622;
+			public const int mr_ic_settings_dark = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int mr_ic_settings_dark = 2130837623;
-			
-			// aapt resource value: 0x7f020078
-			public const int mr_ic_settings_light = 2130837624;
-			
-			// aapt resource value: 0x7f02008b
-			public const int notification_template_icon_bg = 2130837643;
-			
-			// aapt resource value: 0x7f020079
-			public const int profile = 2130837625;
-			
-			// aapt resource value: 0x7f02007a
-			public const int progress_bg_appcontrol = 2130837626;
-			
-			// aapt resource value: 0x7f02007b
-			public const int progress_horizontal_appcontrol = 2130837627;
-			
-			// aapt resource value: 0x7f02007c
-			public const int progress_primary_appcontrol = 2130837628;
-			
-			// aapt resource value: 0x7f02007d
-			public const int progress_secondary_appcontrol = 2130837629;
-			
-			// aapt resource value: 0x7f02007e
-			public const int selectable_background_appcontrol = 2130837630;
-			
-			// aapt resource value: 0x7f02007f
-			public const int spinner_ab_default_appcontrol = 2130837631;
-			
-			// aapt resource value: 0x7f020080
-			public const int spinner_ab_disabled_appcontrol = 2130837632;
-			
-			// aapt resource value: 0x7f020081
-			public const int spinner_ab_focused_appcontrol = 2130837633;
-			
-			// aapt resource value: 0x7f020082
-			public const int spinner_ab_pressed_appcontrol = 2130837634;
-			
-			// aapt resource value: 0x7f020083
-			public const int spinner_background_ab_appcontrol = 2130837635;
-			
-			// aapt resource value: 0x7f020084
-			public const int tab_indicator_ab_appcontrol = 2130837636;
-			
-			// aapt resource value: 0x7f020085
-			public const int tab_selected_appcontrol = 2130837637;
-			
-			// aapt resource value: 0x7f020086
-			public const int tab_selected_focused_appcontrol = 2130837638;
-			
-			// aapt resource value: 0x7f020087
-			public const int tab_selected_pressed_appcontrol = 2130837639;
-			
-			// aapt resource value: 0x7f020088
-			public const int tab_unselected_appcontrol = 2130837640;
-			
-			// aapt resource value: 0x7f020089
-			public const int tab_unselected_focused_appcontrol = 2130837641;
+			public const int mr_ic_settings_light = 2130837623;
 			
 			// aapt resource value: 0x7f02008a
-			public const int tab_unselected_pressed_appcontrol = 2130837642;
+			public const int notification_template_icon_bg = 2130837642;
+			
+			// aapt resource value: 0x7f020078
+			public const int profile = 2130837624;
+			
+			// aapt resource value: 0x7f020079
+			public const int progress_bg_appcontrol = 2130837625;
+			
+			// aapt resource value: 0x7f02007a
+			public const int progress_horizontal_appcontrol = 2130837626;
+			
+			// aapt resource value: 0x7f02007b
+			public const int progress_primary_appcontrol = 2130837627;
+			
+			// aapt resource value: 0x7f02007c
+			public const int progress_secondary_appcontrol = 2130837628;
+			
+			// aapt resource value: 0x7f02007d
+			public const int selectable_background_appcontrol = 2130837629;
+			
+			// aapt resource value: 0x7f02007e
+			public const int spinner_ab_default_appcontrol = 2130837630;
+			
+			// aapt resource value: 0x7f02007f
+			public const int spinner_ab_disabled_appcontrol = 2130837631;
+			
+			// aapt resource value: 0x7f020080
+			public const int spinner_ab_focused_appcontrol = 2130837632;
+			
+			// aapt resource value: 0x7f020081
+			public const int spinner_ab_pressed_appcontrol = 2130837633;
+			
+			// aapt resource value: 0x7f020082
+			public const int spinner_background_ab_appcontrol = 2130837634;
+			
+			// aapt resource value: 0x7f020083
+			public const int tab_indicator_ab_appcontrol = 2130837635;
+			
+			// aapt resource value: 0x7f020084
+			public const int tab_selected_appcontrol = 2130837636;
+			
+			// aapt resource value: 0x7f020085
+			public const int tab_selected_focused_appcontrol = 2130837637;
+			
+			// aapt resource value: 0x7f020086
+			public const int tab_selected_pressed_appcontrol = 2130837638;
+			
+			// aapt resource value: 0x7f020087
+			public const int tab_unselected_appcontrol = 2130837639;
+			
+			// aapt resource value: 0x7f020088
+			public const int tab_unselected_focused_appcontrol = 2130837640;
+			
+			// aapt resource value: 0x7f020089
+			public const int tab_unselected_pressed_appcontrol = 2130837641;
 			
 			static Drawable()
 			{
@@ -4822,9 +4819,6 @@ namespace AppointmentControl.Droid
 			
 			// aapt resource value: 0x7f07014e
 			public const int DropDownNav_Appcontrol = 2131165518;
-			
-			// aapt resource value: 0x7f070152
-			public const int Mono_Android_Theme_Splash = 2131165522;
 			
 			// aapt resource value: 0x7f070016
 			public const int Platform_AppCompat = 2131165206;
