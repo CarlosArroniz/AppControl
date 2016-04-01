@@ -23,11 +23,11 @@ namespace AppointmentControl
         {
             InitializeComponent();
 
-            this.BackgroundColor = Color.FromHex("#FFF");
-            this.Padding = 5;
-            this.Children.Add(new MyAppointmentsPage() { Title = "My Appointmens", Icon = "appointmen.png" }); 
-            this.Children.Add(new CreateAppointment { Title = "New Appointment" });
-            this.Children.Add(new MyProfilePage { Title = "My Profile" });
+            BackgroundColor = Color.FromHex("#FFF");
+            Padding = 5;
+            Children.Add(new MyAppointmentsPage { Title = "My Appointmens" });
+            Children.Add(new CreateAppointment { Title = "New Appointment" });
+            Children.Add(new MyProfilePage { Title = "My Profile" });
         }
 
         #endregion
