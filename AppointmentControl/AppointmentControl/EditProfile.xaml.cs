@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace AppointmentControl
 {
-    public partial class EditProfile : NavigationPage
+    public partial class EditProfile 
     {
         private readonly UserManager userManager = UserManager.Instance;
         private User user;

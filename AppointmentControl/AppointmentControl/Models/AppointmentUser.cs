@@ -10,6 +10,20 @@
         public string Reason { get; set; }
         public string status { get; set; } 
         public string DoctorName { get; set; } 
-        public string PatientName { get; set; } 
+        public string PatientName { get; set; }
+        
+        public override string ToString()
+        {
+            return "AppointmentUser{ Id: " + Id + ", "
+                + "DoctorId: " + DoctorId + ", "
+                + "PatientId: " + PatientId + ", "
+                + "StartDate: " + StartDate + ", "
+                + "EndDate: " + EndDate + ", "
+                + "Reason: " + Reason + ", "
+                + "status: " + status + ", "
+                + "DoctorName: " + DoctorName + ", "
+                + "PatientName: " + PatientName + ", "
+                +" }";
+        }
     }
 }
