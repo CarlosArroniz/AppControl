@@ -59,6 +59,7 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\AppointmentUser.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PatientType.cs" />

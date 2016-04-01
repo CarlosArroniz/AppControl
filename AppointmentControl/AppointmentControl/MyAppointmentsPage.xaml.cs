@@ -6,6 +6,9 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
 using Xamarin.Forms;
@@ -184,6 +187,8 @@ namespace AppointmentControl
             {
                 appointsList.ItemsSource = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
             }
+            //deleteme
+            FillAppointmentUserList((ObservableCollection<Appointment>) appointsList.ItemsSource);
             activityIndicator.IsRunning = activityIndicator.IsVisible = false;
         }
 
@@ -201,19 +206,49 @@ namespace AppointmentControl
         }
         #endregion
 
-        private Dictionary<string, User> GetUsers(ObservableCollection<Appointment> appointmentList)
+        private async Task<Dictionary<string, User>> GetUsersDictionary(ObservableCollection<Appointment> appointmentList)
         {
-            var result = new Dictionary<string, User>();
-            foreach (var appointment in appointmentList)
+            var loggedUser = ((User)Application.Current.Properties[Constants.UserPropertyName]);
+            var userDictionary = new Dictionary<string, User>();
+            var userManager = UserManager.Instance;
+
+            if (!userDictionary.ContainsKey(loggedUser.Id))
             {
-                result.Add(appointment.DoctorId,null);
+                userDictionary.Add(loggedUser.Id, loggedUser);
+                Debug.WriteLine("GetUsersDictionary() user added: {0} {1}", loggedUser.Id, loggedUser.Name);
             }
-            return result;
+                
+            if (loggedUser.isdoctor)
+            {
+                foreach (
+                    var appointment in
+                        appointmentList.Where(appointment => !userDictionary.ContainsKey(appointment.PatientId)))
+                {
+                    var user = await userManager.GetUsersAsync(appointment.PatientId);
+                    userDictionary.Add(appointment.PatientId, user.First());
+                    Debug.WriteLine("GetUsersDictionary() user added: {0} {1}", user.First().Id, user.First().Name);
+                }
+            }
+            else
+            {
+                foreach (
+                    var appointment in
+                        appointmentList.Where(appointment => !userDictionary.ContainsKey(appointment.DoctorId)))
+                {
+                    var user = await userManager.GetUsersAsync(appointment.DoctorId);
+                    userDictionary.Add(appointment.DoctorId, user.First());
+                    Debug.WriteLine("GetUsersDictionary() user added: {0} {1}", user.First().Id, user.First().Name);
+                }
+            }
+
+            return userDictionary;
         }
 
-        private ObservableCollection<AppointmentUser> FillAppointmentUserList(ObservableCollection<Appointment> appointmentList)
+        private async Task<ObservableCollection<AppointmentUser>> FillAppointmentUserList(ObservableCollection<Appointment> appointmentList)
         {
-            var result = new ObservableCollection<AppointmentUser>();
+            var appointmentUserList = new ObservableCollection<AppointmentUser>();
+            Dictionary<string, User> userDictionary = await GetUsersDictionary(appointmentList);
+
             foreach (var appointment in appointmentList)
             {
                 var appointmentUser = new AppointmentUser()
@@ -224,12 +259,15 @@ namespace AppointmentControl
                     StartDate = appointment.StartDate,
                     EndDate = appointment.EndDate,
                     Reason = appointment.Reason,
-                    status = appointment.status
+                    status = appointment.status,
+                    DoctorName = userDictionary[appointment.DoctorId].Name,
+                    PatientName = userDictionary[appointment.PatientId].Name
                 };
-                result.Add(appointmentUser);
+                appointmentUserList.Add(appointmentUser);
+                Debug.WriteLine("FillAppointmentUserList() appointmentUser added: {0}", appointmentUser);
             }
 
-            return result;
+            return appointmentUserList;
         }
     }
 }
