@@ -15,6 +15,7 @@ using Xamarin.Forms;
 
 namespace AppointmentControl
 {
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The my appointments page.
@@ -62,6 +63,7 @@ namespace AppointmentControl
             user = (User)Application.Current.Properties[Constants.UserPropertyName];
             appointManager = AppointmentManager.Instance;
             userManager = UserManager.Instance;
+            appsUserList = FillAppointmentsList().Result;
 
             BackgroundColor = Color.FromHex("#FFF");
 
@@ -73,7 +75,7 @@ namespace AppointmentControl
                 ItemsSource = appsUserList,
                 ItemTemplate = new DataTemplate(() =>
                 {
-                    var statusLabel = new Label
+                    var statusLabel = new Label()
                     {
                         FontSize = 10,
                         FontAttributes = FontAttributes.Bold,
@@ -196,7 +198,7 @@ namespace AppointmentControl
         private async Task<ObservableCollection<AppointmentUser>> FillAppointmentsList()
         {
             ObservableCollection<AppointmentUser> appountmentUserList;
-
+            
             //activityIndicator.IsRunning = activityIndicator.IsVisible = true;
 
             appsList = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
@@ -214,7 +216,7 @@ namespace AppointmentControl
             //activityIndicator.IsRunning = activityIndicator.IsVisible = false;
 
             appountmentUserList = await FillAppointmentUserList(appsList);
-            //appointsList.ItemsSource = appountmentUserList;
+            appointsList.ItemsSource = appountmentUserList;
             return appountmentUserList;
 
         }
