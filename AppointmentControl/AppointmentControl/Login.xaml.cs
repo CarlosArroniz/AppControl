@@ -7,6 +7,7 @@
 namespace AppointmentControl
 {
     using System;
+    using System.Diagnostics;
 
     using global::AppointmentControl.Data;
 
@@ -103,18 +104,6 @@ namespace AppointmentControl
                                  TextColor = Color.FromHex("#FFF"), 
                              };
 
-            // </StackLayout 3>
-
-            // <StackLayout 4>
-            var forgotPass = new Button
-                                 {
-                                     Text = "Forgot your password?", 
-                                     BackgroundColor = Color.Transparent, 
-                                     VerticalOptions = LayoutOptions.Center, 
-                                     TextColor = Color.FromHex("#12A5F4")
-                                 };
-
-            // </StackLayout 4>
             var stack3 = new StackLayout
                              {
                                  Orientation = StackOrientation.Horizontal, 
@@ -126,7 +115,8 @@ namespace AppointmentControl
 
             var stack1 = new StackLayout
                              {
-                                 Orientation = StackOrientation.Vertical, 
+                                 Orientation = StackOrientation.Vertical,
+                                 Padding = new Thickness(5,10,10,5),
                                  Children = {
                                                titleImage, title
                                             }, 
@@ -144,9 +134,7 @@ namespace AppointmentControl
                                                this.userName, this.password, login, stack3 
                                             }
                              };
-            var stack4 = new StackLayout { Children = { forgotPass } };
-
-            var mainStack = new StackLayout { Children = { stack1, stack2, stack4 } };
+            var mainStack = new StackLayout { Children = { stack1, stack2} };
 
             //this.Content = mainStack;
             activityIndicator = Util.CreateLoadingIndicator();
@@ -181,7 +169,8 @@ namespace AppointmentControl
             if (user != null && pass != null)
             {
                 activityIndicator.IsRunning = activityIndicator.IsVisible = true;
-                userPass = await this.usman.FindUsernameAndPass(user, pass);
+                userPass = await usman.FindUsernameAndPass(user, pass);
+                
                 activityIndicator.IsRunning = activityIndicator.IsVisible = false;
             }
 

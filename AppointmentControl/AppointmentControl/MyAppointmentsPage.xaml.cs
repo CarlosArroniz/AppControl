@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using AppointmentControl.Data;
 using AppointmentControl.Models;
 using Xamarin.Forms;
@@ -63,7 +62,7 @@ namespace AppointmentControl
             user = (User)Application.Current.Properties[Constants.UserPropertyName];
             appointManager = AppointmentManager.Instance;
             userManager = UserManager.Instance;
-            appsUserList = FillAppointmentsList().Result;
+            //appsUserList = FillAppointmentsList().Result;
 
             BackgroundColor = Color.FromHex("#FFF");
 

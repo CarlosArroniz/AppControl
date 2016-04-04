@@ -11,6 +11,8 @@ namespace AppointmentControl
 
     using Xamarin.Forms;
 
+    using XLabs.Platform.Services.Geolocation;
+
     /// <summary>
     /// The menu page.
     /// </summary>
@@ -28,30 +30,36 @@ namespace AppointmentControl
             InitializeComponent();
 
             this.Title = "Menu";
-            this.BackgroundColor = Color.FromHex("#12A5F4");
+            this.BackgroundColor = Color.FromHex("#FFF");
+
+            this.Opacity = Opacity.RadiansToDegrees();
+
             Menu = new MenuListView();
 
-            var menuLabel = new ContentView
-                                {
-                                    Padding = new Thickness(10, 36, 0, 5),
-                                    Content =
-                                            new Label
-                                                {
-                                                    TextColor = Color.FromHex("#FFF"),
-                                                    Text = "Settings",
-                                                    FontAttributes = FontAttributes.Bold,
-                                                    FontSize = 15
-                                                }
-                                };
-            var layout = new StackLayout
-                             {
-                                 Spacing = 0,
-                                 HorizontalOptions = LayoutOptions.CenterAndExpand,
-                                 VerticalOptions = LayoutOptions.FillAndExpand,
-                                 Orientation = StackOrientation.Horizontal
-                             };
+            var label1 = new Label
+            {
+                TextColor = Color.FromHex("#12A5F4"),
+                Text = "Edit Profile",
+                FontAttributes = FontAttributes.Bold,
+                FontSize = 15
+            };
 
-            layout.Children.Add(menuLabel);
+            var label2 = new Label
+            {
+                TextColor = Color.FromHex("#12A5F4"),
+                Text = "Log Out",
+                FontAttributes = FontAttributes.Bold,
+                FontSize = 15
+            };
+
+            var layout = new StackLayout
+            {
+                Spacing = 0,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Orientation = StackOrientation.Horizontal
+            };
+
             layout.Children.Add(Menu);
 
             this.Content = layout;
@@ -95,6 +103,7 @@ namespace AppointmentControl
                 this.ItemsSource = data;
                 this.VerticalOptions = LayoutOptions.FillAndExpand;
                 this.BackgroundColor = Color.Transparent;
+                this.WidthRequest = 120;
 
                 var cell = new DataTemplate(typeof(ImageCell));
                 cell.SetBinding(TextCell.TextColorProperty, "Title");
@@ -108,8 +117,8 @@ namespace AppointmentControl
         {
             public MenuListData()
             {
-                this.Add(new MenuItem() { Title = "Account", IconSource = "medical.png", TargetType = typeof(Login) });
-                this.Add(new MenuItem() { Title = "Settings", IconSource = "icon.png", TargetType = typeof(Page) });
+                Add(new MenuItem() { Title = "Edit Profile", IconSource = "edit.png", TargetType = typeof(EditProfile) });
+                Add(new MenuItem() { Title = "LogOut", IconSource = "logout.png", TargetType = typeof(Login) });
             }
         }
     }

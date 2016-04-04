@@ -54,9 +54,17 @@ namespace AppointmentControl
         {
             Page displayPage = (Page)Activator.CreateInstance(menu.TargetType);
 
-            this.Detail = new NavigationPage(displayPage);
+            if (menu.TargetType == typeof(Login))
+            {
+                this.Navigation.PushModalAsync(new Login());
+                Application.Current.Properties.Clear();
+            }
+            else
+            {
+                this.Detail = new NavigationPage(displayPage);
 
-            this.IsPresented = false;
+                this.IsPresented = false;
+            }
         }
 
         #endregion
