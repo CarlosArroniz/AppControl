@@ -4,8 +4,8 @@
     {
         // Sign up for an Azure account at https://account.windowsazure.com/signup
         // Replace strings with your mobile services url and key.
-        public static string AzureApplicationUrl = @"https://appointmentcontrol.azure-mobile.net/";
-        public static string AzureApplicationKey = @"kaKHoQLgVKFAzPgPoVKSKeceGXXvNY61"; 
+        public static string AzureApplicationUrl = @"https://appointcontrol.azure-mobile.net/";
+        public static string AzureApplicationKey = @"htrOSpriqcwOdpsmBMQSTZPhdifxBv49"; 
 
         // Constants for application
         public static string UserPropertyName = "user";
