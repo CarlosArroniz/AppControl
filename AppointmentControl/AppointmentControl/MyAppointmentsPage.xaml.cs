@@ -49,8 +49,7 @@ namespace AppointmentControl
         private StackLayout content;
 
         private Label statusLabel;
-        private Label appointmentIdLabel;
-
+        
         private ActivityIndicator activityIndicator;
         
         #endregion
@@ -89,7 +88,7 @@ namespace AppointmentControl
 
                     statusLabel.SetBinding(Label.TextProperty, "status");
 
-                    appointmentIdLabel = new Label()
+                    var appointmentIdLabel = new Label()
                     {
                         FontSize = 10,
                         FontAttributes = FontAttributes.Bold,
@@ -101,9 +100,6 @@ namespace AppointmentControl
                     appointmentIdLabel.SetBinding(Label.TextProperty, "Id");
 
                     var grid = new Grid { Padding = 5, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center };
-
-                    Debug.WriteLine("statusLabel: {0}", statusLabel.Text);
-                    Debug.WriteLine("user: {0}", user);
 
                     grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(150, GridUnitType.Star) });
 
