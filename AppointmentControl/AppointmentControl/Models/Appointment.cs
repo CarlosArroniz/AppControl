@@ -31,5 +31,15 @@ namespace AppointmentControl.Models
 
         [JsonProperty(PropertyName = "status")]
         public string status { get; set; }
+
+        [JsonProperty(PropertyName = "isaccepted")]
+        public bool isaccepted { get; set; }
+
+        [JsonProperty(PropertyName = "isdeclined")]
+        public bool isdeclined { get; set; }
+
+        [JsonProperty(PropertyName = "iscanceled")]
+        public bool iscanceled { get; set; }
+
     }
 }

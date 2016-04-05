@@ -11,7 +11,10 @@
         public string status { get; set; } 
         public string DoctorName { get; set; } 
         public string PatientName { get; set; }
-        
+        public bool isaccepted { get; set; }
+        public bool isdeclined { get; set; }
+        public bool iscanceled { get; set; }
+
         public override string ToString()
         {
             return "AppointmentUser{ Id: " + Id + ", "

@@ -24,6 +24,7 @@ namespace AppointmentControl
         #region Fields
 
         private readonly AppointmentManager appointManager;
+
         private readonly UserManager userManager;
 
         public ObservableCollection<Appointment> appsList;
@@ -46,8 +47,10 @@ namespace AppointmentControl
 
         private StackLayout content;
 
-        private ActivityIndicator activityIndicator;
+        private Label statusLabel;
 
+        private ActivityIndicator activityIndicator;
+        
         #endregion
 
         #region Constructors and Destructors
@@ -69,38 +72,40 @@ namespace AppointmentControl
             appointsList = new ListView
             {
                 IsPullToRefreshEnabled = true,
-                RowHeight = 150,
+                RowHeight = 160,
                 WidthRequest = 200,
                 ItemsSource = appsUserList,
                 ItemTemplate = new DataTemplate(() =>
                 {
-                    var statusLabel = new Label()
+                    statusLabel = new Label()
                     {
                         FontSize = 10,
                         FontAttributes = FontAttributes.Bold,
                         HorizontalTextAlignment = TextAlignment.Center,
                         TextColor = Color.FromHex("#FFF")
                     };
+
                     statusLabel.SetBinding(Label.TextProperty, "status");
 
                     var grid = new Grid { Padding = 5, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center };
 
-                    var btnAceptar = new Button { BackgroundColor = Color.FromHex("#2C903D"), FontSize = 12, HeightRequest = 20, Text = "Accept", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
-                    var btnRechazar = new Button { BackgroundColor = Color.FromHex("#FF5808"), FontSize = 12, HeightRequest = 20, Text = "Decline", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
-                    var btnCancelar = new Button { BackgroundColor = Color.FromHex("#FF0000"), FontSize = 12, HeightRequest = 20, Text = "Cancel", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
-
                     Debug.WriteLine("statusLabel: {0}", statusLabel.Text);
                     Debug.WriteLine("user: {0}", user);
-                    //btnAceptar.IsVisible = Appointment.REQUESTED.Equals(statusLabel.Text) && user.isdoctor;
-                    //btnRechazar.IsVisible = Appointment.REQUESTED.Equals(statusLabel.Text) && user.isdoctor;
-                    //btnCancelar.IsVisible = Appointment.ACCEPTED.Equals(statusLabel.Text) || (!user.isdoctor && Appointment.REQUESTED.Equals(statusLabel.Text));
 
-                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Star) });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(150, GridUnitType.Star) });
 
                     grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80, GridUnitType.Auto) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(30, GridUnitType.Auto) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(30, GridUnitType.Auto) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(30, GridUnitType.Auto) });
+
+                    var btnAceptar = new Button { BackgroundColor = Color.FromHex("#2C903D"), FontSize = 12, HeightRequest = 25, Text = "Accept", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
+                    var btnRechazar = new Button { BackgroundColor = Color.FromHex("#FF5808"), FontSize = 12, HeightRequest = 25, Text = "Decline", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
+                    var btnCancelar = new Button { BackgroundColor = Color.FromHex("#FF0000"), FontSize = 12, HeightRequest = 25, Text = "Cancel", TextColor = Color.FromHex("#FFF"), FontAttributes = FontAttributes.Bold };
+
+                    btnAceptar.SetBinding(Button.IsVisibleProperty, "isaccepted");  ///Pay Atention
+                    btnRechazar.SetBinding(Button.IsVisibleProperty, "isdeclined");
+                    btnCancelar.SetBinding(Button.IsVisibleProperty, "iscanceled");
 
                     grid.Children.Add(btnAceptar, 0, 0);
                     grid.Children.Add(btnRechazar, 1, 0);
@@ -137,8 +142,6 @@ namespace AppointmentControl
                     };
                     reasonLabel.SetBinding(Label.TextProperty, "Reason");
 
-                    boxView = new BoxView { BackgroundColor = Color.FromHex("#666666") };
-
                     return new ViewCell
                     {
                         View = new StackLayout
@@ -147,7 +150,7 @@ namespace AppointmentControl
                             Orientation = StackOrientation.Horizontal,
                             Children =
                             {
-                                boxView, new StackLayout
+                                new StackLayout
                                 {
                                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                                     BackgroundColor = Color.FromHex("#12A5F4"),
@@ -197,7 +200,7 @@ namespace AppointmentControl
         private async Task<ObservableCollection<AppointmentUser>> FillAppointmentsList()
         {
             ObservableCollection<AppointmentUser> appountmentUserList;
-            
+
             //activityIndicator.IsRunning = activityIndicator.IsVisible = true;
 
             appsList = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
@@ -205,19 +208,16 @@ namespace AppointmentControl
             if (user.isdoctor)
             {
                 appsList = await appointManager.GetAppointmentsOfDoctorAsync(user.Id);
-
             }
             else
             {
                 appsList = await appointManager.GetAppointmentsOfPatientAsync(user.Id);
-
             }
             //activityIndicator.IsRunning = activityIndicator.IsVisible = false;
 
             appountmentUserList = await FillAppointmentUserList(appsList);
             appointsList.ItemsSource = appountmentUserList;
             return appountmentUserList;
-
         }
 
         #endregion
@@ -234,14 +234,14 @@ namespace AppointmentControl
         {
             var loggedUser = ((User)Application.Current.Properties[Constants.UserPropertyName]);
             var userDictionary = new Dictionary<string, User>();
-            
+
 
             if (!userDictionary.ContainsKey(loggedUser.Id))
             {
                 userDictionary.Add(loggedUser.Id, loggedUser);
                 Debug.WriteLine("GetUsersDictionary() user added: {0} {1}", loggedUser.Id, loggedUser.Name);
             }
-                
+
             if (loggedUser.isdoctor)
             {
                 foreach (
@@ -251,7 +251,7 @@ namespace AppointmentControl
                     var userFound = await userManager.GetUsersAsync(appointment.PatientId);
                     userDictionary.Add(appointment.PatientId, userFound.First());
                     Debug.WriteLine("GetUsersDictionary() user added: {0} {1}", userFound.First().Id, userFound.First().Name);
-        }
+                }
             }
             else
             {
@@ -285,7 +285,10 @@ namespace AppointmentControl
                     Reason = appointment.Reason,
                     status = appointment.status,
                     DoctorName = userDictionary[appointment.DoctorId].Name,
-                    PatientName = userDictionary[appointment.PatientId].Name
+                    PatientName = userDictionary[appointment.PatientId].Name,
+                    isaccepted = appointment.isaccepted,
+                    isdeclined = appointment.isdeclined,
+                    iscanceled = appointment.iscanceled
                 };
                 appointmentUserList.Add(appointmentUser);
                 Debug.WriteLine("FillAppointmentUserList() appointmentUser added: {0}", appointmentUser);
