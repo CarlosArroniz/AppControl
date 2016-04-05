@@ -8,7 +8,7 @@ namespace AppointmentControl.Models
         public const string REQUESTED = "Requested";
         public const string ACCEPTED = "Accepted";
         public const string DECLINED = "Declined";
-        public const string REJECTED = "Rejected";
+        public const string CANCELED = "Canceled";
         public const string DONE = "DONE";
         
         [JsonProperty(PropertyName = "id")]

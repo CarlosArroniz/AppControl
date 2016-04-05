@@ -14,6 +14,7 @@ using Xamarin.Forms;
 
 namespace AppointmentControl
 {
+    using System;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -48,6 +49,7 @@ namespace AppointmentControl
         private StackLayout content;
 
         private Label statusLabel;
+        private Label appointmentIdLabel;
 
         private ActivityIndicator activityIndicator;
         
@@ -87,6 +89,17 @@ namespace AppointmentControl
 
                     statusLabel.SetBinding(Label.TextProperty, "status");
 
+                    appointmentIdLabel = new Label()
+                    {
+                        FontSize = 10,
+                        FontAttributes = FontAttributes.Bold,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        TextColor = Color.FromHex("#FFF"),
+                        IsVisible = false
+                    };
+
+                    appointmentIdLabel.SetBinding(Label.TextProperty, "Id");
+
                     var grid = new Grid { Padding = 5, HorizontalOptions = LayoutOptions.CenterAndExpand, VerticalOptions = LayoutOptions.Center };
 
                     Debug.WriteLine("statusLabel: {0}", statusLabel.Text);
@@ -106,6 +119,10 @@ namespace AppointmentControl
                     btnAceptar.SetBinding(Button.IsVisibleProperty, "isaccepted");  ///Pay Atention
                     btnRechazar.SetBinding(Button.IsVisibleProperty, "isdeclined");
                     btnCancelar.SetBinding(Button.IsVisibleProperty, "iscanceled");
+
+                    btnAceptar.Clicked += (sender, args) => AcceptAppointment(appointmentIdLabel.Text);
+                    btnRechazar.Clicked += (sender, args) => DeclineAppointment(appointmentIdLabel.Text);
+                    btnCancelar.Clicked += (sender, args) => CancelAppointment(appointmentIdLabel.Text);
 
                     grid.Children.Add(btnAceptar, 0, 0);
                     grid.Children.Add(btnRechazar, 1, 0);
@@ -158,6 +175,7 @@ namespace AppointmentControl
                                     HeightRequest = 230,
                                     Children =
                                     {
+                                        appointmentIdLabel,
                                         nameLabel,
                                         dateLabel,
                                         reasonLabel,
@@ -286,9 +304,9 @@ namespace AppointmentControl
                     status = appointment.status,
                     DoctorName = userDictionary[appointment.DoctorId].Name,
                     PatientName = userDictionary[appointment.PatientId].Name,
-                    isaccepted = appointment.isaccepted,
-                    isdeclined = appointment.isdeclined,
-                    iscanceled = appointment.iscanceled
+                    isaccepted = (Appointment.REQUESTED.Equals(appointment.status) && user.isdoctor),
+                    isdeclined = (Appointment.REQUESTED.Equals(appointment.status) && user.isdoctor),
+                    iscanceled = Appointment.ACCEPTED.Equals(appointment.status) || (Appointment.REQUESTED.Equals(appointment.status) && !user.isdoctor)
                 };
                 appointmentUserList.Add(appointmentUser);
                 Debug.WriteLine("FillAppointmentUserList() appointmentUser added: {0}", appointmentUser);
@@ -297,5 +315,32 @@ namespace AppointmentControl
             return appointmentUserList;
         }
         #endregion
+
+        private async void AcceptAppointment(string appointmentId)
+        {
+            await ChangeAppointmentStatus(appointmentId, Appointment.ACCEPTED);
+        }
+
+        private async void CancelAppointment(string appointmentId)
+        {
+            await ChangeAppointmentStatus(appointmentId, Appointment.CANCELED);
+        }
+
+        private async void DeclineAppointment(string appointmentId)
+        {
+            await ChangeAppointmentStatus(appointmentId, Appointment.DECLINED);
+        }
+
+        private async Task ChangeAppointmentStatus(string appointmentId, string status)
+        {
+            Debug.WriteLine("ChangeAppointmentStatus() trying to get appointment {0}", appointmentId);
+            Appointment appointment = await appointManager.GetTaskAsync(appointmentId);
+            Debug.WriteLine("ChangeAppointmentStatus() got appointment {0}", appointment);
+            appointment.status = status;
+            Debug.WriteLine("ChangeAppointmentStatus() trying to save appointment {0}", appointment);
+            await appointManager.SaveTaskAsync(appointment);
+            Debug.WriteLine("ChangeAppointmentStatus() appointment {0} saved.", appointment);
+            RefreshAppointments();
+        }
     }
 }
